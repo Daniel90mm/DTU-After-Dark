@@ -282,15 +282,29 @@ div[style*="background-color"] {
 
 /* CRITICAL: Fix the top navigation bar (Calendar, Student Resources, etc.) */
 .d2l-labs-navigation-centerer,
-.d2l-labs-navigation-centerer *,
-.d2l-labs-navigation-gutter,
+.d2l-labs-navigation-centerer > *,
+.d2l-labs-navigation-centerer div,
+.d2l-labs-navigation-gutters,
+.d2l-labs-navigation-gutters > *,
+.d2l-labs-navigation-gutters div,
+.d2l-labs-navigation-main-footer,
+.d2l-labs-navigation-main-footer > *,
 .d2l-labs-navigation {
   background-color: #3d3d3d !important;
   color: #e0e0e0 !important;
 }
 
+/* Fix slot elements in navigation */
+slot[name="main"],
+.d2l-labs-navigation-centerer slot,
+.d2l-labs-navigation-gutters slot {
+  background-color: #3d3d3d !important;
+}
+
 /* CRITICAL: Fix additional course card elements */
 .d2l-card-container,
+.d2l-card-container > *,
+.d2l-card-container div,
 .d2l-enrollment-card,
 .d2l-enrollment-card-content-flex,
 .d2l-card-footer,
@@ -301,8 +315,32 @@ d2l-card {
   color: #e0e0e0 !important;
 }
 
+/* Fix all nested divs in card link containers */
+.d2l-card-link-container div,
+.d2l-card-link-container > div,
+.d2l-card-link-container * {
+  background-color: #2d2d2d !important;
+}
+
 /* Fix custom elements (web components) */
 d2l-labs-navigation,
-d2l-labs-navigation-centerer {
+d2l-labs-navigation-centerer,
+d2l-labs-navigation-main-footer {
   background-color: #3d3d3d !important;
+}
+
+/* Ultra-aggressive: Target anything with a bright background */
+div[class*="d2l-labs-navigation"],
+div[class*="d2l-card"] {
+  background-color: #2d2d2d !important;
+}
+
+/* Catch divs with light/white backgrounds by RGB values */
+div[style*="rgb(255, 255, 255)"],
+div[style*="rgb(240, 240, 240)"],
+div[style*="rgba(255, 255, 255"],
+div[style*="#ffffff"],
+div[style*="#fff"],
+div[style*="white"] {
+  background-color: #2d2d2d !important;
 }
