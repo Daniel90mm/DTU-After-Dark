@@ -256,3 +256,26 @@ svg,
   background-color: #1a1a1a !important;
   color: #e0e0e0 !important;
 }
+
+/* CRITICAL: Fix the navigation sidebar (Study Announcements) */
+.d2l-navigation-s-main-wrapper,
+.d2l-navigation-s-main-wrapper * {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* CRITICAL: Fix course card containers (the white areas inside course cards) */
+.d2l-card-link-container,
+.d2l-card-link-container *,
+.d2l-card-link,
+.d2l-card-content-titlebar,
+.d2l-card-content-body {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Fix any divs that still have white/light backgrounds */
+div[style*="background"],
+div[style*="background-color"] {
+  background-color: #2d2d2d !important;
+}
