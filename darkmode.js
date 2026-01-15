@@ -75,6 +75,18 @@
 
     // Styles specifically for enrollment card shadow roots
     const enrollmentCardShadowStyles = `
+        :host {
+            background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        .d2l-enrollment-card-container,
+        .d2l-enrollment-card-content,
+        .d2l-enrollment-card-content-flex {
+            background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+        }
+
         /* Override white backgrounds in enrollment cards */
         .d2l-enrollment-card-status-indicator {
             background-color: ${DARK_BG} !important;
@@ -83,10 +95,6 @@
 
         .d2l-enrollment-card-icon-container {
             background-color: ${DARK_BG} !important;
-        }
-
-        .d2l-enrollment-card-content-flex {
-            background-color: transparent !important;
         }
 
         /* Don't override the course image container */
@@ -114,22 +122,37 @@
         /* Override the white background from d2l-card */
         :host {
             background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+            border-color: ${DARK_BORDER} !important;
         }
 
         .d2l-card-container {
-            background-color: ${DARK_BG} !important;
+            background: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+            border-color: ${DARK_BORDER} !important;
         }
 
         .d2l-card-link-container {
-            background-color: ${DARK_BG} !important;
+            background: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        .d2l-card-container a,
+        .d2l-card-container a:link,
+        .d2l-card-container a:visited {
+            background-color: transparent !important;
+            color: ${DARK_TEXT} !important;
         }
 
         .d2l-card-content {
-            background-color: ${DARK_BG} !important;
+            background: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
         }
 
         .d2l-card-footer {
-            background-color: ${DARK_BG} !important;
+            background: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+            border-color: ${DARK_BORDER} !important;
         }
 
         /* Keep header, actions, and badge transparent (for images) */
@@ -143,6 +166,19 @@
 
         .d2l-card-badge {
             background-color: transparent !important;
+        }
+
+        .d2l-card-title,
+        .d2l-card-subtitle,
+        .d2l-card-link-text,
+        .d2l-card-text {
+            color: ${DARK_TEXT} !important;
+            background-color: transparent !important;
+        }
+
+        .d2l-card-divider,
+        .d2l-card-separator {
+            border-color: ${DARK_BORDER} !important;
         }
 
         /* Don't touch images, icons, or course headers */
@@ -211,49 +247,35 @@
             return;
         }
 
-        // Check if we already injected styles
-        const alreadyInjected = shadowRoot._darkModeInjected;
+        let styleId = 'dark-mode-shadow-styles';
+        let styleText = shadowDOMStyles;
 
-        // For enrollment cards, ALWAYS reprocess nested shadow roots
-        // even if we already injected styles, because d2l-card might be added later
-        const isEnrollmentCard = element && element.tagName &&
-                                 element.tagName.toLowerCase() === 'd2l-enrollment-card';
+        if (element && element.tagName) {
+            const tagName = element.tagName.toLowerCase();
 
-        if (alreadyInjected && !isEnrollmentCard) {
-            // Already processed and it's not an enrollment card, skip
-            return;
-        }
-
-        if (!alreadyInjected) {
-            // First time processing - inject styles
-            const style = document.createElement('style');
-
-            // Use element-specific styles based on tag name
-            if (element && element.tagName) {
-                const tagName = element.tagName.toLowerCase();
-
-                if (tagName === 'd2l-icon') {
-                    style.textContent = iconShadowStyles;
-                } else if (tagName === 'd2l-enrollment-card') {
-                    style.textContent = enrollmentCardShadowStyles;
-                } else if (tagName === 'd2l-card') {
-                    style.textContent = cardShadowStyles;
-                } else {
-                    style.textContent = shadowDOMStyles;
-                }
-            } else {
-                style.textContent = shadowDOMStyles;
+            if (tagName === 'd2l-icon') {
+                styleId = 'dark-mode-shadow-styles-icon';
+                styleText = iconShadowStyles;
+            } else if (tagName === 'd2l-enrollment-card') {
+                styleId = 'dark-mode-shadow-styles-enrollment-card';
+                styleText = enrollmentCardShadowStyles;
+            } else if (tagName === 'd2l-card') {
+                styleId = 'dark-mode-shadow-styles-card';
+                styleText = cardShadowStyles;
             }
+        }
 
+        let style = shadowRoot.getElementById(styleId);
+        if (!style) {
+            style = document.createElement('style');
+            style.id = styleId;
+            style.textContent = styleText;
             shadowRoot.appendChild(style);
-            shadowRoot._darkModeInjected = true;
+        } else if (style.textContent !== styleText) {
+            style.textContent = styleText;
         }
 
-        // ALWAYS process nested shadow roots for enrollment cards
-        // This catches d2l-card elements that were created after initial processing
-        if (isEnrollmentCard || !alreadyInjected) {
-            processNestedShadowRoots(shadowRoot);
-        }
+        processNestedShadowRoots(shadowRoot);
     }
 
     // Function to process shadow roots nested inside a shadow root
