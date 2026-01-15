@@ -111,6 +111,56 @@
         }
     `;
 
+    // Styles specifically for d2l-card shadow roots
+    const cardShadowStyles = `
+        /* Override the white background from d2l-card */
+        :host {
+            background-color: ${DARK_BG} !important;
+            border-color: ${DARK_BORDER} !important;
+        }
+
+        .d2l-card-container {
+            background-color: ${DARK_BG} !important;
+        }
+
+        .d2l-card-link-container {
+            background-color: ${DARK_BG} !important;
+        }
+
+        .d2l-card-header {
+            background-color: transparent !important;
+        }
+
+        .d2l-card-content {
+            background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        .d2l-card-footer {
+            background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        .d2l-card-actions {
+            background-color: transparent !important;
+        }
+
+        .d2l-card-badge {
+            background-color: transparent !important;
+        }
+
+        /* All elements inside card should be dark */
+        * {
+            background-color: ${DARK_BG} !important;
+            border-color: ${DARK_BORDER} !important;
+        }
+
+        /* Text should be visible */
+        div, span, p {
+            color: ${DARK_TEXT} !important;
+        }
+    `;
+
     // Elements that should NOT have dark mode injected (keep original styling)
     const EXCLUDED_ELEMENTS = [
         'd2l-image-banner-overlay',      // Course banner
@@ -172,6 +222,8 @@
                 style.textContent = iconShadowStyles;
             } else if (tagName === 'd2l-enrollment-card') {
                 style.textContent = enrollmentCardShadowStyles;
+            } else if (tagName === 'd2l-card') {
+                style.textContent = cardShadowStyles;
             } else {
                 style.textContent = shadowDOMStyles;
             }
@@ -181,6 +233,23 @@
 
         shadowRoot.appendChild(style);
         shadowRoot._darkModeInjected = true;
+
+        // CRITICAL: Process nested shadow roots inside this shadow root!
+        // d2l-card elements are nested inside d2l-enrollment-card shadow DOMs
+        processNestedShadowRoots(shadowRoot);
+    }
+
+    // Function to process shadow roots nested inside a shadow root
+    function processNestedShadowRoots(shadowRoot) {
+        if (!shadowRoot) return;
+
+        // Find all elements inside this shadow root
+        const elements = shadowRoot.querySelectorAll('*');
+        elements.forEach(element => {
+            if (element.shadowRoot) {
+                injectStylesIntoShadowRoot(element.shadowRoot, element);
+            }
+        });
     }
 
     // Function to find and inject into all shadow roots
