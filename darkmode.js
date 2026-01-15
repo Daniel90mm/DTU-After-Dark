@@ -204,39 +204,56 @@
 
     // Function to inject styles into a shadow root
     function injectStylesIntoShadowRoot(shadowRoot, element) {
-        if (!shadowRoot || shadowRoot._darkModeInjected) return;
+        if (!shadowRoot) return;
 
         // Skip if element should be excluded
         if (shouldExcludeElement(element)) {
-            shadowRoot._darkModeInjected = true; // Mark as processed but don't inject
             return;
         }
 
-        const style = document.createElement('style');
+        // Check if we already injected styles
+        const alreadyInjected = shadowRoot._darkModeInjected;
 
-        // Use element-specific styles based on tag name
-        if (element && element.tagName) {
-            const tagName = element.tagName.toLowerCase();
+        // For enrollment cards, ALWAYS reprocess nested shadow roots
+        // even if we already injected styles, because d2l-card might be added later
+        const isEnrollmentCard = element && element.tagName &&
+                                 element.tagName.toLowerCase() === 'd2l-enrollment-card';
 
-            if (tagName === 'd2l-icon') {
-                style.textContent = iconShadowStyles;
-            } else if (tagName === 'd2l-enrollment-card') {
-                style.textContent = enrollmentCardShadowStyles;
-            } else if (tagName === 'd2l-card') {
-                style.textContent = cardShadowStyles;
+        if (alreadyInjected && !isEnrollmentCard) {
+            // Already processed and it's not an enrollment card, skip
+            return;
+        }
+
+        if (!alreadyInjected) {
+            // First time processing - inject styles
+            const style = document.createElement('style');
+
+            // Use element-specific styles based on tag name
+            if (element && element.tagName) {
+                const tagName = element.tagName.toLowerCase();
+
+                if (tagName === 'd2l-icon') {
+                    style.textContent = iconShadowStyles;
+                } else if (tagName === 'd2l-enrollment-card') {
+                    style.textContent = enrollmentCardShadowStyles;
+                } else if (tagName === 'd2l-card') {
+                    style.textContent = cardShadowStyles;
+                } else {
+                    style.textContent = shadowDOMStyles;
+                }
             } else {
                 style.textContent = shadowDOMStyles;
             }
-        } else {
-            style.textContent = shadowDOMStyles;
+
+            shadowRoot.appendChild(style);
+            shadowRoot._darkModeInjected = true;
         }
 
-        shadowRoot.appendChild(style);
-        shadowRoot._darkModeInjected = true;
-
-        // CRITICAL: Process nested shadow roots inside this shadow root!
-        // d2l-card elements are nested inside d2l-enrollment-card shadow DOMs
-        processNestedShadowRoots(shadowRoot);
+        // ALWAYS process nested shadow roots for enrollment cards
+        // This catches d2l-card elements that were created after initial processing
+        if (isEnrollmentCard || !alreadyInjected) {
+            processNestedShadowRoots(shadowRoot);
+        }
     }
 
     // Function to process shadow roots nested inside a shadow root
@@ -267,9 +284,41 @@
         });
     }
 
+    // Wait for critical custom elements to be defined before processing
+    async function waitForCustomElements() {
+        // Wait for the custom elements to be defined
+        const elementsToWait = [
+            'd2l-enrollment-card',
+            'd2l-card',
+            'd2l-icon'
+        ];
+
+        const promises = elementsToWait.map(tagName => {
+            if (customElements.get(tagName)) {
+                // Already defined
+                return Promise.resolve();
+            } else {
+                // Wait for it to be defined
+                return customElements.whenDefined(tagName).catch(() => {
+                    // Element might not exist on this page, that's OK
+                    return Promise.resolve();
+                });
+            }
+        });
+
+        // Wait for all elements (with timeout)
+        return Promise.race([
+            Promise.all(promises),
+            new Promise(resolve => setTimeout(resolve, 3000)) // 3 second timeout
+        ]);
+    }
+
     // Initial processing
-    function initialize() {
-        // Process existing elements
+    async function initialize() {
+        // Wait for custom elements to be defined first
+        await waitForCustomElements();
+
+        // Now process existing elements
         processElement(document.body);
 
         // Set up MutationObserver to catch dynamically added elements
@@ -283,9 +332,11 @@
                         if (node.tagName &&
                             (node.tagName.toLowerCase() === 'd2l-enrollment-card' ||
                              node.tagName.toLowerCase() === 'd2l-card')) {
-                            // Process immediately for cards
+                            // Process immediately for cards, and recheck multiple times
+                            setTimeout(() => processElement(node), 10);
                             setTimeout(() => processElement(node), 50);
                             setTimeout(() => processElement(node), 100);
+                            setTimeout(() => processElement(node), 200);
                         }
                     }
                 });
@@ -312,17 +363,17 @@
         initialize();
     }
 
-    // Also try to process on load with multiple checks extending longer
-    // Cards are loaded dynamically, so we need multiple attempts
-    window.addEventListener('load', () => {
-        setTimeout(() => processElement(document.body), 100);
-        setTimeout(() => processElement(document.body), 250);
-        setTimeout(() => processElement(document.body), 500);
-        setTimeout(() => processElement(document.body), 1000);
-        setTimeout(() => processElement(document.body), 2000);
-        setTimeout(() => processElement(document.body), 3000);
-        setTimeout(() => processElement(document.body), 4000);
-        setTimeout(() => processElement(document.body), 5000);
+    // Also try to process on load with VERY aggressive checks
+    // Cards are loaded dynamically, so we need multiple attempts over longer period
+    window.addEventListener('load', async () => {
+        // Wait for custom elements first
+        await waitForCustomElements();
+
+        // Then do aggressive checking
+        const checkTimes = [100, 250, 500, 750, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000];
+        checkTimes.forEach(time => {
+            setTimeout(() => processElement(document.body), time);
+        });
     });
 
     // Listen for visibility changes (when user switches tabs back)
@@ -334,10 +385,15 @@
     });
 
     // Listen for clicks on the page (like semester chevron clicks)
-    document.addEventListener('click', () => {
-        // Check for new cards after a click (semester switch, etc.)
-        setTimeout(() => processElement(document.body), 500);
-        setTimeout(() => processElement(document.body), 1500);
-        setTimeout(() => processElement(document.body), 3000);
+    document.addEventListener('click', async () => {
+        // Wait a bit, then wait for custom elements, then check aggressively
+        setTimeout(async () => {
+            await waitForCustomElements();
+            // Check for new cards multiple times after click
+            const clickCheckTimes = [50, 200, 500, 1000, 1500, 2000, 2500, 3000, 3500];
+            clickCheckTimes.forEach(time => {
+                setTimeout(() => processElement(document.body), time);
+            });
+        }, 100);
     }, true);  // Use capture phase to catch all clicks
 })();
