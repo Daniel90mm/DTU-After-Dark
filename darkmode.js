@@ -218,6 +218,7 @@
         'd2l-image-banner-overlay',      // Course banner
         'd2l-image-banner',               // Course banner components
         'team-widget',                    // Teams widget
+        'd2l-html-block',                 // Module content blocks
         'd2l-organization-image',         // Course images
         'd2l-course-image'                // Course images
     ];
