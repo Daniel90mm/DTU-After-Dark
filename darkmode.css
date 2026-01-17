@@ -405,6 +405,23 @@ li.d2l-datalist-item {
   background-color: #3d3d3d !important;
 }
 
+/* Menu and menu items */
+d2l-menu,
+d2l-menu-item,
+d2l-menu-item-link,
+.d2l-menu,
+.d2l-menu-mvc,
+.d2l-contextmenu {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.d2l-menu-item:hover,
+.d2l-menu-item:focus {
+  background-color: #3d3d3d !important;
+}
+
 /* ===== EXCLUSIONS - Override dark mode for specific elements ===== */
 /* These rules must come LAST to override all previous dark mode rules */
 

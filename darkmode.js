@@ -242,6 +242,40 @@
         }
     `;
 
+    // Styles for menu and menu items
+    const menuStyles = `
+        /* Dark background for menus */
+        :host {
+            background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        .d2l-menu,
+        .d2l-menu-mvc,
+        .d2l-contextmenu {
+            background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+            border-color: ${DARK_BORDER} !important;
+        }
+
+        .d2l-menu-item,
+        .d2l-menu-item-text {
+            background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        .d2l-menu-item:hover,
+        .d2l-menu-item:focus {
+            background-color: #3d3d3d !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        a, button {
+            color: ${DARK_TEXT} !important;
+            background-color: transparent !important;
+        }
+    `;
+
     // Elements that should NOT have dark mode injected (keep original styling)
     const EXCLUDED_ELEMENTS = [
         'd2l-image-banner-overlay',      // Course banner
@@ -311,6 +345,9 @@
             } else if (tagName === 'd2l-expand-collapse-content' || tagName === 'd2l-lti-launch') {
                 styleId = 'dark-mode-shadow-styles-expand-collapse';
                 styleText = expandCollapseStyles;
+            } else if (tagName === 'd2l-menu' || tagName === 'd2l-menu-item' || tagName === 'd2l-menu-item-link') {
+                styleId = 'dark-mode-shadow-styles-menu';
+                styleText = menuStyles;
             }
         }
 
