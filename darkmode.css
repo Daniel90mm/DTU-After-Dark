@@ -1,10 +1,18 @@
 /* DTU Learn Dark Mode - Making your courses easier on the eyes! */
 
 /* Main body and background */
+html,
+html[data-he-context],
+html[data-global-context],
+html[data-css-vars],
+html.d2l-dialog-open,
 body,
 body.d2l-body-flex,
 body.daylight,
-html {
+body.vui-typography,
+body.d2l-typography,
+body.d2l-shim-body-overflow,
+#d2l_body {
   background-color: #1a1a1a !important;
   color: #e0e0e0 !important;
 }
@@ -177,12 +185,15 @@ input[type="search"],
   color: #e0e0e0 !important;
 }
 
-/* Module content blocks should keep original (light) styling */
+/* Module content blocks - dark background with light text */
 #content-block,
 #content-block .module-display,
-#content-block .module-inner-container {
-  background-color: #ffffff !important;
-  color: #1a1a1a !important;
+#content-block .module-inner-container,
+.content-panel,
+.content-panel-header,
+#content-header {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
 }
 
 #content-block h1,
@@ -190,8 +201,26 @@ input[type="search"],
 #content-block h3,
 #content-block p,
 #content-block span,
-#content-block div {
-  color: #1a1a1a !important;
+#content-block div,
+.content-panel h1,
+.content-panel h2,
+.content-panel h3,
+.content-panel p,
+.content-panel span,
+.module-header,
+.module-description-body {
+  color: #e0e0e0 !important;
+}
+
+#content-block h1,
+.content-panel h1,
+.module-header,
+h1.module-header,
+h1.d2l-heading-1,
+h1.d2l-heading-1.module-header,
+.d2l-heading-1 {
+  color: #ffffff !important;
+  background-color: transparent !important;
 }
 
 /* Side panel boxes (e.g. team widgets) */
@@ -432,6 +461,519 @@ d2l-menu-item-link,
   background-color: #3d3d3d !important;
 }
 
+/* Modal dialogs (e.g., evaluation reminders) */
+.modal-content {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.modal-content .close,
+#nagClose {
+  color: #e0e0e0 !important;
+}
+
+.modal-content .close:hover,
+#nagClose:hover {
+  color: #ffffff !important;
+}
+
+#nagBody,
+#nagBody * {
+  color: #e0e0e0 !important;
+  background-color: transparent !important;
+}
+
+#nagBody h1,
+#nagBody h2,
+#nagBody h3 {
+  color: #ffffff !important;
+}
+
+/* Navigation search and container */
+.navigation-container,
+.navigation-menu,
+.navigation-search,
+#navigation-search-results-div,
+.navigation-search-results-div {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+#navigation-search-results-div *,
+.navigation-search-results-div * {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Action buttons container */
+.d2l-action-buttons,
+.d2l-action-buttons-list,
+.d2l-action-buttons-item {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Action button - keep visible with light background */
+.d2l-action-buttons .d2l-button,
+.d2l-action-buttons-item .d2l-button,
+button.d2l-button[primary] {
+  background-color: #4a90d9 !important;
+  color: #ffffff !important;
+  border-color: #3a7fc9 !important;
+}
+
+.d2l-action-buttons .d2l-button:hover,
+.d2l-action-buttons-item .d2l-button:hover,
+button.d2l-button[primary]:hover {
+  background-color: #5aa0e9 !important;
+}
+
+/* d2l-input-search shadow DOM override */
+d2l-input-search {
+  background-color: #2d2d2d !important;
+  --d2l-input-background-color: #3d3d3d !important;
+  --d2l-input-border-color: #505050 !important;
+  --d2l-color-ferrite: #e0e0e0 !important;
+}
+
+/* Search input styling */
+.d2l-input-container,
+.d2l-input-text-container,
+.d2l-skeletize,
+.d2l-input-inside-before,
+.d2l-input-inside-after {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+input.d2l-input,
+input[class*="d2l-input"] {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+input.d2l-input::placeholder {
+  color: #888888 !important;
+}
+
+/* Content/Lessons navigation sidebar */
+.navigation-tree,
+.navigation-tree > div,
+.navigation-item,
+.navigation-item > div,
+.navigation-item div,
+.unit,
+.unit-box,
+.unit-box.hoverable,
+.unit-box.selectable,
+.unit-box.selected,
+.unit-box.focusable,
+[role="treeitem"],
+[data-objectid],
+div[data-objectid],
+div.navigation-item[data-objectid] {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Force all divs inside navigation-item to be dark */
+div.navigation-item *,
+[data-objectid] *,
+[role="tree"] *,
+[role="tree"] div {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Keep accent colors transparent */
+div.navigation-item .accent,
+[data-objectid] .accent {
+  background-color: revert !important;
+}
+
+.co-content,
+.title-container,
+.title,
+.title-text,
+.text-wrapper,
+.date-container,
+.due-date-container,
+.drag-handle,
+.accent-outline,
+.outline,
+.overflow-detector,
+.fadeout-spacer {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+.unit-box .outline,
+.unit-box .accent-outline {
+  border-color: #404040 !important;
+}
+
+.unit-box:hover,
+.unit-box.hoverable:hover {
+  background-color: #3d3d3d !important;
+}
+
+.unit-box .fadeout,
+.fadeout {
+  background: transparent !important;
+  display: none !important;
+}
+
+.unit-box:hover .fadeout,
+.unit-box.selected .fadeout {
+  background: transparent !important;
+  display: none !important;
+}
+
+/* File drop area */
+.file-drop-area,
+.drop-wrapper {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+/* Dialog/Modal (ddial) styling */
+.ddial_o2,
+.ddial_i,
+.ddial_c,
+.ddial_t,
+.ddial_h,
+.d2l-dialog-buttons,
+.d2l-dialog-footer,
+.d2l-dialog-loading-spinner {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.ddial_t table,
+.ddial_t td,
+.d2l-dialog-buttons table,
+.d2l-dialog-buttons td {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.ddial_h h1,
+.ddial_h .d2l-heading,
+.ddial_h .vui-heading-3 {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+.ddial_close a,
+.d2l-dialog-close {
+  color: #e0e0e0 !important;
+}
+
+.ddial_close a:hover,
+.d2l-dialog-close:hover {
+  color: #ffffff !important;
+}
+
+.d2l-dialog-resize {
+  background-color: transparent !important;
+}
+
+/* Dialog backdrop/overlay */
+.d2l-shim,
+.d2l-shim-opaque,
+.d2l-shim.d2l-shim-opaque {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Popup title (e.g., Compose New Message) */
+.d2l-popup-title,
+.d2l-popup-title h1,
+.d2l-popup-title .d2l-heading,
+.d2l-popup-title .vui-heading-1 {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+}
+
+/* Multiselect (email recipients, etc.) */
+.d2l-multiselect,
+ul.d2l-multiselect,
+ul[class*="d2l-multiselect"],
+[id$="$control"].d2l-multiselect,
+[id*="Addresses$control"],
+ul[id*="$control"] {
+  background-color: #3d3d3d !important;
+  border-color: #505050 !important;
+}
+
+.d2l-multiselect-choice,
+li.d2l-multiselect-choice,
+ul.d2l-multiselect li.d2l-multiselect-choice,
+ul[id*="$control"] li.d2l-multiselect-choice,
+li[class*="d2l-multiselect-choice"] {
+  background-color: #4a4a4a !important;
+  color: #e0e0e0 !important;
+  border-color: #606060 !important;
+}
+
+.d2l-multiselect-choice span,
+li.d2l-multiselect-choice span,
+ul.d2l-multiselect li span,
+ul[id*="$control"] li span,
+li[class*="d2l-multiselect-choice"] span {
+  color: #e0e0e0 !important;
+}
+
+.d2l-multiselect-choice a,
+.d2l-multiselect-clearicon,
+.d2l-imagelink.d2l-multiselect-clearicon,
+li.d2l-multiselect-choice a,
+ul[id*="$control"] li a {
+  color: #e0e0e0 !important;
+}
+
+.d2l-multiselect-choice a:hover,
+.d2l-multiselect-clearicon:hover {
+  color: #ffffff !important;
+}
+
+.d2l-multiselect-input,
+li.d2l-multiselect-input,
+.d2l-multiselect-input input,
+.d2l-multiselect input.d2l-edit,
+ul.d2l-multiselect input,
+ul[id*="$control"] input,
+input.d2l-edit {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+/* Autocomplete dropdown */
+.d2l-autocomplete-dynamic,
+[id*="AutoComplete"],
+.d2l-autocomplete-message {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+/* ===== DTU Login Page (sts.ait.dtu.dk) ===== */
+#contentWrapper,
+#content,
+#workArea,
+#authArea,
+#loginArea,
+#formsAuthenticationArea,
+#userNameArea,
+#passwordArea,
+#submissionArea,
+#authOptions,
+#introduction,
+#footerPlaceholder {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+#header,
+#header.float,
+div#header {
+  background-color: #1a1a1a !important;
+}
+
+#loginMessage,
+#loginMessage b {
+  color: #e0e0e0 !important;
+}
+
+#loginMessage a {
+  color: #66b3ff !important;
+}
+
+#userNameInput,
+#passwordInput,
+.text.fullWidth {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+#userNameInput::placeholder,
+#passwordInput::placeholder {
+  color: #888888 !important;
+}
+
+#submitButton,
+.submit {
+  background-color: #c62828 !important;
+  color: #ffffff !important;
+  border-color: #a62020 !important;
+}
+
+#submitButton:hover,
+.submit:hover {
+  background-color: #d32f2f !important;
+}
+
+#footer,
+#footerLinks {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+#footer a,
+#footerLinks a,
+#helpDesk {
+  color: #66b3ff !important;
+}
+
+#copyright {
+  color: #888888 !important;
+}
+
+#error,
+.error {
+  color: #ff6b6b !important;
+}
+
+/* Assignment info table */
+table.d_FG,
+table.d_FG tbody,
+table.d_FG tr,
+table.d_FG td,
+.d_fgh,
+.fct_w,
+.fl_n,
+.fl_top {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+table.d_FG label,
+table.d_FG .d2l-label,
+table.d_FG .dco,
+table.d_FG .dco_c {
+  color: #e0e0e0 !important;
+  background-color: transparent !important;
+}
+
+/* List role containers */
+div[role="list"],
+[role="list"] {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Navigation sidebar - override role="list" to use lighter color */
+.d2l-navigation-s-main-wrapper,
+.d2l-navigation-s-main-wrapper[role="list"],
+div.d2l-navigation-s-main-wrapper,
+.d2l-navigation-s-main-wrapper *,
+.d2l-navigation-s-item,
+.d2l-navigation-s-group,
+.d2l-navigation-s-link {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Collapse/expand button */
+.d2l-hpg-opener,
+button.d2l-hpg-opener {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.d2l-hpg-opener span {
+  color: #e0e0e0 !important;
+}
+
+/* Empty state container */
+.empty-state-container,
+.d2l-empty-state-description,
+.d2l-body-compact.d2l-empty-state-description {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Floating buttons container */
+.d2l-floating-buttons-container,
+.d2l-floating-buttons,
+.d2l-floating-buttons-inner-container {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Breadcrumb */
+d2l-breadcrumb,
+d2l-breadcrumbs,
+[d2l-breadcrumb],
+[d2l-breadcrumb-current-page],
+d2l-breadcrumb-current-page {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Breadcrumb links (not inline links) */
+a.d2l-link:not(.d2l-link-inline),
+a.d2l-link-small:not(.d2l-link-inline) {
+  background-color: #1a1a1a !important;
+}
+
+/* Breadcrumb current page span */
+span[aria-current="page"] {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Inline links - lighter dark */
+a.d2l-link-inline,
+a.d2l-link.d2l-link-inline,
+.dco a.d2l-link,
+.dco_c a.d2l-link,
+td.d_gn a.d2l-link,
+td.d_gc a.d2l-link {
+  background-color: #2d2d2d !important;
+}
+
+/* Breadcrumb icons */
+d2l-breadcrumbs d2l-icon,
+d2l-breadcrumb d2l-icon,
+d2l-icon[icon="tier1:chevron-right"] {
+  background-color: #1a1a1a !important;
+}
+
+/* File viewer / content viewer */
+.content-div,
+.topic-display,
+.activity-viewer,
+.content-container,
+.content-loaded-wrapper,
+.vui-fileviewer,
+.vui-fileviewer-generic,
+.vui-fileviewer-generic-container,
+.vui-fileviewer-generic-main,
+.generic-header-icon-container,
+.generic-headers,
+.vui-fileviewer-generic-header,
+.vui-fileviewer-generic-subheader,
+.vui-fileviewer-icon,
+.generic-download-area,
+.vui-fileviewer-generic-size,
+.vui-fileviewer-generic-download {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.vui-fileviewer-generic-header {
+  color: #ffffff !important;
+}
+
 /* ===== EXCLUSIONS - Override dark mode for specific elements ===== */
 /* These rules must come LAST to override all previous dark mode rules */
 
@@ -464,4 +1006,48 @@ d2l-menu-item-link,
   background-color: revert !important;
   color: revert !important;
   background: revert !important;
+}
+
+/* PDF Viewer - keep original styling */
+d2l-pdf-viewer,
+d2l-pdf-viewer *,
+d2l-pdf-viewer-toolbar,
+d2l-pdf-viewer-toolbar *,
+d2l-pdf-viewer-progress-bar,
+#viewerContainer,
+#viewerContainer *,
+#viewer,
+#viewer *,
+.pdfViewer,
+.pdfViewer *,
+.page[data-page-number],
+.page[data-page-number] *,
+.canvasWrapper,
+.canvasWrapper *,
+.textLayer,
+.textLayer *,
+.annotationLayer,
+.annotationLayer *,
+.annotationEditorLayer,
+.annotationEditorLayer * {
+  background-color: revert !important;
+  color: revert !important;
+  background: revert !important;
+  filter: none !important;
+}
+
+/* Media Player - keep original styling */
+d2l-labs-media-player,
+d2l-labs-media-player *,
+d2l-labs-slider-bar,
+d2l-labs-slider-bar *,
+#d2l-labs-media-player-video,
+#d2l-labs-media-player-media-container,
+#d2l-labs-media-player-media-controls,
+#d2l-labs-media-player-buttons,
+[id^="d2l-labs-media-player"] {
+  background-color: revert !important;
+  color: revert !important;
+  background: revert !important;
+  filter: none !important;
 }

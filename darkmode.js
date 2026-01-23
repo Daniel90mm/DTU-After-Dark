@@ -50,6 +50,51 @@
             filter: grayscale(0) !important;
             opacity: 1 !important;
         }
+
+        /* List role containers */
+        div[role="list"],
+        [role="list"] {
+            background-color: #1a1a1a !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        /* Breadcrumb elements */
+        d2l-breadcrumb,
+        d2l-breadcrumbs,
+        d2l-breadcrumb-current-page,
+        .d2l-breadcrumb,
+        .d2l-breadcrumbs {
+            background-color: #1a1a1a !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        /* Breadcrumb links and icons */
+        a.d2l-link-small:not(.d2l-link-inline),
+        d2l-icon[icon="tier1:chevron-right"],
+        span[aria-current="page"] {
+            background-color: #1a1a1a !important;
+        }
+
+        /* Inline links - lighter dark */
+        a.d2l-link-inline {
+            background-color: #2d2d2d !important;
+        }
+
+        /* Floating buttons */
+        .d2l-floating-buttons-container,
+        .d2l-floating-buttons,
+        .d2l-floating-buttons-inner-container {
+            background-color: #1a1a1a !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        /* Empty state */
+        .empty-state-container,
+        .d2l-empty-state-description,
+        .d2l-body-compact {
+            background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+        }
     `;
 
     // Styles for same-origin iframes
@@ -65,6 +110,118 @@
             background-color: ${DARK_BG} !important;
             color: ${DARK_TEXT} !important;
             border-color: ${DARK_BORDER} !important;
+        }
+
+        /* Navigation tree and items */
+        .navigation-container,
+        .navigation-menu,
+        .navigation-search,
+        .navigation-tree,
+        .navigation-tree > div,
+        .navigation-item,
+        .navigation-item > div,
+        .navigation-item div,
+        .unit,
+        .unit-box,
+        [role="treeitem"] {
+            background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+            border-color: ${DARK_BORDER} !important;
+        }
+
+        .co-content,
+        .title-container,
+        .title,
+        .title-text,
+        .text-wrapper,
+        .date-container,
+        .due-date-container {
+            background-color: transparent !important;
+            color: ${DARK_TEXT} !important;
+        }
+
+        .unit-box .fadeout,
+        .fadeout {
+            background: transparent !important;
+            display: none !important;
+        }
+
+        /* Links */
+        a {
+            color: #66b3ff !important;
+        }
+
+        /* Module headers and text */
+        h1, h2, h3, h4, h5, h6,
+        .d2l-heading-1,
+        .d2l-heading-2,
+        .d2l-heading-3,
+        .module-header,
+        h1.module-header,
+        h1.d2l-heading-1 {
+            color: #ffffff !important;
+        }
+
+        p, span, div, strong, em, b, i {
+            color: ${DARK_TEXT} !important;
+        }
+
+        /* Multiselect (email recipients) */
+        .d2l-multiselect,
+        ul.d2l-multiselect,
+        ul[id*="$control"],
+        [id*="Addresses$control"] {
+            background-color: #3d3d3d !important;
+            border-color: #505050 !important;
+        }
+
+        .d2l-multiselect-choice,
+        li.d2l-multiselect-choice,
+        ul[id*="$control"] li.d2l-multiselect-choice,
+        li[class*="d2l-multiselect-choice"] {
+            background-color: #4a4a4a !important;
+            color: ${DARK_TEXT} !important;
+            border-color: #606060 !important;
+        }
+
+        .d2l-multiselect-choice span,
+        li.d2l-multiselect-choice span,
+        ul[id*="$control"] li span,
+        li[class*="d2l-multiselect-choice"] span {
+            color: ${DARK_TEXT} !important;
+        }
+
+        .d2l-multiselect-choice a,
+        .d2l-multiselect-clearicon,
+        .d2l-imagelink,
+        ul[id*="$control"] li a {
+            color: ${DARK_TEXT} !important;
+        }
+
+        .d2l-multiselect-input,
+        .d2l-multiselect-input input,
+        .d2l-multiselect input.d2l-edit,
+        ul[id*="$control"] input,
+        input.d2l-edit {
+            background-color: #3d3d3d !important;
+            color: ${DARK_TEXT} !important;
+            border-color: #505050 !important;
+        }
+
+        /* Autocomplete dropdown */
+        .d2l-autocomplete-dynamic,
+        [id*="AutoComplete"],
+        .d2l-autocomplete-message {
+            background-color: ${DARK_BG} !important;
+            color: ${DARK_TEXT} !important;
+            border-color: #505050 !important;
+        }
+
+        /* Popup title */
+        .d2l-popup-title,
+        .d2l-popup-title h1 {
+            background-color: ${DARK_BG} !important;
+            color: #ffffff !important;
         }
     `;
 
@@ -280,27 +437,39 @@
     const htmlBlockStyles = `
         /* Light text for readability on dark backgrounds */
         :host {
-            color: ${DARK_TEXT} !important;
+            color: #e0e0e0 !important;
         }
 
+        /* Force ALL elements to have light text */
+        *, *::before, *::after {
+            color: #e0e0e0 !important;
+        }
+
+        div.d2l-html-block-rendered,
+        div.d2l-html-block-rendered *,
         .d2l-html-block-rendered,
         .d2l-html-block-rendered * {
-            color: ${DARK_TEXT} !important;
-            background-color: transparent !important;
+            color: #e0e0e0 !important;
         }
 
         /* Ensure all text elements are visible */
         p, span, div, h1, h2, h3, h4, h5, h6,
-        strong, em, b, i, ul, ol, li {
-            color: ${DARK_TEXT} !important;
+        strong, em, b, i, ul, ol, li, table, tr, td, th {
+            color: #e0e0e0 !important;
+        }
+
+        /* Override any inline color styles */
+        [style*="color"],
+        [style] {
+            color: #e0e0e0 !important;
         }
 
         /* Keep links visible with blue color */
-        a {
+        a, a *, a span, a strong, a em {
             color: #66b3ff !important;
         }
 
-        a:hover {
+        a:hover, a:hover * {
             color: #99ccff !important;
         }
     `;
@@ -311,7 +480,12 @@
         'd2l-image-banner',               // Course banner components
         'team-widget',                    // Teams widget
         'd2l-organization-image',         // Course images
-        'd2l-course-image'                // Course images
+        'd2l-course-image',               // Course images
+        'd2l-pdf-viewer',                 // PDF viewer
+        'd2l-pdf-viewer-toolbar',         // PDF viewer toolbar
+        'd2l-pdf-viewer-progress-bar',    // PDF viewer progress bar
+        'd2l-labs-media-player',          // Media player
+        'd2l-labs-slider-bar'             // Media player slider
     ];
 
     // Function to check if element should be excluded from dark mode
@@ -332,6 +506,16 @@
                 element.classList.contains('bg-white')) {
                 return true;
             }
+
+            // PDF Viewer exclusions
+            if (element.classList.contains('pdfViewer') ||
+                element.classList.contains('page') ||
+                element.classList.contains('canvasWrapper') ||
+                element.classList.contains('textLayer') ||
+                element.classList.contains('annotationLayer') ||
+                element.classList.contains('annotationEditorLayer')) {
+                return true;
+            }
         }
 
         // Check if element ID suggests it should be excluded
@@ -341,6 +525,21 @@
                 element.id.includes('overlayContent')) {
                 return true;
             }
+
+            // PDF Viewer exclusion
+            if (element.id === 'viewer' || element.id.includes('pdfViewer')) {
+                return true;
+            }
+
+            // Media Player exclusion
+            if (element.id === 'player' || element.id.includes('d2l-labs-media-player')) {
+                return true;
+            }
+        }
+
+        // Check for PDF page data attribute
+        if (element.hasAttribute && element.hasAttribute('data-page-number')) {
+            return true;
         }
 
         return false;
@@ -408,19 +607,320 @@
         });
     }
 
+    // Function to specifically process d2l-html-block elements
+    function processHtmlBlocks(root) {
+        const htmlBlocks = root.querySelectorAll('d2l-html-block');
+        htmlBlocks.forEach(block => {
+            // Try immediately
+            if (block.shadowRoot) {
+                injectStylesIntoShadowRoot(block.shadowRoot, block);
+            }
+            // Also poll multiple times to catch late shadow root creation
+            const delays = [50, 100, 200, 500, 1000, 2000];
+            delays.forEach(delay => {
+                setTimeout(() => {
+                    if (block.shadowRoot) {
+                        injectStylesIntoShadowRoot(block.shadowRoot, block);
+                    }
+                }, delay);
+            });
+        });
+    }
+
+    // Aggressively poll for d2l-html-block elements
+    function pollForHtmlBlocks() {
+        const htmlBlocks = document.querySelectorAll('d2l-html-block');
+        htmlBlocks.forEach(block => {
+            if (block.shadowRoot) {
+                injectStylesIntoShadowRoot(block.shadowRoot, block);
+            }
+        });
+    }
+
+    // Start polling for html blocks
+    setInterval(pollForHtmlBlocks, 500);
+
+    // Function to directly style multiselect elements (for iframes where CSS doesn't apply)
+    function styleMultiselectElements(root) {
+        // Style multiselect containers
+        const multiselects = root.querySelectorAll('.d2l-multiselect, ul.d2l-multiselect');
+        multiselects.forEach(el => {
+            el.style.setProperty('background-color', '#3d3d3d', 'important');
+            el.style.setProperty('border-color', '#505050', 'important');
+        });
+
+        // Style multiselect choice items
+        const choices = root.querySelectorAll('.d2l-multiselect-choice');
+        choices.forEach(el => {
+            el.style.setProperty('background-color', '#4a4a4a', 'important');
+            el.style.setProperty('color', '#e0e0e0', 'important');
+            el.style.setProperty('border-color', '#606060', 'important');
+        });
+
+        // Style spans inside choices
+        const choiceSpans = root.querySelectorAll('.d2l-multiselect-choice span');
+        choiceSpans.forEach(el => {
+            el.style.setProperty('color', '#e0e0e0', 'important');
+        });
+
+        // Style clear icons
+        const clearIcons = root.querySelectorAll('.d2l-multiselect-clearicon, .d2l-multiselect-choice a');
+        clearIcons.forEach(el => {
+            el.style.setProperty('color', '#e0e0e0', 'important');
+        });
+
+        // Style input fields
+        const inputs = root.querySelectorAll('.d2l-multiselect input, input.d2l-edit, .d2l-multiselect-input input');
+        inputs.forEach(el => {
+            el.style.setProperty('background-color', '#3d3d3d', 'important');
+            el.style.setProperty('color', '#e0e0e0', 'important');
+            el.style.setProperty('border-color', '#505050', 'important');
+        });
+
+        // Style popup titles
+        const popupTitles = root.querySelectorAll('.d2l-popup-title, .d2l-popup-title h1');
+        popupTitles.forEach(el => {
+            el.style.setProperty('background-color', '#2d2d2d', 'important');
+            el.style.setProperty('color', '#ffffff', 'important');
+        });
+    }
+
+    // Poll for multiselect elements in main document and iframes
+    function pollForMultiselects() {
+        styleMultiselectElements(document);
+
+        // Also check iframes
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+            try {
+                const doc = iframe.contentDocument;
+                if (doc && doc.body) {
+                    styleMultiselectElements(doc);
+                }
+            } catch (e) {
+                // Cross-origin iframe, skip
+            }
+        });
+    }
+
+    // Start polling for multiselect elements
+    setInterval(pollForMultiselects, 500);
+
+    // Selectors for elements that should be #1a1a1a (darkest)
+    const DARK_SELECTORS = `
+        div[role="list"]:not(.d2l-navigation-s-main-wrapper),
+        .d2l-hpg-opener,
+        button.d2l-hpg-opener,
+        .empty-state-container,
+        .d2l-floating-buttons-container,
+        .d2l-floating-buttons,
+        .d2l-floating-buttons-inner-container,
+        d2l-breadcrumb,
+        d2l-breadcrumbs,
+        d2l-breadcrumb-current-page,
+        span[aria-current="page"],
+        a.d2l-link-small:not(.d2l-link-inline),
+        d2l-breadcrumbs d2l-icon,
+        d2l-breadcrumb d2l-icon,
+        d2l-icon[icon="tier1:chevron-right"],
+        table.d_FG,
+        table.d_FG td,
+        .d_fgh,
+        .fct_w,
+        .fl_n,
+        .fl_top,
+        .d2l-empty-state-description,
+        .d2l-body-compact,
+        .content-div,
+        .topic-display,
+        .activity-viewer,
+        .content-container,
+        .content-loaded-wrapper,
+        .vui-fileviewer,
+        .vui-fileviewer-generic,
+        .vui-fileviewer-generic-container,
+        .vui-fileviewer-generic-main,
+        .generic-header-icon-container,
+        .generic-headers,
+        .vui-fileviewer-generic-header,
+        .vui-fileviewer-generic-subheader,
+        .vui-fileviewer-icon,
+        .generic-download-area,
+        .vui-fileviewer-generic-size,
+        .vui-fileviewer-generic-download
+    `;
+
+    // Selectors for elements that should be #2d2d2d (lighter dark)
+    const LIGHTER_DARK_SELECTORS = `
+        .d2l-navigation-s-main-wrapper,
+        .d2l-navigation-s-main-wrapper *,
+        .d2l-navigation-s-item,
+        .d2l-navigation-s-group,
+        .d2l-navigation-s-link,
+        a.d2l-link-inline,
+        .dco a.d2l-link,
+        .dco_c a.d2l-link,
+        td.d_gn a.d2l-link,
+        td.d_gc a.d2l-link
+    `;
+
+    // Function to apply darkest style to an element (#1a1a1a)
+    function applyDarkStyle(el) {
+        if (!el || !el.style) return;
+        // Skip navigation wrapper elements
+        if (el.closest && el.closest('.d2l-navigation-s-main-wrapper')) return;
+        el.style.setProperty('background-color', '#1a1a1a', 'important');
+        el.style.setProperty('color', '#e0e0e0', 'important');
+    }
+
+    // Function to apply lighter dark style to an element (#2d2d2d)
+    function applyLighterDarkStyle(el) {
+        if (!el || !el.style) return;
+        el.style.setProperty('background-color', '#2d2d2d', 'important');
+        el.style.setProperty('color', '#e0e0e0', 'important');
+    }
+
+    // Function to aggressively override dynamically applied styles
+    function overrideDynamicStyles(root) {
+        // Apply darkest color to dark selectors
+        const darkElements = root.querySelectorAll(DARK_SELECTORS);
+        darkElements.forEach(applyDarkStyle);
+
+        // Apply lighter dark color to navigation wrapper
+        const lighterElements = root.querySelectorAll(LIGHTER_DARK_SELECTORS);
+        lighterElements.forEach(applyLighterDarkStyle);
+    }
+
+    // MutationObserver to watch for style changes
+    function setupStyleObserver(root) {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    const el = mutation.target;
+                    // Check if it's a navigation wrapper element (lighter dark)
+                    if (el.closest && el.closest('.d2l-navigation-s-main-wrapper')) {
+                        applyLighterDarkStyle(el);
+                    } else if (el.matches && el.matches(DARK_SELECTORS)) {
+                        applyDarkStyle(el);
+                    }
+                }
+                if (mutation.type === 'childList') {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType === 1) { // Element node
+                            // Check navigation wrapper elements first
+                            if (node.matches && node.matches(LIGHTER_DARK_SELECTORS)) {
+                                applyLighterDarkStyle(node);
+                            } else if (node.matches && node.matches(DARK_SELECTORS)) {
+                                applyDarkStyle(node);
+                            }
+                            // Check descendants
+                            if (node.querySelectorAll) {
+                                const lighterDescendants = node.querySelectorAll(LIGHTER_DARK_SELECTORS);
+                                lighterDescendants.forEach(applyLighterDarkStyle);
+                                const darkDescendants = node.querySelectorAll(DARK_SELECTORS);
+                                darkDescendants.forEach(applyDarkStyle);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        observer.observe(root, {
+            attributes: true,
+            attributeFilter: ['style', 'class'],
+            childList: true,
+            subtree: true
+        });
+
+        return observer;
+    }
+
+    // Setup observer on document
+    setupStyleObserver(document.documentElement);
+
+    // Poll to override dynamic styles
+    function pollOverrideDynamicStyles() {
+        overrideDynamicStyles(document);
+
+        // Also check iframes
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+            try {
+                const doc = iframe.contentDocument;
+                if (doc && doc.body) {
+                    overrideDynamicStyles(doc);
+                    // Setup observer on iframe if not already done
+                    if (!iframe._darkModeObserver) {
+                        iframe._darkModeObserver = setupStyleObserver(doc.documentElement);
+                    }
+                }
+            } catch (e) {
+                // Cross-origin iframe, skip
+            }
+        });
+    }
+
+    // Start polling for dynamic style overrides (fast interval)
+    setInterval(pollOverrideDynamicStyles, 100);
+
+    // Also run immediately and after short delays
+    pollOverrideDynamicStyles();
+    setTimeout(pollOverrideDynamicStyles, 500);
+    setTimeout(pollOverrideDynamicStyles, 1000);
+    setTimeout(pollOverrideDynamicStyles, 2000);
+    setTimeout(pollOverrideDynamicStyles, 3000);
+    setTimeout(pollOverrideDynamicStyles, 5000);
+
+    // Function to check if element is inside a PDF viewer or media player
+    function isInsideExcludedContainer(element) {
+        let parent = element;
+        while (parent) {
+            // PDF viewer check
+            if (parent.id === 'viewer' ||
+                (parent.classList && (
+                    parent.classList.contains('pdfViewer') ||
+                    parent.classList.contains('pdf-viewer')
+                ))) {
+                return true;
+            }
+            // Media player check
+            if (parent.tagName && parent.tagName.toLowerCase() === 'd2l-labs-media-player') {
+                return true;
+            }
+            if (parent.id === 'player' || (parent.id && parent.id.includes('d2l-labs-media-player'))) {
+                return true;
+            }
+            parent = parent.parentElement;
+        }
+        return false;
+    }
+
     // Function to find and inject into all shadow roots
     function processElement(element) {
+        // Skip if inside PDF viewer
+        if (isInsideExcludedContainer(element)) {
+            return;
+        }
+
         if (element.shadowRoot) {
             injectStylesIntoShadowRoot(element.shadowRoot, element);
         }
 
-        // Check all children
+        // Check all children (excluding PDF viewer contents)
         const children = element.querySelectorAll('*');
         children.forEach(child => {
+            // Skip PDF viewer elements
+            if (shouldExcludeElement(child) || isInsideExcludedContainer(child)) {
+                return;
+            }
             if (child.shadowRoot) {
                 injectStylesIntoShadowRoot(child.shadowRoot, child);
             }
         });
+
+        // Specifically process d2l-html-block elements
+        processHtmlBlocks(element);
 
         processIframes(element);
     }
@@ -429,8 +929,22 @@
         const iframes = root.querySelectorAll('iframe');
         iframes.forEach(iframe => {
             try {
+                // Skip PDF viewer iframes
+                const src = iframe.src || '';
+                if (src.includes('pdf') || src.includes('viewer') || src.includes('.pdf')) {
+                    return;
+                }
+
                 const doc = iframe.contentDocument;
                 if (!doc || !doc.documentElement) return;
+
+                // Skip if iframe contains PDF viewer
+                if (doc.getElementById('viewer') ||
+                    doc.querySelector('.pdfViewer') ||
+                    doc.querySelector('.pdf-viewer') ||
+                    doc.querySelector('[data-page-number]')) {
+                    return;
+                }
 
                 let style = doc.getElementById('dark-mode-iframe-styles');
                 if (!style) {
@@ -453,6 +967,7 @@
         const elementsToWait = [
             'd2l-enrollment-card',
             'd2l-card',
+            'd2l-html-block',
             'd2l-icon'
         ];
 
