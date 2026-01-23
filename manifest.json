@@ -8,7 +8,24 @@
       "matches": ["*://learn.inside.dtu.dk/*"],
       "css": ["darkmode.css"],
       "js": ["darkmode.js"],
-      "run_at": "document_start"
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["*://*.brightspace.com/*", "*://s.brightspace.com/*"],
+      "css": ["darkmode.css"],
+      "js": ["darkmode.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["*://sts.ait.dtu.dk/*"],
+      "css": ["darkmode.css"],
+      "js": ["darkmode.js"],
+      "run_at": "document_start",
+      "all_frames": true
     }
   ]
 }
