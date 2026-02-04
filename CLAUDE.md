@@ -12,4 +12,4 @@ When i say less dark or dark 2, i mean rgb(45,45,45).
 
 I do not understand HTML, css, javascript, no web dev stuff, so if you cant darken something i want, give me clear instructions on what to give you so you can darken it.
 
-when i copy something from the "inspect element" page, i will copy the html code with Copy Outer HTML.
+when i copy something from the "inspect element" page, i will copy the html code with "Copy Outer HTML".
