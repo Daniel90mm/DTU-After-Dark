@@ -923,7 +923,21 @@
         #outercontent_0_ContentColumn,
         #karsumForm,
         .subservicemenuHeader,
-        .subservicemenu
+        .subservicemenu,
+        .subservicemenuFooter,
+        .servicemenu,
+        .servicemenu *,
+        .servicemenuitems,
+        .servicemenuitems *,
+        .grid_6.minHeight,
+        .grid_6.minHeight *,
+        .item.itemmenu,
+        .item.separator,
+        .servicemenu nav,
+        .servicemenu nav *,
+        .servicemenu__link-text,
+        .breadcrumb.linkset6,
+        .breadcrumb.linkset6 *
     `;
 
     // Selectors for elements that should be #2d2d2d (lighter dark)
@@ -956,8 +970,19 @@
         .d2l-personal-tools-category-item,
         .d2l-personal-tools-separated-item,
         .d2l-personal-tools-list a.d2l-link,
+        li.d2l-datalist-item,
+        .d2l-datalist-item-actionable,
+        .d2l-navigation-area-activity-message-content,
+        .d2l-navigation-area-activity-message-wrapper,
+        .d2l-navigation-area-activity-message-details,
+        li.d2l-datalist-item.d2l-datalist-item-actionable,
         .d2l-datalist-item-actioncontrol,
         a.d2l-datalist-item-actioncontrol,
+        .d2l-messagebucket-button-container,
+        .d2l-messagebucket-button-container *,
+        .d2l-messagebucket-button-container-left,
+        .d2l-messagebucket-button-container-right,
+        d2l-icon,
         .d2l-iterator-button,
         a.d2l-iterator-button,
         #TitlePlaceholderId,
@@ -977,7 +1002,43 @@
         .search,
         .search .inputtext,
         .inside-search-btn,
-        .inside-search-btn .inputsubmit
+        .inside-search-btn .inputsubmit,
+        .pagefooterlogo,
+        .pagefootercolumn,
+        #footerLogo,
+        #footerAbout,
+        #footerJob,
+        #footerFollowus,
+        .footeraddresstitle,
+        .footeraddress,
+        .footerintro,
+        .contactWrapper,
+        .socialMediaIcons,
+        .subsitesearch,
+        .top-search-wrapper,
+        .pageheaderoverlay,
+        .pageheader *,
+        .pageheaderoverlay *,
+        .sitelogo,
+        .sitetextlogo,
+        .websiteLogoLink,
+        .websitelogoright__link,
+        .mainmenu,
+        .breadcrumb-print,
+        .grid_6.pageheadertop,
+        .grid_6.pageheadertop *,
+        .mobileTopMenuButton,
+        .mobileTopMenuButton *,
+        .linkset4,
+        .topmenuitems,
+        .linkset1,
+        .mobilemenuNavigation,
+        .grid_5,
+        .grid_1.minHeight,
+        .pagefooter,
+        .pagefooter .container_12,
+        .pagefooter .container_12 *,
+        .lineheight13_18
     `;
 
     // Function to apply darkest style to an element (#1a1a1a)
@@ -985,14 +1046,27 @@
         if (!el || !el.style) return;
         // Skip navigation wrapper elements
         if (el.closest && el.closest('.d2l-navigation-s-main-wrapper')) return;
+        // Skip elements inside pagefooter (those should be dark 2)
+        if (el.closest && el.closest('.pagefooter')) return;
+        // Skip topmenuitems (should be dark 2)
+        if (el.closest && el.closest('.topmenuitems')) return;
+        // Skip pageheader descendants (should be dark 2), except breadcrumb.linkset6 (dark 1)
+        if (el.closest && el.closest('.pageheader') && !el.closest('.breadcrumb.linkset6')) return;
+        el.style.setProperty('background', '#1a1a1a', 'important');
         el.style.setProperty('background-color', '#1a1a1a', 'important');
+        el.style.setProperty('background-image', 'none', 'important');
         el.style.setProperty('color', '#e0e0e0', 'important');
     }
 
     // Function to apply lighter dark style to an element (#2d2d2d)
     function applyLighterDarkStyle(el) {
         if (!el || !el.style) return;
+        // Skip breadcrumb.linkset6 (should be dark 1)
+        if (el.matches && el.matches('.breadcrumb.linkset6')) return;
+        if (el.closest && el.closest('.breadcrumb.linkset6')) return;
+        el.style.setProperty('background', '#2d2d2d', 'important');
         el.style.setProperty('background-color', '#2d2d2d', 'important');
+        el.style.setProperty('background-image', 'none', 'important');
         el.style.setProperty('color', '#e0e0e0', 'important');
     }
 
@@ -1013,8 +1087,8 @@
             mutations.forEach((mutation) => {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
                     const el = mutation.target;
-                    // Check if it's a navigation wrapper element (lighter dark)
-                    if (el.closest && el.closest('.d2l-navigation-s-main-wrapper')) {
+                    // Check lighter dark selectors first (they take priority)
+                    if (el.matches && el.matches(LIGHTER_DARK_SELECTORS)) {
                         applyLighterDarkStyle(el);
                     } else if (el.matches && el.matches(DARK_SELECTORS)) {
                         applyDarkStyle(el);
@@ -1023,18 +1097,19 @@
                 if (mutation.type === 'childList') {
                     mutation.addedNodes.forEach(node => {
                         if (node.nodeType === 1) { // Element node
-                            // Check navigation wrapper elements first
-                            if (node.matches && node.matches(LIGHTER_DARK_SELECTORS)) {
-                                applyLighterDarkStyle(node);
-                            } else if (node.matches && node.matches(DARK_SELECTORS)) {
+                            // Apply dark first, then lighter (lighter wins)
+                            if (node.matches && node.matches(DARK_SELECTORS)) {
                                 applyDarkStyle(node);
                             }
-                            // Check descendants
+                            if (node.matches && node.matches(LIGHTER_DARK_SELECTORS)) {
+                                applyLighterDarkStyle(node);
+                            }
+                            // Check descendants: dark first, then lighter (lighter wins)
                             if (node.querySelectorAll) {
-                                const lighterDescendants = node.querySelectorAll(LIGHTER_DARK_SELECTORS);
-                                lighterDescendants.forEach(applyLighterDarkStyle);
                                 const darkDescendants = node.querySelectorAll(DARK_SELECTORS);
                                 darkDescendants.forEach(applyDarkStyle);
+                                const lighterDescendants = node.querySelectorAll(LIGHTER_DARK_SELECTORS);
+                                lighterDescendants.forEach(applyLighterDarkStyle);
                             }
                         }
                     });
@@ -1304,11 +1379,16 @@
         // Helper function to replace logo in a given root
         function replaceInRoot(root) {
             if (!root) return;
-            const logoImages = root.querySelectorAll('img[src*="/d2l/lp/navbars/"][src*="/theme/viewimage/"], img[alt="My Home"]');
+            const logoImages = root.querySelectorAll('img[src*="/d2l/lp/navbars/"][src*="/theme/viewimage/"], img[alt="My Home"], img.websitelogoright__link-image, img[src*="dtulogo2_colour.png"]');
             logoImages.forEach(img => {
                 if (!img.dataset.darkModeReplaced) {
                     img.src = newSrc;
                     img.dataset.darkModeReplaced = 'true';
+                    // Resize the sites.dtu.dk DTU logo
+                    if (img.classList.contains('websitelogoright__link-image') || img.getAttribute('src')?.includes('dtulogo2_colour')) {
+                        img.style.setProperty('max-height', '50px', 'important');
+                        img.style.setProperty('width', 'auto', 'important');
+                    }
                 }
             });
         }
@@ -1360,6 +1440,312 @@
         setTimeout(replaceLogoImage, 100);
         setTimeout(replaceLogoImage, 500);
         setTimeout(replaceLogoImage, 1000);
+    });
+
+    // ===== MOJANGLES TEXT INSERTION =====
+    // Insert Mojangles text image into the navigation header with Minecraft-style animation
+
+    function isMojanglesEnabled() {
+        const stored = localStorage.getItem('mojanglesTextEnabled');
+        return stored === null ? true : stored === 'true';
+    }
+
+    // Find all .mojangles-text-img elements including inside shadow roots
+    function findAllMojanglesImages(root) {
+        const images = [];
+        if (!root) return images;
+        root.querySelectorAll('.mojangles-text-img').forEach(img => images.push(img));
+        root.querySelectorAll('*').forEach(el => {
+            if (el.shadowRoot) {
+                findAllMojanglesImages(el.shadowRoot).forEach(img => images.push(img));
+            }
+        });
+        return images;
+    }
+
+    function insertMojanglesText() {
+        // If disabled, hide all existing Mojangles images (including in shadow DOM) and return
+        if (!isMojanglesEnabled()) {
+            findAllMojanglesImages(document).forEach(img => {
+                img.style.display = 'none';
+            });
+            return;
+        }
+
+        // If enabled, make sure existing ones are visible
+        findAllMojanglesImages(document).forEach(img => {
+            img.style.display = '';
+        });
+
+        const mojanglesImgSrc = chrome.runtime.getURL('Mojangles text.png');
+        const isHomePage = /^\/d2l\/home\/?$/.test(window.location.pathname);
+
+        // Helper function to insert in a given root
+        function insertInRoot(root) {
+            if (!root) return;
+
+            // Find the navigation header container
+            const headerContainers = root.querySelectorAll('.d2l-labs-navigation-header-container');
+            headerContainers.forEach(container => {
+                // Check if we already added the image
+                if (container.querySelector('.mojangles-text-img')) return;
+
+                // Create the image element
+                const img = document.createElement('img');
+                img.src = mojanglesImgSrc;
+                img.className = 'mojangles-text-img';
+                img.alt = 'Mojangles';
+
+                // Find the DTU logo
+                const logo = container.querySelector('d2l-navigation-link-image, a[href*="home"], img');
+
+                if (!isHomePage) {
+                    // Course page: smaller, static, positioned absolutely next to the logo
+                    container.style.position = 'relative';
+                    const containerRect = container.getBoundingClientRect();
+                    const logoRect = logo ? logo.getBoundingClientRect() : null;
+                    const leftPos = logoRect ? (logoRect.right - containerRect.left - 38) : 0;
+                    img.style.cssText = `height: 10px; position: absolute; left: ${leftPos}px; top: calc(60% + 17px); transform: translateY(-50%) rotate(-20deg); z-index: 10; pointer-events: none;`;
+                    container.appendChild(img);
+                } else {
+                    // Home page: normal size, inserted after logo
+                    img.style.cssText = 'height: 20px; margin-left: 10px; vertical-align: middle; transform: rotate(-20deg);';
+                    if (logo && logo.parentNode === container) {
+                        logo.after(img);
+                    } else if (container.firstElementChild) {
+                        container.firstElementChild.after(img);
+                    } else {
+                        container.appendChild(img);
+                    }
+
+                    // Pulse animation only on home page
+                    function animatePulse(timestamp) {
+                        const scale = 1 + 0.05 * Math.sin(timestamp / 127);
+                        img.style.transform = `rotate(-20deg) scale(${scale})`;
+                        requestAnimationFrame(animatePulse);
+                    }
+                    requestAnimationFrame(animatePulse);
+                }
+            });
+        }
+
+        // Check main document
+        insertInRoot(document);
+
+        // Check all shadow roots recursively
+        function checkShadowRoots(root) {
+            if (!root) return;
+            const elements = root.querySelectorAll('*');
+            elements.forEach(el => {
+                if (el.shadowRoot) {
+                    insertInRoot(el.shadowRoot);
+                    checkShadowRoots(el.shadowRoot);
+                }
+            });
+        }
+
+        checkShadowRoots(document);
+    }
+
+    // Run Mojangles text insertion on page load and periodically
+    insertMojanglesText();
+    setInterval(insertMojanglesText, 500);
+
+    // Also run after DOM changes
+    const mojanglesObserver = new MutationObserver(() => {
+        insertMojanglesText();
+    });
+
+    if (document.body) {
+        mojanglesObserver.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    } else {
+        document.addEventListener('DOMContentLoaded', () => {
+            insertMojanglesText();
+            mojanglesObserver.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        });
+    }
+
+    window.addEventListener('load', () => {
+        insertMojanglesText();
+        setTimeout(insertMojanglesText, 100);
+        setTimeout(insertMojanglesText, 500);
+        setTimeout(insertMojanglesText, 1000);
+    });
+
+    // ===== MOJANGLES TOGGLE IN ADMIN TOOLS =====
+    function insertMojanglesToggle() {
+        if (document.querySelector('#mojangles-toggle')) return;
+
+        const placeholder = document.querySelector('#AdminToolsPlaceholderId');
+        if (!placeholder) return;
+
+        const column = document.createElement('div');
+        column.className = 'd2l-admin-tools-column';
+        column.style.cssText = 'background-color: #1a1a1a !important; color: #e0e0e0 !important;';
+
+        const heading = document.createElement('h2');
+        heading.className = 'd2l-heading vui-heading-4 d2l-heading-none';
+        heading.textContent = 'DTU After Dark';
+        heading.style.cssText = 'background-color: #1a1a1a !important; color: #e0e0e0 !important;';
+
+        const list = document.createElement('ul');
+        list.className = 'd2l-list';
+        list.style.cssText = 'background-color: #1a1a1a !important;';
+
+        const li = document.createElement('li');
+        li.style.cssText = 'display: flex; align-items: center; gap: 8px; padding: 4px 0; background-color: #1a1a1a !important;';
+
+        const label = document.createElement('label');
+        label.style.cssText = 'display: flex; align-items: center; gap: 8px; cursor: pointer; color: #e0e0e0; font-size: 14px; background-color: #1a1a1a !important; background: #1a1a1a !important;';
+
+        const toggle = document.createElement('input');
+        toggle.type = 'checkbox';
+        toggle.id = 'mojangles-toggle';
+        toggle.checked = isMojanglesEnabled();
+        toggle.style.cssText = 'width: 16px; height: 16px; cursor: pointer; accent-color: #c62828;';
+
+        toggle.addEventListener('change', () => {
+            localStorage.setItem('mojanglesTextEnabled', toggle.checked.toString());
+            insertMojanglesText();
+        });
+
+        label.appendChild(toggle);
+        label.appendChild(document.createTextNode('Mojangles Text'));
+        li.appendChild(label);
+        list.appendChild(li);
+        column.appendChild(heading);
+        column.appendChild(list);
+        placeholder.appendChild(column);
+    }
+
+    // Run toggle insertion
+    insertMojanglesToggle();
+    setInterval(insertMojanglesToggle, 1000);
+
+    if (document.body) {
+        const toggleObserver = new MutationObserver(() => insertMojanglesToggle());
+        toggleObserver.observe(document.body, { childList: true, subtree: true });
+    } else {
+        document.addEventListener('DOMContentLoaded', () => {
+            insertMojanglesToggle();
+            const toggleObserver = new MutationObserver(() => insertMojanglesToggle());
+            toggleObserver.observe(document.body, { childList: true, subtree: true });
+        });
+    }
+
+    window.addEventListener('load', () => {
+        insertMojanglesToggle();
+        setTimeout(insertMojanglesToggle, 500);
+        setTimeout(insertMojanglesToggle, 1000);
+    });
+
+    // ===== FIRST-TIME ONBOARDING HINT =====
+    // Show a hint pointing to the gear icon the first time the extension is used
+    function showOnboardingHint() {
+        if (localStorage.getItem('dtuDarkModeHintSeen')) return;
+
+        // Find the gear icon — it lives inside shadow DOM
+        function findGearIcon(root) {
+            if (!root) return null;
+            const icon = root.querySelector('d2l-icon[icon="tier3:gear"]');
+            if (icon) return icon;
+            const els = root.querySelectorAll('*');
+            for (const el of els) {
+                if (el.shadowRoot) {
+                    const found = findGearIcon(el.shadowRoot);
+                    if (found) return found;
+                }
+            }
+            return null;
+        }
+
+        const gear = findGearIcon(document);
+        if (!gear) return;
+
+        // Get gear icon position
+        const gearRect = gear.getBoundingClientRect();
+        if (gearRect.width === 0) return; // not visible yet
+
+        // Create the hint bubble
+        const bubble = document.createElement('div');
+        bubble.id = 'dtu-dark-hint';
+        bubble.innerHTML = `
+            <div style="
+                position: fixed;
+                top: ${gearRect.bottom + 12}px;
+                left: ${gearRect.left + gearRect.width / 2 - 120}px;
+                z-index: 999999;
+                pointer-events: auto;
+            " id="dtu-dark-hint-inner">
+                <div style="
+                    position: relative;
+                    background: linear-gradient(135deg, #c62828, #8e0000);
+                    color: #fff;
+                    padding: 12px 16px;
+                    border-radius: 10px;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 13px;
+                    line-height: 1.4;
+                    max-width: 240px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+                    cursor: pointer;
+                    animation: dtuHintBounce 2s ease-in-out infinite;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: -8px;
+                        left: 110px;
+                        width: 0; height: 0;
+                        border-left: 8px solid transparent;
+                        border-right: 8px solid transparent;
+                        border-bottom: 8px solid #c62828;
+                    "></div>
+                    <span style="font-weight: bold; font-size: 14px;">&#9881; DTU After Dark</span><br>
+                    <span style="opacity: 0.9;">Click the gear to customize your dark mode experience!</span>
+                    <div style="margin-top: 6px; font-size: 11px; opacity: 0.7; text-align: right;">click to dismiss</div>
+                </div>
+            </div>
+        `;
+
+        // Add bounce animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes dtuHintBounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(6px); }
+            }
+        `;
+        document.head.appendChild(style);
+        document.body.appendChild(bubble);
+
+        // Dismiss on click
+        bubble.addEventListener('click', () => {
+            localStorage.setItem('dtuDarkModeHintSeen', 'true');
+            bubble.style.transition = 'opacity 0.3s';
+            bubble.style.opacity = '0';
+            setTimeout(() => bubble.remove(), 300);
+        });
+
+        // Also dismiss after 15 seconds
+        setTimeout(() => {
+            if (document.querySelector('#dtu-dark-hint')) {
+                localStorage.setItem('dtuDarkModeHintSeen', 'true');
+                bubble.style.transition = 'opacity 0.3s';
+                bubble.style.opacity = '0';
+                setTimeout(() => bubble.remove(), 300);
+            }
+        }, 15000);
+    }
+
+    // Run after page loads (gear icon needs to be rendered)
+    window.addEventListener('load', () => {
+        setTimeout(showOnboardingHint, 2000);
     });
 
     // ===== TYPEBOX PRESERVATION (kurser.dtu.dk, studieplan.dtu.dk, etc.) =====

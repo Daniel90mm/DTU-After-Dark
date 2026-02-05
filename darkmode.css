@@ -13,7 +13,28 @@ body.vui-typography,
 body.d2l-typography,
 body.d2l-shim-body-overflow,
 #d2l_body {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
+  color: #e0e0e0 !important;
+}
+
+/* Outer page wrappers (karakterer.dtu.dk etc.) - dark 2 */
+.page-articlehtml,
+.container_12,
+form,
+#aspnetForm,
+#__Page,
+.printFooter,
+.printFooter *,
+body > div,
+body > form,
+body > form > div,
+header,
+footer {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
   color: #e0e0e0 !important;
 }
 
@@ -434,10 +455,10 @@ div[style*="white"]:not(.typebox) {
   color: #e0e0e0 !important;
 }
 
-/* Course selector items - dark 1 */
+/* Course selector items - dark 2 */
 .d2l-datalist-item-actionable,
 li.d2l-datalist-item.d2l-datalist-item-actionable {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
@@ -451,22 +472,32 @@ li.d2l-datalist-item.d2l-datalist-item-actionable {
   border-color: #404040 !important;
 }
 
-/* Datalist list items / Course selector dropdown - dark 1 */
+/* Datalist list items / Course selector dropdown - dark 2 */
 ul.d2l-datalist,
 ul.d2l-datalist.vui-list,
 .vui-list,
+li.d2l-datalist-item,
 .d2l-datalist-item-content,
 .d2l-course-selector-item,
 .d2l-course-selector-item-name,
 .d2l-button-toggle-container,
 .d2l-clear {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
-/* Course selector links */
+/* Activity message content wrappers - dark 2 */
+.d2l-navigation-area-activity-message-content,
+.d2l-navigation-area-activity-message-wrapper,
+.d2l-navigation-area-activity-message-details {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Course selector links - dark 2 */
 a.d2l-datalist-item-actioncontrol {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #66b3ff !important;
 }
 
@@ -1388,6 +1419,19 @@ d2l-icon[icon="tier1:chevron-left"],
 d2l-icon[icon="tier1:chevron-down"],
 d2l-icon[icon="tier1:chevron-up"] {
   background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
+}
+
+/* Message bucket buttons - dark 2 */
+.d2l-messagebucket-button-container,
+.d2l-messagebucket-button-container *,
+.d2l-messagebucket-button-container-left,
+.d2l-messagebucket-button-container-right {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
+  color: #e0e0e0 !important;
 }
 
 /* ===== DTU Studieplanlægger (studieplaner.dtu.dk) ===== */
@@ -1893,7 +1937,24 @@ div.pageheader,
 .pageheader *,
 div.pageheader * {
   background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
   color: #e0e0e0 !important;
+}
+
+/* Page header pseudo-elements */
+.pageheader::before,
+.pageheader::after,
+.pageheaderoverlay::before,
+.pageheaderoverlay::after,
+.pageheader .container_12::before,
+.pageheader .container_12::after,
+.pageheader .grid_6::before,
+.pageheader .grid_6::after {
+  background: #2d2d2d !important;
+  background-color: #2d2d2d !important;
+  background-image: none !important;
+  display: none !important;
 }
 
 .pageheaderoverlay,
@@ -1901,6 +1962,8 @@ div.pageheader * {
 .pageheaderoverlay *,
 #ctl10_PageHeaderOverlay * {
   background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
   color: #e0e0e0 !important;
 }
 
@@ -1929,8 +1992,11 @@ div.pageheader * {
 /* Mobile menu buttons */
 .mobilemenuNavigation,
 .mobilemenuNavigation *,
-.mobileTopMenuButton {
+.mobileTopMenuButton,
+.mobileTopMenuButton * {
   background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
 }
 
 /* Main menu */
@@ -1984,6 +2050,12 @@ nav {
 .pageheader .hideInPrint,
 .pageheaderoverlay .clear {
   background-color: #2d2d2d !important;
+}
+
+/* Website logo link */
+.websiteLogoLink,
+.websitelogoright__link {
+  background-color: transparent !important;
 }
 
 /* Website logo link */
@@ -2221,4 +2293,158 @@ input.inputsubmit,
 input.inputsubmit:hover {
   background-color: #4d4d4d !important;
   background: #4d4d4d !important;
+}
+
+/* ==================== Page Footer - dark 2 ==================== */
+.pagefooterlogo,
+.pagefootercolumn,
+#footerLogo,
+#footerAbout,
+#footerJob,
+#footerFollowus,
+.footeraddresstitle,
+.footeraddress,
+.footerintro,
+.contactWrapper,
+.socialMediaIcons,
+.grid_1.minHeight.pagefooterlogo,
+.grid_5.pagefootercolumn,
+.grid_3.pagefootercolumn,
+.grid_1.minHeight,
+.grid_5.minHeight,
+.grid_5,
+div[id="footerLogo"],
+div[id="footerAbout"],
+div[id="footerJob"],
+div[id="footerFollowus"] {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Footer - override ALL descendants */
+#footerLogo *,
+#footerAbout *,
+#footerJob *,
+#footerFollowus *,
+.pagefooterlogo *,
+.pagefootercolumn * {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Footer text elements */
+#footerAbout p,
+#footerAbout strong,
+#footerAbout br,
+#footerAbout h2,
+#footerFollowus h2,
+.footeraddresstitle,
+.footeraddress p,
+.footeraddress strong,
+.footerintro p {
+  color: #e0e0e0 !important;
+}
+
+/* Footer links */
+#footerAbout a,
+#footerFollowus a,
+.footeraddress a,
+.pagefootercolumn a {
+  color: #66b3ff !important;
+}
+
+/* Footer images should be transparent bg */
+#footerLogo img,
+#footerFollowus img,
+.socialMediaIcons img,
+.pagefooterlogo img {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Page footer container - dark 2 */
+.pagefooter,
+.pagefooter .container_12,
+.pagefooter .container_12 *,
+.pagefooter.lineheight13_18 {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Page footer links */
+.pagefooter a {
+  color: #66b3ff !important;
+}
+
+/* Page footer images transparent */
+.pagefooter img {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* ==================== Service Menu (header & footer) - dark 1 ==================== */
+.servicemenu,
+.servicemenu *,
+.servicemenuitems,
+.servicemenuitems *,
+.subservicemenuFooter,
+.grid_6.minHeight,
+.grid_6.minHeight *,
+.servicemenu nav,
+.servicemenu nav *,
+.item.itemmenu,
+.item.separator,
+.servicemenu__link-text {
+  background-color: #1a1a1a !important;
+  background: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Service menu links */
+.servicemenu a,
+.servicemenuitems a {
+  color: #66b3ff !important;
+}
+
+/* Service menu images transparent */
+.servicemenu img,
+.servicemenuitems img,
+.item.separator img {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* ==================== Top Menu Items - dark 2 ==================== */
+.topmenuitems,
+.topmenuitems *,
+.linkset1,
+ul.container_12.topmenuitems {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
+  color: #e0e0e0 !important;
+}
+
+/* ==================== Breadcrumb linkset6 - dark 1 ==================== */
+.breadcrumb.linkset6,
+.breadcrumb.linkset6 *,
+.breadcrumb.linkset6.grid_10 {
+  background-color: #1a1a1a !important;
+  background: #1a1a1a !important;
+  background-image: none !important;
+  color: #e0e0e0 !important;
+}
+
+.breadcrumb.linkset6 a {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.breadcrumb.linkset6 img {
+  background-color: transparent !important;
+  background: transparent !important;
 }
