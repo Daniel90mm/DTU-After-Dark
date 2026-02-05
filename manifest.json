@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "DTU Learn Dark Mode",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Dark mode for DTU Learn (learn.inside.dtu.dk) - Makes your courses easier on the eyes!",
   "browser_specific_settings": {
     "gecko": {

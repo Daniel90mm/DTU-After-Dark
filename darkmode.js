@@ -1488,22 +1488,22 @@
 
         const column = document.createElement('div');
         column.className = 'd2l-admin-tools-column';
-        column.style.cssText = 'background-color: #1a1a1a !important; color: #e0e0e0 !important;';
+        column.style.cssText = 'background-color: #2d2d2d !important; color: #e0e0e0 !important;';
 
         const heading = document.createElement('h2');
         heading.className = 'd2l-heading vui-heading-4 d2l-heading-none';
         heading.textContent = 'DTU After Dark';
-        heading.style.cssText = 'background-color: #1a1a1a !important; color: #e0e0e0 !important;';
+        heading.style.cssText = 'background-color: #2d2d2d !important; color: #e0e0e0 !important;';
 
         const list = document.createElement('ul');
         list.className = 'd2l-list';
-        list.style.cssText = 'background-color: #1a1a1a !important;';
+        list.style.cssText = 'background-color: #2d2d2d !important;';
 
         const li = document.createElement('li');
-        li.style.cssText = 'display: flex; align-items: center; gap: 8px; padding: 4px 0; background-color: #1a1a1a !important;';
+        li.style.cssText = 'display: flex; align-items: center; gap: 8px; padding: 4px 0; background-color: #2d2d2d !important;';
 
         const label = document.createElement('label');
-        label.style.cssText = 'display: flex; align-items: center; gap: 8px; cursor: pointer; color: #e0e0e0; font-size: 14px; background-color: #1a1a1a !important; background: #1a1a1a !important;';
+        label.style.cssText = 'display: flex; align-items: center; gap: 8px; cursor: pointer; color: #e0e0e0; font-size: 14px; background-color: #2d2d2d !important; background: #2d2d2d !important;';
 
         const toggle = document.createElement('input');
         toggle.type = 'checkbox';
