@@ -1,88 +1,75 @@
-# DTU Learn Dark Mode 🌙
+# DTU Learn Dark Mode
 
-A Firefox extension that brings dark mode to DTU Learn (learn.inside.dtu.dk). No more bright white backgrounds burning your eyes during late-night study sessions!
+A Firefox extension that applies a dark theme to DTU Learn and other DTU web services. No more bright white backgrounds during late-night study sessions.
+
+## Supported Sites
+
+- **DTU Learn** (learn.inside.dtu.dk) - Brightspace LMS
+- **DTU Login** (sts.ait.dtu.dk)
+- **Course Evaluations** (evaluering.dtu.dk)
+- **Study Planner** (studieplan.dtu.dk)
+- **Course Catalog** (kurser.dtu.dk)
+- **Grades** (karakterer.dtu.dk)
+- **Department Sites** (sites.dtu.dk)
 
 ## Features
 
-- Dark backgrounds throughout DTU Learn
-- Comfortable dark theme for all course pages
-- Maintains DTU's red branding colors
-- Easy on the eyes for long study sessions
-- Smooth color transitions
+- Two-tier dark theme: dark backgrounds (#1a1a1a) with lighter card/widget surfaces (#2d2d2d)
+- Comfortable text color (#e0e0e0) that preserves custom-colored content
+- Readable link color (#66b3ff)
+- Shadow DOM and iframe support for full coverage of Brightspace components
+- Runs at document start for instant dark mode with no white flash
 
-## Installation Instructions
+## Installation
 
-### Method 1: Temporary Installation (For Testing)
+### Firefox Add-ons (Recommended)
 
-1. Open Firefox
-2. Type `about:debugging` in the address bar and press Enter
-3. Click "This Firefox" in the left sidebar
-4. Click "Load Temporary Add-on..."
-5. Navigate to this folder and select the `manifest.json` file
-6. The extension is now active! Visit https://learn.inside.dtu.dk to see the dark mode
+Install directly from the Firefox Add-ons store: *(link to be added after publishing)*
 
-**Note:** Temporary add-ons are removed when you close Firefox. You'll need to reload it each time you restart the browser.
+### Manual Installation (For Testing)
 
-### Method 2: Permanent Installation (Unsigned)
+1. Open Firefox and navigate to `about:debugging`
+2. Click "This Firefox" in the left sidebar
+3. Click "Load Temporary Add-on..."
+4. Select the `manifest.json` file from this folder
+5. Visit [learn.inside.dtu.dk](https://learn.inside.dtu.dk) to see the dark mode
 
-Firefox requires extensions to be signed for permanent installation. For personal use:
-
-1. Open Firefox
-2. Type `about:config` in the address bar and press Enter
-3. Search for `xpinstall.signatures.required`
-4. Double-click to set it to `false` (Firefox Developer/Nightly only)
-5. Type `about:addons` in the address bar
-6. Click the gear icon ⚙️ → "Install Add-on From File..."
-7. Select the `manifest.json` file from this folder
-
-### Method 3: Development Mode (Recommended for Regular Use)
-
-1. Open Firefox
-2. Type `about:debugging` in the address bar
-3. Click "This Firefox"
-4. Click "Load Temporary Add-on..."
-5. Select `manifest.json`
-6. Bookmark `about:debugging` for quick reloading after browser restarts
+**Note:** Temporary add-ons are removed when you close Firefox.
 
 ## Files
 
-- `manifest.json` - Extension configuration
-- `darkmode.css` - All the dark mode styles
+- `manifest.json` - Extension manifest (Manifest V2)
+- `darkmode.css` - CSS dark mode styles (loaded at document start)
+- `darkmode.js` - JavaScript for dynamic element styling, shadow DOM injection, and iframe handling
+- `logo_dark.png` - Extension icon
+- `PRIVACY.md` - Privacy policy
+- `LICENSE` - MIT License
 
 ## Customization
 
-Want to tweak the colors? Edit `darkmode.css`:
+Edit `darkmode.css` to tweak the color scheme:
 
-- Main background: `#1a1a1a` (very dark gray)
-- Cards/widgets: `#2d2d2d` (dark gray)
-- Text: `#e0e0e0` (light gray)
-- Links: `#66b3ff` (light blue)
-- DTU Red: `#c62828` (kept for branding)
+| Element         | Color     |
+|-----------------|-----------|
+| Main background | `#1a1a1a` |
+| Cards/widgets   | `#2d2d2d` |
+| Text            | `#e0e0e0` |
+| Links           | `#66b3ff` |
 
-After making changes, go to `about:debugging` and click "Reload" on the extension.
+After making changes, reload the extension in `about:debugging`.
 
-## Troubleshooting
+## Privacy
 
-**The dark mode isn't working:**
-- Make sure you're on learn.inside.dtu.dk
-- Check that the extension is enabled in `about:addons`
-- Try reloading the extension in `about:debugging`
+This extension does not collect, store, or transmit any user data. All processing happens locally in your browser. See [PRIVACY.md](PRIVACY.md) for full details.
 
-**Some elements are still bright:**
-- Take a screenshot and let me know - I can add more CSS rules!
+## License
 
-**Text is hard to read:**
-- You can adjust the text color in `darkmode.css` (look for `color: #e0e0e0`)
+MIT License. See [LICENSE](LICENSE).
 
 ## Contributing
 
-Found an element that's still too bright? Want to improve the colors? Feel free to edit `darkmode.css` and share your improvements!
-
-## Screenshots
-
-Before: 🔆 Bright white background
-After: 🌙 Comfortable dark theme
+Found an element that still has a bright background? Open an issue or submit a pull request.
 
 ---
 
-Made with 💙 for DTU students who study late at night
+Made for DTU students who study after dark.

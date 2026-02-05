@@ -13,8 +13,8 @@ body.vui-typography,
 body.d2l-typography,
 body.d2l-shim-body-overflow,
 #d2l_body {
-  background-color: #2d2d2d !important;
-  background: #2d2d2d !important;
+  background-color: #1a1a1a !important;
+  background: #1a1a1a !important;
   background-image: none !important;
   color: #e0e0e0 !important;
 }
@@ -41,8 +41,14 @@ footer {
 /* Main content wrapper */
 .d2l-body-main-wrapper,
 .d2l-page-main,
-.d2l-page-main-padding,
 div[role="main"] {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Inner content area - dark 1 */
+.d2l-page-main-padding,
+#d_content_inner {
   background-color: #1a1a1a !important;
   color: #e0e0e0 !important;
 }
@@ -82,21 +88,52 @@ aside,
   border-color: #404040 !important;
 }
 
-/* Text elements */
+/* Text elements - preserve custom inline colors (red, green, etc.) */
 h1, h2, h3, h4, h5, h6,
 .d2l-heading,
 .d2l-body-standard,
-p, span, div, label {
+p, div, label,
+span:not([style^="color"]):not([style*="; color"]):not([style*=";color"]),
+em:not([style^="color"]):not([style*="; color"]):not([style*=";color"]),
+strong:not([style^="color"]):not([style*="; color"]):not([style*=";color"]) {
+  color: #e0e0e0 !important;
+}
+
+/* Override black/near-black text specifically */
+span[style*="color: #000"], span[style*="color:#000"],
+span[style*="color: black"], span[style*="color:black"],
+span[style*="color: rgb(0, 0, 0"],
+span[style*="color: #202122"], span[style*="color:#202122"],
+span[style*="color: rgb(32, 33, 34"],
+em[style*="color: #000"], em[style*="color:#000"],
+em[style*="color: black"], em[style*="color:black"],
+em[style*="color: rgb(0, 0, 0"],
+em[style*="color: #202122"], em[style*="color:#202122"],
+em[style*="color: rgb(32, 33, 34"] {
   color: #e0e0e0 !important;
 }
 
 /* Links - keep them visible but not DTU red to avoid confusion */
 a {
   color: #66b3ff !important;
+  background-color: transparent !important;
 }
 
 a:hover {
   color: #99ccff !important;
+}
+
+/* File attachment links */
+a.d2l-filelink-text {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+}
+
+/* Heading-none (instructor names, etc.) - dark 2 background, white text */
+h2.d2l-heading-none,
+h2.d2l-heading.d2l-heading-none {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
 }
 
 /* Buttons */
@@ -283,6 +320,13 @@ svg,
 }
 
 /* Scrollbars for better look */
+/* Firefox scrollbar styling */
+* {
+  scrollbar-color: #4d4d4d #1a1a1a;
+  scrollbar-width: thin;
+}
+
+/* Webkit (Chrome, Edge, Opera) scrollbar styling */
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
@@ -328,8 +372,46 @@ svg,
 .d2l-page-header,
 .d2l-page-content,
 .d2l-page-collapsepane {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Collapsepane content - dark 1 */
+.d2l-page-collapsepane-content,
+.d2l-page-collapsepane-content-inner,
+.d2l-page-collapsepane-content-padding {
   background-color: #1a1a1a !important;
   color: #e0e0e0 !important;
+}
+
+/* User profile card - dark 1 */
+.d2l-user-profile-card,
+.d2l-user-profile-card *,
+.d2l-user-profile-card-corner,
+.d2l-user-profile-card-user-info,
+.d2l-user-profile-card-name-container,
+.d2l-user-profile-card-link,
+.d2l-user-profile-card-name,
+.d2l-user-profile-card-online-edit,
+.d2l-user-profile-card-user-progress {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Box layout - dark 2 */
+.d2l-box-layout,
+.d2l-box.d2l-box-v {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.d2l-user-profile-card a.d2l-link {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+}
+
+.d2l-user-profile-card h2 {
+  color: #ffffff !important;
 }
 
 /* CRITICAL: Fix the navigation sidebar (Study Announcements) */
@@ -353,6 +435,12 @@ svg,
 div[style*="background"]:not(.typebox),
 div[style*="background-color"]:not(.typebox) {
   background-color: #2d2d2d !important;
+}
+
+/* Clear white backgrounds from pasted/rich-text content spans */
+span[style*="background"]:not(.typebox) {
+  background-color: transparent !important;
+  background: transparent !important;
 }
 
 /* CRITICAL: Fix the top navigation bar (Calendar, Student Resources, etc.) */
@@ -936,7 +1024,7 @@ table.d_FG td,
 .fct_w,
 .fl_n,
 .fl_top {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
@@ -951,7 +1039,7 @@ table.d_FG .dco_c {
 /* List role containers */
 div[role="list"],
 [role="list"] {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
@@ -991,30 +1079,30 @@ button.d2l-hpg-opener {
 .d2l-floating-buttons-container,
 .d2l-floating-buttons,
 .d2l-floating-buttons-inner-container {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
   border-color: #404040 !important;
 }
 
-/* Breadcrumb */
+/* Breadcrumb - dark 2 */
 d2l-breadcrumb,
 d2l-breadcrumbs,
 [d2l-breadcrumb],
 [d2l-breadcrumb-current-page],
 d2l-breadcrumb-current-page {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
 /* Breadcrumb links (not inline links) */
 a.d2l-link:not(.d2l-link-inline),
 a.d2l-link-small:not(.d2l-link-inline) {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
 }
 
 /* Breadcrumb current page span */
 span[aria-current="page"] {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
@@ -1043,7 +1131,7 @@ iframe.ddial_c_frame {
 /* Breadcrumb icons */
 d2l-breadcrumbs d2l-icon,
 d2l-breadcrumb d2l-icon {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
 }
 
 /* File viewer / content viewer */
@@ -2099,6 +2187,13 @@ a.d2l-link[title*="unread"] strong {
   color: #66b3ff !important;
 }
 
+/* Accordion content (Discussions, etc.) - dark 2 */
+.d2l-accordion-content,
+.d2l-accordion-content-expanded {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
 /* ===== D2L Admin Tools Column - dark 1 ===== */
 .d2l-admin-tools-column,
 div.d2l-admin-tools-column {
@@ -2169,7 +2264,7 @@ span[style*="border-left"][style*="#990000"] {
   background: revert !important;
 }
 
-/* Teams widget - keep original white/light styling */
+/* Side panel and Teams widget - dark 1 */
 .team-widget-container,
 .team-widget-container *,
 .box-section.bg-white,
@@ -2181,9 +2276,19 @@ span[style*="border-left"][style*="#990000"] {
 .card.teamH,
 .panel-section.side-panel,
 .panel-section.side-panel * {
-  background-color: revert !important;
-  color: revert !important;
-  background: revert !important;
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  background: #1a1a1a !important;
+}
+
+.panel-section.side-panel a {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+}
+
+.panel-section.side-panel img {
+  background-color: transparent !important;
+  background: transparent !important;
 }
 
 /* PDF Viewer - keep original styling */
@@ -2393,6 +2498,8 @@ div[id="footerFollowus"] {
 .subservicemenuFooter,
 .grid_6.minHeight,
 .grid_6.minHeight *,
+.grid_3.minHeight,
+.grid_3.minHeight *,
 .servicemenu nav,
 .servicemenu nav *,
 .item.itemmenu,
@@ -2425,6 +2532,14 @@ ul.container_12.topmenuitems {
   background-color: #2d2d2d !important;
   background: #2d2d2d !important;
   background-image: none !important;
+  color: #e0e0e0 !important;
+}
+
+/* Content linkset8 - dark 1 */
+.linkset8,
+.content.linkset8 {
+  background-color: #1a1a1a !important;
+  background: #1a1a1a !important;
   color: #e0e0e0 !important;
 }
 
