@@ -54,7 +54,7 @@
         /* List role containers */
         div[role="list"],
         [role="list"] {
-            background-color: #1a1a1a !important;
+            background-color: #2d2d2d !important;
             color: ${DARK_TEXT} !important;
         }
 
@@ -64,7 +64,7 @@
         d2l-breadcrumb-current-page,
         .d2l-breadcrumb,
         .d2l-breadcrumbs {
-            background-color: #1a1a1a !important;
+            background-color: #2d2d2d !important;
             color: ${DARK_TEXT} !important;
         }
 
@@ -72,7 +72,7 @@
         a.d2l-link-small:not(.d2l-link-inline),
         d2l-icon[icon="tier1:chevron-right"],
         span[aria-current="page"] {
-            background-color: #1a1a1a !important;
+            background-color: #2d2d2d !important;
         }
 
         /* Inline links - lighter dark */
@@ -84,7 +84,7 @@
         .d2l-floating-buttons-container,
         .d2l-floating-buttons,
         .d2l-floating-buttons-inner-container {
-            background-color: #1a1a1a !important;
+            background-color: #2d2d2d !important;
             color: ${DARK_TEXT} !important;
         }
 
@@ -190,7 +190,18 @@
             color: #ffffff !important;
         }
 
-        p, span, div, strong, em, b, i {
+        p, div, b, i {
+            color: ${DARK_TEXT} !important;
+        }
+        span:not([style^="color"]):not([style*="; color"]):not([style*=";color"]),
+        em:not([style^="color"]):not([style*="; color"]):not([style*=";color"]),
+        strong:not([style^="color"]):not([style*="; color"]):not([style*=";color"]) {
+            color: ${DARK_TEXT} !important;
+        }
+
+        /* Override near-black text */
+        [style*="color: #202122"], [style*="color:#202122"],
+        [style*="color: rgb(32, 33, 34"] {
             color: ${DARK_TEXT} !important;
         }
 
@@ -539,22 +550,33 @@
             color: #e0e0e0 !important;
         }
 
-        /* Force ALL elements to have light text (except links) */
-        *:not(a), *::before, *::after {
+        /* Force grey text on elements WITHOUT custom inline color (except links) */
+        *:not(a):not([style^="color"]):not([style*="; color"]):not([style*=";color"]),
+        *::before, *::after {
+            color: #e0e0e0 !important;
+        }
+
+        /* Override specifically black/near-black text back to grey */
+        [style*="color: #000"], [style*="color:#000"],
+        [style*="color: black"], [style*="color:black"],
+        [style*="color: rgb(0, 0, 0"], [style*="color:rgb(0,0,0"],
+        [style*="color: rgb(0,0,0"],
+        [style*="color: #202122"], [style*="color:#202122"],
+        [style*="color: rgb(32, 33, 34"] {
             color: #e0e0e0 !important;
         }
 
         div.d2l-html-block-rendered,
-        div.d2l-html-block-rendered *:not(a),
+        div.d2l-html-block-rendered *:not(a):not([style^="color"]):not([style*="; color"]):not([style*=";color"]),
         .d2l-html-block-rendered,
-        .d2l-html-block-rendered *:not(a) {
+        .d2l-html-block-rendered *:not(a):not([style^="color"]):not([style*="; color"]):not([style*=";color"]) {
             color: #e0e0e0 !important;
         }
 
-        /* Ensure all text elements are visible */
-        p, span, div, h1, h2, h3, h4, h5, h6,
-        strong, em, b, i, ul, ol, li {
-            color: ${DARK_TEXT} !important;
+        /* Clear white backgrounds from pasted/rich-text content */
+        span, p, div, strong, em, b, i {
+            background-color: transparent !important;
+            background: transparent !important;
         }
 
         /* Keep links visible with blue color */
@@ -750,9 +772,6 @@
         });
     }
 
-    // Start polling for html blocks
-    setInterval(pollForHtmlBlocks, 500);
-
     // Function to directly style multiselect elements (for iframes where CSS doesn't apply)
     function styleMultiselectElements(root) {
         // Style multiselect containers
@@ -816,34 +835,22 @@
         });
     }
 
-    // Start polling for multiselect elements
-    setInterval(pollForMultiselects, 500);
-
     // Selectors for elements that should be #1a1a1a (darkest)
     const DARK_SELECTORS = `
-        div[role="list"]:not(.d2l-navigation-s-main-wrapper),
+        .grid_3.minHeight,
+        .grid_3.minHeight *,
+        .linkset8,
         .d2l-hpg-opener,
         button.d2l-hpg-opener,
         .empty-state-container,
-        .d2l-floating-buttons-container,
-        .d2l-floating-buttons,
-        .d2l-floating-buttons-inner-container,
-        d2l-breadcrumb,
-        d2l-breadcrumbs,
-        d2l-breadcrumb-current-page,
-        span[aria-current="page"],
-        a.d2l-link-small:not(.d2l-link-inline),
-        d2l-breadcrumbs d2l-icon,
-        d2l-breadcrumb d2l-icon,
-        d2l-icon[icon="tier1:chevron-right"],
-        table.d_FG,
-        table.d_FG td,
-        .d_fgh,
-        .fct_w,
-        .fl_n,
-        .fl_top,
+        .d2l-page-collapsepane-content,
+        .d2l-page-collapsepane-content-inner,
+        .d2l-page-collapsepane-content-padding,
+        .d2l-user-profile-card,
+        .d2l-user-profile-card *,
         .d2l-empty-state-description,
-        .d2l-body-compact,
+        .panel-section.side-panel,
+        .panel-section.side-panel *,
         .content-div,
         .topic-display,
         .activity-viewer,
@@ -947,7 +954,6 @@
         .d2l-navigation-s-item,
         .d2l-navigation-s-group,
         .d2l-navigation-s-link,
-        a.d2l-link-inline,
         .dco a.d2l-link,
         .dco_c a.d2l-link,
         td.d_gn a.d2l-link,
@@ -993,12 +999,10 @@
         #ListPageViewSelector,
         .breadcrumb,
         .linkset6,
-        .linkset8,
         .table-slide-container,
         .content.grid_6,
         .pageheader,
         .grid_10,
-        .grid_3,
         .search,
         .search .inputtext,
         .inside-search-btn,
@@ -1038,7 +1042,33 @@
         .pagefooter,
         .pagefooter .container_12,
         .pagefooter .container_12 *,
-        .lineheight13_18
+        .lineheight13_18,
+        ul.d2l-action-buttons-list,
+        .d2l-action-buttons-list,
+        .d2l-action-buttons-item,
+        .d2l-floating-buttons-container,
+        .d2l-floating-buttons,
+        .d2l-floating-buttons-inner-container,
+        table.d_FG,
+        table.d_FG td,
+        .d_fgh,
+        .fct_w,
+        .fl_n,
+        .fl_top,
+        div[role="list"]:not(.d2l-navigation-s-main-wrapper),
+        d2l-breadcrumb,
+        d2l-breadcrumbs,
+        d2l-breadcrumb-current-page,
+        span[aria-current="page"],
+        a.d2l-link-small:not(.d2l-link-inline),
+        d2l-icon[icon="tier1:chevron-right"],
+        .d2l-tool-areas-item,
+        li.d2l-tool-areas-item,
+        h2.d2l-heading-none,
+        .d2l-box-layout,
+        .d2l-box.d2l-box-v,
+        .d2l-accordion-content,
+        .d2l-accordion-content-expanded
     `;
 
     // Function to apply darkest style to an element (#1a1a1a)
@@ -1055,7 +1085,10 @@
         el.style.setProperty('background', '#1a1a1a', 'important');
         el.style.setProperty('background-color', '#1a1a1a', 'important');
         el.style.setProperty('background-image', 'none', 'important');
-        el.style.setProperty('color', '#e0e0e0', 'important');
+        // Skip color on links — let CSS handle it (nav links grey, content links blue)
+        if (el.tagName !== 'A') {
+            el.style.setProperty('color', '#e0e0e0', 'important');
+        }
     }
 
     // Function to apply lighter dark style to an element (#2d2d2d)
@@ -1067,7 +1100,10 @@
         el.style.setProperty('background', '#2d2d2d', 'important');
         el.style.setProperty('background-color', '#2d2d2d', 'important');
         el.style.setProperty('background-image', 'none', 'important');
-        el.style.setProperty('color', '#e0e0e0', 'important');
+        // Skip color on links — let CSS handle it (nav links grey, content links blue)
+        if (el.tagName !== 'A') {
+            el.style.setProperty('color', '#e0e0e0', 'important');
+        }
     }
 
     // Function to aggressively override dynamically applied styles
@@ -1127,9 +1163,6 @@
         return observer;
     }
 
-    // Setup observer on document
-    setupStyleObserver(document.documentElement);
-
     // Poll to override dynamic styles
     function pollOverrideDynamicStyles() {
         overrideDynamicStyles(document);
@@ -1157,16 +1190,8 @@
         });
     }
 
-    // Start polling for dynamic style overrides (fast interval)
-    setInterval(pollOverrideDynamicStyles, 100);
-
-    // Also run immediately and after short delays
+    // Run immediately (unified scheduling handles periodic checks)
     pollOverrideDynamicStyles();
-    setTimeout(pollOverrideDynamicStyles, 500);
-    setTimeout(pollOverrideDynamicStyles, 1000);
-    setTimeout(pollOverrideDynamicStyles, 2000);
-    setTimeout(pollOverrideDynamicStyles, 3000);
-    setTimeout(pollOverrideDynamicStyles, 5000);
 
     // Function to check if element is inside a PDF viewer or media player
     function isInsideExcludedContainer(element) {
@@ -1287,47 +1312,10 @@
         ]);
     }
 
-    // Initial processing
+    // Initial processing (unified observer handles ongoing changes)
     async function initialize() {
-        // Wait for custom elements to be defined first
         await waitForCustomElements();
-
-        // Now process existing elements
         processElement(document.body);
-
-        // Set up MutationObserver to catch dynamically added elements
-        const observer = new MutationObserver(mutations => {
-            mutations.forEach(mutation => {
-                mutation.addedNodes.forEach(node => {
-                    if (node.nodeType === 1) { // Element node
-                        processElement(node);
-
-                        // Also check if this is a card element or contains cards
-                        if (node.tagName &&
-                            (node.tagName.toLowerCase() === 'd2l-enrollment-card' ||
-                             node.tagName.toLowerCase() === 'd2l-card')) {
-                            // Process immediately for cards, and recheck multiple times
-                            setTimeout(() => processElement(node), 10);
-                            setTimeout(() => processElement(node), 50);
-                            setTimeout(() => processElement(node), 100);
-                            setTimeout(() => processElement(node), 200);
-                        }
-                    }
-                });
-            });
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-            attributes: false,
-            characterData: false
-        });
-
-        // Aggressive periodic check for cards (more frequent than before)
-        setInterval(() => {
-            processElement(document.body);
-        }, 500);  // Check every 500ms instead of 1000ms
     }
 
     // Wait for DOM to be ready
@@ -1337,39 +1325,7 @@
         initialize();
     }
 
-    // Also try to process on load with VERY aggressive checks
-    // Cards are loaded dynamically, so we need multiple attempts over longer period
-    window.addEventListener('load', async () => {
-        // Wait for custom elements first
-        await waitForCustomElements();
-
-        // Then do aggressive checking
-        const checkTimes = [100, 250, 500, 750, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000];
-        checkTimes.forEach(time => {
-            setTimeout(() => processElement(document.body), time);
-        });
-    });
-
-    // Listen for visibility changes (when user switches tabs back)
-    document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) {
-            setTimeout(() => processElement(document.body), 100);
-            setTimeout(() => processElement(document.body), 500);
-        }
-    });
-
-    // Listen for clicks on the page (like semester chevron clicks)
-    document.addEventListener('click', async () => {
-        // Wait a bit, then wait for custom elements, then check aggressively
-        setTimeout(async () => {
-            await waitForCustomElements();
-            // Check for new cards multiple times after click
-            const clickCheckTimes = [50, 200, 500, 1000, 1500, 2000, 2500, 3000, 3500];
-            clickCheckTimes.forEach(time => {
-                setTimeout(() => processElement(document.body), time);
-            });
-        }, 100);
-    }, true);  // Use capture phase to catch all clicks
+    // Load and visibility handlers are managed by unified scheduling section below
 
     // ===== LOGO REPLACEMENT =====
     // Replace the "My Home" logo with custom white DTU logo for dark mode
@@ -1379,13 +1335,13 @@
         // Helper function to replace logo in a given root
         function replaceInRoot(root) {
             if (!root) return;
-            const logoImages = root.querySelectorAll('img[src*="/d2l/lp/navbars/"][src*="/theme/viewimage/"], img[alt="My Home"], img.websitelogoright__link-image, img[src*="dtulogo2_colour.png"]');
+            const logoImages = root.querySelectorAll('img[src*="/d2l/lp/navbars/"][src*="/theme/viewimage/"], img[alt="My Home"], img.websitelogoright__link-image, img[src*="dtulogo2_colour.png"], img[src*="dtulogo_colour.png"]');
             logoImages.forEach(img => {
                 if (!img.dataset.darkModeReplaced) {
                     img.src = newSrc;
                     img.dataset.darkModeReplaced = 'true';
                     // Resize the sites.dtu.dk DTU logo
-                    if (img.classList.contains('websitelogoright__link-image') || img.getAttribute('src')?.includes('dtulogo2_colour')) {
+                    if (img.classList.contains('websitelogoright__link-image') || img.getAttribute('src')?.includes('dtulogo2_colour') || img.classList.contains('logo-img')) {
                         img.style.setProperty('max-height', '50px', 'important');
                         img.style.setProperty('width', 'auto', 'important');
                     }
@@ -1411,36 +1367,8 @@
         checkShadowRoots(document);
     }
 
-    // Run logo replacement on page load and periodically
+    // Run logo replacement (unified observer handles updates)
     replaceLogoImage();
-    setInterval(replaceLogoImage, 500);
-
-    // Also run after DOM changes
-    const logoObserver = new MutationObserver(() => {
-        replaceLogoImage();
-    });
-
-    if (document.body) {
-        logoObserver.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    } else {
-        document.addEventListener('DOMContentLoaded', () => {
-            replaceLogoImage();
-            logoObserver.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-        });
-    }
-
-    window.addEventListener('load', () => {
-        replaceLogoImage();
-        setTimeout(replaceLogoImage, 100);
-        setTimeout(replaceLogoImage, 500);
-        setTimeout(replaceLogoImage, 1000);
-    });
 
     // ===== MOJANGLES TEXT INSERTION =====
     // Insert Mojangles text image into the navigation header with Minecraft-style animation
@@ -1520,6 +1448,7 @@
 
                     // Pulse animation only on home page
                     function animatePulse(timestamp) {
+                        if (!img.isConnected) return; // Stop loop if element removed
                         const scale = 1 + 0.05 * Math.sin(timestamp / 127);
                         img.style.transform = `rotate(-20deg) scale(${scale})`;
                         requestAnimationFrame(animatePulse);
@@ -1547,36 +1476,8 @@
         checkShadowRoots(document);
     }
 
-    // Run Mojangles text insertion on page load and periodically
+    // Run Mojangles text insertion (unified observer handles updates)
     insertMojanglesText();
-    setInterval(insertMojanglesText, 500);
-
-    // Also run after DOM changes
-    const mojanglesObserver = new MutationObserver(() => {
-        insertMojanglesText();
-    });
-
-    if (document.body) {
-        mojanglesObserver.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    } else {
-        document.addEventListener('DOMContentLoaded', () => {
-            insertMojanglesText();
-            mojanglesObserver.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-        });
-    }
-
-    window.addEventListener('load', () => {
-        insertMojanglesText();
-        setTimeout(insertMojanglesText, 100);
-        setTimeout(insertMojanglesText, 500);
-        setTimeout(insertMojanglesText, 1000);
-    });
 
     // ===== MOJANGLES TOGGLE IN ADMIN TOOLS =====
     function insertMojanglesToggle() {
@@ -1624,26 +1525,8 @@
         placeholder.appendChild(column);
     }
 
-    // Run toggle insertion
+    // Run toggle insertion (unified observer handles updates)
     insertMojanglesToggle();
-    setInterval(insertMojanglesToggle, 1000);
-
-    if (document.body) {
-        const toggleObserver = new MutationObserver(() => insertMojanglesToggle());
-        toggleObserver.observe(document.body, { childList: true, subtree: true });
-    } else {
-        document.addEventListener('DOMContentLoaded', () => {
-            insertMojanglesToggle();
-            const toggleObserver = new MutationObserver(() => insertMojanglesToggle());
-            toggleObserver.observe(document.body, { childList: true, subtree: true });
-        });
-    }
-
-    window.addEventListener('load', () => {
-        insertMojanglesToggle();
-        setTimeout(insertMojanglesToggle, 500);
-        setTimeout(insertMojanglesToggle, 1000);
-    });
 
     // ===== FIRST-TIME ONBOARDING HINT =====
     // Show a hint pointing to the gear icon the first time the extension is used
@@ -1675,43 +1558,64 @@
         // Create the hint bubble
         const bubble = document.createElement('div');
         bubble.id = 'dtu-dark-hint';
-        bubble.innerHTML = `
-            <div style="
-                position: fixed;
-                top: ${gearRect.bottom + 12}px;
-                left: ${gearRect.left + gearRect.width / 2 - 120}px;
-                z-index: 999999;
-                pointer-events: auto;
-            " id="dtu-dark-hint-inner">
-                <div style="
-                    position: relative;
-                    background: linear-gradient(135deg, #c62828, #8e0000);
-                    color: #fff;
-                    padding: 12px 16px;
-                    border-radius: 10px;
-                    font-family: 'Segoe UI', sans-serif;
-                    font-size: 13px;
-                    line-height: 1.4;
-                    max-width: 240px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-                    cursor: pointer;
-                    animation: dtuHintBounce 2s ease-in-out infinite;
-                ">
-                    <div style="
-                        position: absolute;
-                        top: -8px;
-                        left: 110px;
-                        width: 0; height: 0;
-                        border-left: 8px solid transparent;
-                        border-right: 8px solid transparent;
-                        border-bottom: 8px solid #c62828;
-                    "></div>
-                    <span style="font-weight: bold; font-size: 14px;">&#9881; DTU After Dark</span><br>
-                    <span style="opacity: 0.9;">Click the gear to customize your dark mode experience!</span>
-                    <div style="margin-top: 6px; font-size: 11px; opacity: 0.7; text-align: right;">click to dismiss</div>
-                </div>
-            </div>
-        `;
+        // Build hint bubble using DOM API (avoids innerHTML)
+        const outer = document.createElement('div');
+        outer.id = 'dtu-dark-hint-inner';
+        Object.assign(outer.style, {
+            position: 'fixed',
+            top: (gearRect.bottom + 12) + 'px',
+            left: (gearRect.left + gearRect.width / 2 - 120) + 'px',
+            zIndex: '999999',
+            pointerEvents: 'auto'
+        });
+
+        const card = document.createElement('div');
+        Object.assign(card.style, {
+            position: 'relative',
+            background: 'linear-gradient(135deg, #c62828, #8e0000)',
+            color: '#fff',
+            padding: '12px 16px',
+            borderRadius: '10px',
+            fontFamily: "'Segoe UI', sans-serif",
+            fontSize: '13px',
+            lineHeight: '1.4',
+            maxWidth: '240px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+            cursor: 'pointer',
+            animation: 'dtuHintBounce 2s ease-in-out infinite'
+        });
+
+        const arrow = document.createElement('div');
+        Object.assign(arrow.style, {
+            position: 'absolute',
+            top: '-8px',
+            left: '110px',
+            width: '0',
+            height: '0',
+            borderLeft: '8px solid transparent',
+            borderRight: '8px solid transparent',
+            borderBottom: '8px solid #c62828'
+        });
+
+        const title = document.createElement('span');
+        Object.assign(title.style, { fontWeight: 'bold', fontSize: '14px' });
+        title.textContent = '\u2699 DTU After Dark';
+
+        const desc = document.createElement('span');
+        desc.style.opacity = '0.9';
+        desc.textContent = 'Click the gear to customize your dark mode experience!';
+
+        const dismiss = document.createElement('div');
+        Object.assign(dismiss.style, { marginTop: '6px', fontSize: '11px', opacity: '0.7', textAlign: 'right' });
+        dismiss.textContent = 'click to dismiss';
+
+        card.appendChild(arrow);
+        card.appendChild(title);
+        card.appendChild(document.createElement('br'));
+        card.appendChild(desc);
+        card.appendChild(dismiss);
+        outer.appendChild(card);
+        bubble.appendChild(outer);
 
         // Add bounce animation
         const style = document.createElement('style');
@@ -1743,10 +1647,7 @@
         }, 15000);
     }
 
-    // Run after page loads (gear icon needs to be rendered)
-    window.addEventListener('load', () => {
-        setTimeout(showOnboardingHint, 2000);
-    });
+    // showOnboardingHint is called from unified load handler below
 
     // ===== TYPEBOX PRESERVATION (kurser.dtu.dk, studieplan.dtu.dk, etc.) =====
     // Preserve custom colors on .typebox elements by reapplying inline styles with !important
@@ -1767,41 +1668,136 @@
         });
     }
 
-    // Run typebox preservation on ALL pages (only affects pages that have .typebox elements)
-    // Run immediately and on intervals
+    // Run typebox preservation (unified observer handles updates)
     preserveTypeboxColors();
-    setInterval(preserveTypeboxColors, 100); // More frequent - every 100ms
 
-    // Also run after DOM changes
-    const typeboxObserver = new MutationObserver(() => {
+    // ===== UNIFIED SCHEDULING =====
+    // Replaces 8 separate setIntervals and 6 MutationObservers with
+    // ONE master interval + ONE unified MutationObserver for much lower CPU usage.
+
+    // Force html/body to dark 1 (overrides any site inline styles)
+    function enforcePageBackground() {
+        document.documentElement.style.setProperty('background-color', '#1a1a1a', 'important');
+        document.documentElement.style.setProperty('background', '#1a1a1a', 'important');
+        if (document.body) {
+            document.body.style.setProperty('background-color', '#1a1a1a', 'important');
+            document.body.style.setProperty('background', '#1a1a1a', 'important');
+        }
+    }
+
+    // Run immediately
+    enforcePageBackground();
+
+    // Master function that runs all periodic checks
+    function runAllPeriodicChecks() {
+        enforcePageBackground();
+        pollForHtmlBlocks();
+        pollForMultiselects();
+        pollOverrideDynamicStyles();
+        if (document.body) processElement(document.body);
+        replaceLogoImage();
+        insertMojanglesText();
+        insertMojanglesToggle();
         preserveTypeboxColors();
-    });
+    }
 
-    if (document.body) {
-        typeboxObserver.observe(document.body, {
+    // Single safety-net interval at 2000ms (MutationObserver handles real-time)
+    setInterval(runAllPeriodicChecks, 2000);
+
+    // Unified MutationObserver — handles style re-overrides immediately,
+    // and debounces heavier processing (shadow roots, logos, etc.)
+    let _heavyWorkTimer = null;
+
+    function handleMutations(mutations) {
+        let needsHeavyWork = false;
+
+        for (const mutation of mutations) {
+            // Style / class attribute changes — apply dark overrides immediately
+            if (mutation.type === 'attributes') {
+                const el = mutation.target;
+                if (mutation.attributeName === 'style' || mutation.attributeName === 'class') {
+                    if (el.matches) {
+                        // Lighter dark selectors take priority
+                        if (el.matches(LIGHTER_DARK_SELECTORS)) {
+                            applyLighterDarkStyle(el);
+                        } else if (el.matches(DARK_SELECTORS)) {
+                            applyDarkStyle(el);
+                        }
+                    }
+                    // Preserve typebox custom colors
+                    if (el.classList && el.classList.contains('typebox')) {
+                        const inlineStyle = el.getAttribute('style');
+                        if (inlineStyle) {
+                            const match = inlineStyle.match(/background-color:\s*([^;]+)/i);
+                            if (match && match[1]) {
+                                el.style.setProperty('background-color', match[1].trim(), 'important');
+                            }
+                        }
+                    }
+                }
+            }
+
+            // New nodes added — apply dark styles immediately, schedule heavy work
+            if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === 1) {
+                        // Immediate: apply dark/lighter styles to new nodes
+                        if (node.matches && node.matches(DARK_SELECTORS)) applyDarkStyle(node);
+                        if (node.matches && node.matches(LIGHTER_DARK_SELECTORS)) applyLighterDarkStyle(node);
+                        if (node.querySelectorAll) {
+                            node.querySelectorAll(DARK_SELECTORS).forEach(applyDarkStyle);
+                            node.querySelectorAll(LIGHTER_DARK_SELECTORS).forEach(applyLighterDarkStyle);
+                        }
+                        needsHeavyWork = true;
+                    }
+                });
+            }
+        }
+
+        // Debounce heavy operations (shadow root processing, logo, mojangles, etc.)
+        if (needsHeavyWork && !_heavyWorkTimer) {
+            _heavyWorkTimer = setTimeout(() => {
+                _heavyWorkTimer = null;
+                if (document.body) processElement(document.body);
+                replaceLogoImage();
+                insertMojanglesText();
+                insertMojanglesToggle();
+                preserveTypeboxColors();
+            }, 200);
+        }
+    }
+
+    function startUnifiedObserver() {
+        const observer = new MutationObserver(handleMutations);
+        observer.observe(document.documentElement, {
             childList: true,
             subtree: true,
             attributes: true,
             attributeFilter: ['style', 'class']
         });
-    } else {
-        document.addEventListener('DOMContentLoaded', () => {
-            preserveTypeboxColors();
-            typeboxObserver.observe(document.body, {
-                childList: true,
-                subtree: true,
-                attributes: true,
-                attributeFilter: ['style', 'class']
-            });
-        });
     }
 
-    // Run on window load as well
-    window.addEventListener('load', () => {
-        preserveTypeboxColors();
-        // Run multiple times after load
-        setTimeout(preserveTypeboxColors, 100);
-        setTimeout(preserveTypeboxColors, 500);
-        setTimeout(preserveTypeboxColors, 1000);
+    // Start observer immediately on documentElement (exists at document_start)
+    // so elements get dark-styled as the parser adds them to the DOM
+    if (document.documentElement) {
+        startUnifiedObserver();
+    } else {
+        document.addEventListener('DOMContentLoaded', startUnifiedObserver);
+    }
+
+    // Page load: run all checks a few times to catch late-loading elements
+    window.addEventListener('load', async () => {
+        await waitForCustomElements();
+        runAllPeriodicChecks();
+        setTimeout(runAllPeriodicChecks, 500);
+        setTimeout(runAllPeriodicChecks, 1500);
+        setTimeout(showOnboardingHint, 2000);
+    });
+
+    // Re-process when tab becomes visible again
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            setTimeout(runAllPeriodicChecks, 100);
+        }
     });
 })();
