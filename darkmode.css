@@ -2194,10 +2194,14 @@ a.d2l-link[title*="unread"] strong {
   color: #e0e0e0 !important;
 }
 
-/* ===== D2L Admin Tools Column - dark 1 ===== */
+/* ===== D2L Admin Tools Column - dark 2 ===== */
 .d2l-admin-tools-column,
-div.d2l-admin-tools-column {
-  background-color: #1a1a1a !important;
+div.d2l-admin-tools-column,
+.d2l-admin-tools-column .d2l-list,
+.d2l-admin-tools-column li,
+.d2l-admin-tools-column label {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
@@ -2205,13 +2209,13 @@ div.d2l-admin-tools-column {
 .d2l-admin-tools-column h2.d2l-heading,
 .d2l-admin-tools-column h2.d2l-heading-none,
 h2.d2l-heading.d2l-heading-none {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
 .d2l-admin-tools-column ul.d2l-list,
 .d2l-admin-tools-column ul.d2l-list li {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
