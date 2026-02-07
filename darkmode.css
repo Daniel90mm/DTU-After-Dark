@@ -1,4 +1,4 @@
-/* DTU Learn Dark Mode - Making your courses easier on the eyes! */
+/* DTU Dark Mode - Making your courses easier on the eyes! */
 
 /* Main body and background */
 html,
@@ -221,6 +221,28 @@ tr:hover,
   border-bottom-color: #c62828 !important;
 }
 
+/* Tab panel content - dark 1 */
+d2l-tab-panel,
+d2l-tab-panel[selected] {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+d2l-tab-panel .dco,
+d2l-tab-panel .dco_c {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+d2l-tab-panel .d2l-fieldgroup-track-changes,
+d2l-tab-panel .d2l-fieldgroup-horizontal {
+  background-color: #1a1a1a !important;
+}
+
+d2l-tab-panel h2.dhdg_1 {
+  color: #e0e0e0 !important;
+}
+
 /* Badges and notifications */
 .d2l-badge,
 .d2l-notification-count {
@@ -372,7 +394,7 @@ svg,
 .d2l-page-header,
 .d2l-page-content,
 .d2l-page-collapsepane {
-  background-color: #2d2d2d !important;
+  background-color: #1a1a1a !important;
   color: #e0e0e0 !important;
 }
 
@@ -1024,7 +1046,7 @@ table.d_FG td,
 .fct_w,
 .fl_n,
 .fl_top {
-  background-color: #2d2d2d !important;
+  background-color: #1a1a1a !important;
   color: #e0e0e0 !important;
 }
 
@@ -1033,7 +1055,21 @@ table.d_FG .d2l-label,
 table.d_FG .dco,
 table.d_FG .dco_c {
   color: #e0e0e0 !important;
-  background-color: transparent !important;
+  background-color: #1a1a1a !important;
+}
+
+/* Settings content containers - dark 1 */
+.dco,
+.dco_c {
+  background-color: #1a1a1a !important;
+  background: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+table.d_FG .dhdg_fg,
+table.d_FG .dh_fg {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
 }
 
 /* List role containers */
@@ -2566,4 +2602,510 @@ ul.container_12.topmenuitems {
 .breadcrumb.linkset6 img {
   background-color: transparent !important;
   background: transparent !important;
+}
+
+/* ===== CampusNet Grades (campusnet.dtu.dk) ===== */
+/* GPA summary row */
+.gpa-row {
+  background-color: #1a1a1a !important;
+  border-bottom: 2px solid #c62828 !important;
+}
+
+.gpa-row td {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  padding: 8px 5px !important;
+}
+
+/* Grades list table */
+table.gradesList {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+table.gradesList tr.gradesListHeader td {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+table.gradesList tr.context_direct td,
+table.gradesList tr.context_alternating td {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+table.gradesList tr.context_alternating td {
+  background-color: #252525 !important;
+}
+
+table.gradesList tr:hover td {
+  background-color: #3d3d3d !important;
+}
+
+table.gradesList a {
+  color: #66b3ff !important;
+}
+
+table.gradesList span[style*="color : green"],
+table.gradesList td[style*="color : green"] {
+  color: #4caf50 !important;
+}
+
+/* CampusNet header - dark 2 */
+article.header__top,
+.header__top {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.header__top *,
+article.header__top * {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.header__top a {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+}
+
+.header__top img {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Header nav icons */
+.header__sub-nav {
+  background-color: #2d2d2d !important;
+}
+
+.nav__icon .fa-circle {
+  color: #3d3d3d !important;
+}
+
+.nav__icon .fa-heart,
+.nav__icon .fa-user {
+  color: #e0e0e0 !important;
+}
+
+/* Dropdown lists */
+.arc-dropdown__list {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.arc-dropdown__list-item {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.arc-dropdown__list-item:hover {
+  background-color: #3d3d3d !important;
+}
+
+.arc-dropdown__list-item img {
+  background-color: transparent !important;
+}
+
+.list-item__divider {
+  background-color: #404040 !important;
+  border-color: #404040 !important;
+}
+
+/* Arc buttons */
+.arc-button,
+.arc-button--default,
+.arc-button--small {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.arc-button:hover {
+  background-color: #4d4d4d !important;
+}
+
+/* Arc row / flex containers - dark 2 */
+.arc-row,
+.arc-row.flex {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+}
+
+/* Widget header - dark 2 bg, white text */
+.widget__header {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.widget__header *:not(service-icon):not(.widget__icon):not(.service-icon):not(.icon__base):not(.icon__content):not(.icon__identifier) {
+  background-color: transparent !important;
+  background: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+h2.widget__title {
+  color: #ffffff !important;
+}
+
+/* Icons keep original site colors (excluded from * override above) */
+
+/* CampusNet element links - light blue */
+a[href*="/cnnet/element/"] {
+  color: #b3d9ff !important;
+}
+
+a[href*="/cnnet/element/"]:hover {
+  color: #cce5ff !important;
+}
+
+/* Box content / files widget - dark 2 */
+.boxContent,
+.filesWidget {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Main content area - dark 1 */
+.main__content,
+.main__content--box,
+#ctl00_ContentBox {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Toolbar */
+.arc-toolbar,
+article.arc-toolbar {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.arc-toolbar select,
+#typeSelector {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.arc-toolbar select option {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.checkbox-label,
+.checkbox-label span {
+  color: #e0e0e0 !important;
+  background-color: transparent !important;
+}
+
+.checkbox-functions {
+  background-color: #2d2d2d !important;
+}
+
+/* Arc button hollow */
+.arc-button--hollow-default {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.arc-button--hollow-default:hover {
+  background-color: #3d3d3d !important;
+}
+
+.arc-button--medium {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+/* Archived elements list */
+.archived-elements {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.archived-elements__header {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.archived-elements__header div {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+.archived-elements__content {
+  background-color: #2d2d2d !important;
+}
+
+/* Individual archived element rows */
+.archived-element,
+article.archived-element {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.archived-element:hover,
+article.archived-element:hover {
+  background-color: #3d3d3d !important;
+}
+
+.archived-element__select,
+.archived-element__expiration,
+.archived-element__name,
+.archived-element__action {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+.archived-element__title {
+  background-color: transparent !important;
+}
+
+.archived-element__subtitle {
+  color: #888888 !important;
+  background-color: transparent !important;
+}
+
+.archived-element__expiration time {
+  color: #b0b0b0 !important;
+}
+
+/* Sort icons */
+.icon--sort {
+  color: #e0e0e0 !important;
+}
+
+/* Nav dropdown - white link text */
+.nav__dropdown a,
+article.nav__dropdown a {
+  color: #ffffff !important;
+}
+
+.nav__dropdown a:hover,
+article.nav__dropdown a:hover {
+  color: #ffffff !important;
+}
+
+/* Sidebar menu */
+ul.menu__items {
+  background-color: #2d2d2d !important;
+}
+
+.menu__item {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.item__link {
+  color: #e0e0e0 !important;
+}
+
+.item__link:hover {
+  background-color: #3a3a3a !important;
+  color: #ffffff !important;
+}
+
+.item__title {
+  color: #e0e0e0 !important;
+}
+
+.item__icon {
+  color: #e0e0e0 !important;
+}
+
+/* Category title */
+h4.category__title,
+h4.category__title a {
+  color: #ffffff !important;
+}
+
+/* Participants list */
+.ui-participants-placeholder {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.ui-participant {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.ui-participant-categorybar {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+  color: #e0e0e0 !important;
+}
+
+.ui-participant-details {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.ui-participant-infobox {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+  color: #e0e0e0 !important;
+}
+
+.info-header {
+  color: #e0e0e0 !important;
+}
+
+.ui-participant a {
+  color: #66b3ff !important;
+}
+
+.ui-participant img {
+  background-color: transparent !important;
+}
+
+/* DTU red background bar - dark 2 */
+.dturedbackground {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.dturedbackground a,
+.dturedbackground .pull-right a,
+.dturedbackground .pull-right span a {
+  color: #b3d9ff !important;
+}
+
+.dturedbackground a:hover,
+.dturedbackground .pull-right a:hover,
+.dturedbackground .pull-right span a:hover {
+  color: #cce5ff !important;
+}
+
+.dturedbackground .seperator {
+  color: #888888 !important;
+}
+
+.dturedbackground .dropdown-toggle.red {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.dturedbackground .dropdown-menu.red {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.dturedbackground .dropdown-menu.red li a {
+  color: #e0e0e0 !important;
+}
+
+.dturedbackground .dropdown-menu.red li a:hover {
+  background-color: #3d3d3d !important;
+}
+
+/* Pull-right (language selector, login) - dark 2 containers */
+.dturedbackground .pull-right,
+.dturedbackground .pull-right span,
+.dturedbackground .container,
+.dturedbackground .row,
+.dturedbackground .col-md-12 {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+}
+
+/* Search form container - dark 1 */
+form.form-horizontal {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+form.form-horizontal .form-group {
+  background-color: #1a1a1a !important;
+}
+
+form.form-horizontal label.control-label {
+  color: #e0e0e0 !important;
+}
+
+form.form-horizontal .form-control {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Frontpage area and widgets - dark 1 */
+.frontpage-area {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.column__container,
+.column__row,
+[class^="column-lg-"],
+[class^="column-md-"],
+[class^="column-sm-"],
+[class^="column-xs-"] {
+  background-color: #1a1a1a !important;
+}
+
+.widget {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.widget__content {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.widget__content a {
+  color: #b3d9ff !important;
+}
+
+.widget__footer {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Deadline items */
+.deadline-item {
+  color: #e0e0e0 !important;
+}
+
+.deadline {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.event-date {
+  color: #e0e0e0 !important;
+}
+
+.event-date__year,
+.event-date__day,
+.event-date__month {
+  color: #e0e0e0 !important;
+}
+
+.deadline__details {
+  color: #e0e0e0 !important;
+}
+
+.deadline__title {
+  color: #ffffff !important;
+}
+
+.deadline__type {
+  color: #b0b0b0 !important;
 }
