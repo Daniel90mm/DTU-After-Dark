@@ -1671,6 +1671,71 @@
     // Run typebox preservation (unified observer handles updates)
     preserveTypeboxColors();
 
+    // ===== CAMPUSNET GPA CALCULATION (campusnet.dtu.dk) =====
+    // Calculate weighted GPA from the grades table and insert a summary row
+    function insertGPARow() {
+        const table = document.querySelector('table.gradesList');
+        if (!table || table.querySelector('.gpa-row')) return;
+
+        const rows = table.querySelectorAll('tr:not(.gradesListHeader)');
+        let totalWeighted = 0;
+        let totalECTS = 0;
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length < 4) return;
+
+            const gradeSpan = cells[2].querySelector('span');
+            if (!gradeSpan) return;
+
+            const gradeText = gradeSpan.textContent.trim();
+            const gradeMatch = gradeText.match(/^(-?\d+)/);
+            if (!gradeMatch) return; // Skip pass/fail (e.g. "BE (P)")
+
+            const grade = parseInt(gradeMatch[1], 10);
+            const ects = parseFloat(cells[3].textContent.trim());
+            if (isNaN(ects) || ects <= 0) return;
+
+            totalWeighted += grade * ects;
+            totalECTS += ects;
+        });
+
+        if (totalECTS === 0) return;
+
+        const gpa = totalWeighted / totalECTS;
+
+        const headerRow = table.querySelector('tr.gradesListHeader');
+        if (!headerRow) return;
+
+        const gpaRow = document.createElement('tr');
+        gpaRow.className = 'gpa-row';
+
+        const tdLabel = document.createElement('td');
+        tdLabel.colSpan = 2;
+        tdLabel.style.cssText = 'text-align: left; font-weight: bold; padding: 8px 0;';
+        tdLabel.textContent = 'Weighted GPA';
+
+        const tdGrade = document.createElement('td');
+        tdGrade.style.cssText = 'text-align: right; padding-right: 5px; font-weight: bold; white-space: nowrap;';
+        tdGrade.textContent = gpa.toFixed(2);
+
+        const tdECTS = document.createElement('td');
+        tdECTS.style.cssText = 'text-align: right; padding-right: 5px; font-weight: bold;';
+        tdECTS.textContent = totalECTS;
+
+        const tdDate = document.createElement('td');
+
+        gpaRow.appendChild(tdLabel);
+        gpaRow.appendChild(tdGrade);
+        gpaRow.appendChild(tdECTS);
+        gpaRow.appendChild(tdDate);
+
+        headerRow.after(gpaRow);
+    }
+
+    // Run GPA insertion (unified observer handles updates)
+    insertGPARow();
+
     // ===== UNIFIED SCHEDULING =====
     // Replaces 8 separate setIntervals and 6 MutationObservers with
     // ONE master interval + ONE unified MutationObserver for much lower CPU usage.
@@ -1699,6 +1764,7 @@
         insertMojanglesText();
         insertMojanglesToggle();
         preserveTypeboxColors();
+        insertGPARow();
     }
 
     // Single safety-net interval at 2000ms (MutationObserver handles real-time)

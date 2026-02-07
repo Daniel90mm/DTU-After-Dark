@@ -1,10 +1,10 @@
-# Privacy Policy - DTU Learn Dark Mode
+# Privacy Policy - DTU Dark Mode
 
 **Last updated:** February 2025
 
 ## Data Collection
 
-DTU Learn Dark Mode does **not** collect, store, or transmit any user data. The extension operates entirely locally in your browser.
+DTU Dark Mode does **not** collect, store, or transmit any user data. The extension operates entirely locally in your browser.
 
 ## What the Extension Does
 
@@ -23,6 +23,7 @@ The extension requires access to the following domains solely to apply dark mode
 - `kurser.dtu.dk` - DTU course catalog
 - `karakterer.dtu.dk` - DTU grades
 - `sites.dtu.dk` - DTU department sites
+- `campusnet.dtu.dk` - CampusNet grades
 
 No data from these sites is read, stored, or transmitted. The extension only modifies the visual appearance of the pages.
 
