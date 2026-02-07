@@ -1,19 +1,54 @@
-/* DTU Learn Dark Mode - Making your courses easier on the eyes! */
+/* DTU Dark Mode - Making your courses easier on the eyes! */
 
 /* Main body and background */
+html,
+html[data-he-context],
+html[data-global-context],
+html[data-css-vars],
+html.d2l-dialog-open,
 body,
 body.d2l-body-flex,
 body.daylight,
-html {
+body.vui-typography,
+body.d2l-typography,
+body.d2l-shim-body-overflow,
+#d2l_body {
   background-color: #1a1a1a !important;
+  background: #1a1a1a !important;
+  background-image: none !important;
+  color: #e0e0e0 !important;
+}
+
+/* Outer page wrappers (karakterer.dtu.dk etc.) - dark 2 */
+.page-articlehtml,
+.container_12,
+form,
+#aspnetForm,
+#__Page,
+.printFooter,
+.printFooter *,
+body > div,
+body > form,
+body > form > div,
+header,
+footer {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
   color: #e0e0e0 !important;
 }
 
 /* Main content wrapper */
 .d2l-body-main-wrapper,
 .d2l-page-main,
-.d2l-page-main-padding,
 div[role="main"] {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Inner content area - dark 1 */
+.d2l-page-main-padding,
+#d_content_inner {
   background-color: #1a1a1a !important;
   color: #e0e0e0 !important;
 }
@@ -53,21 +88,52 @@ aside,
   border-color: #404040 !important;
 }
 
-/* Text elements */
+/* Text elements - preserve custom inline colors (red, green, etc.) */
 h1, h2, h3, h4, h5, h6,
 .d2l-heading,
 .d2l-body-standard,
-p, span, div, label {
+p, div, label,
+span:not([style^="color"]):not([style*="; color"]):not([style*=";color"]),
+em:not([style^="color"]):not([style*="; color"]):not([style*=";color"]),
+strong:not([style^="color"]):not([style*="; color"]):not([style*=";color"]) {
+  color: #e0e0e0 !important;
+}
+
+/* Override black/near-black text specifically */
+span[style*="color: #000"], span[style*="color:#000"],
+span[style*="color: black"], span[style*="color:black"],
+span[style*="color: rgb(0, 0, 0"],
+span[style*="color: #202122"], span[style*="color:#202122"],
+span[style*="color: rgb(32, 33, 34"],
+em[style*="color: #000"], em[style*="color:#000"],
+em[style*="color: black"], em[style*="color:black"],
+em[style*="color: rgb(0, 0, 0"],
+em[style*="color: #202122"], em[style*="color:#202122"],
+em[style*="color: rgb(32, 33, 34"] {
   color: #e0e0e0 !important;
 }
 
 /* Links - keep them visible but not DTU red to avoid confusion */
 a {
   color: #66b3ff !important;
+  background-color: transparent !important;
 }
 
 a:hover {
   color: #99ccff !important;
+}
+
+/* File attachment links */
+a.d2l-filelink-text {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+}
+
+/* Heading-none (instructor names, etc.) - dark 2 background, white text */
+h2.d2l-heading-none,
+h2.d2l-heading.d2l-heading-none {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
 }
 
 /* Buttons */
@@ -155,6 +221,28 @@ tr:hover,
   border-bottom-color: #c62828 !important;
 }
 
+/* Tab panel content - dark 1 */
+d2l-tab-panel,
+d2l-tab-panel[selected] {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+d2l-tab-panel .dco,
+d2l-tab-panel .dco_c {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+d2l-tab-panel .d2l-fieldgroup-track-changes,
+d2l-tab-panel .d2l-fieldgroup-horizontal {
+  background-color: #1a1a1a !important;
+}
+
+d2l-tab-panel h2.dhdg_1 {
+  color: #e0e0e0 !important;
+}
+
 /* Badges and notifications */
 .d2l-badge,
 .d2l-notification-count {
@@ -177,12 +265,15 @@ input[type="search"],
   color: #e0e0e0 !important;
 }
 
-/* Module content blocks should keep original (light) styling */
+/* Module content blocks - dark background with light text */
 #content-block,
 #content-block .module-display,
-#content-block .module-inner-container {
-  background-color: #ffffff !important;
-  color: #1a1a1a !important;
+#content-block .module-inner-container,
+.content-panel,
+.content-panel-header,
+#content-header {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
 }
 
 #content-block h1,
@@ -190,8 +281,26 @@ input[type="search"],
 #content-block h3,
 #content-block p,
 #content-block span,
-#content-block div {
-  color: #1a1a1a !important;
+#content-block div,
+.content-panel h1,
+.content-panel h2,
+.content-panel h3,
+.content-panel p,
+.content-panel span,
+.module-header,
+.module-description-body {
+  color: #e0e0e0 !important;
+}
+
+#content-block h1,
+.content-panel h1,
+.module-header,
+h1.module-header,
+h1.d2l-heading-1,
+h1.d2l-heading-1.module-header,
+.d2l-heading-1 {
+  color: #ffffff !important;
+  background-color: transparent !important;
 }
 
 /* Side panel boxes (e.g. team widgets) */
@@ -233,6 +342,13 @@ svg,
 }
 
 /* Scrollbars for better look */
+/* Firefox scrollbar styling */
+* {
+  scrollbar-color: #4d4d4d #1a1a1a;
+  scrollbar-width: thin;
+}
+
+/* Webkit (Chrome, Edge, Opera) scrollbar styling */
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
@@ -282,6 +398,44 @@ svg,
   color: #e0e0e0 !important;
 }
 
+/* Collapsepane content - dark 1 */
+.d2l-page-collapsepane-content,
+.d2l-page-collapsepane-content-inner,
+.d2l-page-collapsepane-content-padding {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* User profile card - dark 1 */
+.d2l-user-profile-card,
+.d2l-user-profile-card *,
+.d2l-user-profile-card-corner,
+.d2l-user-profile-card-user-info,
+.d2l-user-profile-card-name-container,
+.d2l-user-profile-card-link,
+.d2l-user-profile-card-name,
+.d2l-user-profile-card-online-edit,
+.d2l-user-profile-card-user-progress {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Box layout - dark 2 */
+.d2l-box-layout,
+.d2l-box.d2l-box-v {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.d2l-user-profile-card a.d2l-link {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+}
+
+.d2l-user-profile-card h2 {
+  color: #ffffff !important;
+}
+
 /* CRITICAL: Fix the navigation sidebar (Study Announcements) */
 .d2l-navigation-s-main-wrapper,
 .d2l-navigation-s-main-wrapper * {
@@ -299,14 +453,20 @@ svg,
   color: #e0e0e0 !important;
 }
 
-/* Fix any divs that still have white/light backgrounds */
-div[style*="background"],
-div[style*="background-color"] {
+/* Fix any divs that still have white/light backgrounds (exclude .typebox) */
+div[style*="background"]:not(.typebox),
+div[style*="background-color"]:not(.typebox) {
   background-color: #2d2d2d !important;
 }
 
+/* Clear white backgrounds from pasted/rich-text content spans */
+span[style*="background"]:not(.typebox) {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
 /* CRITICAL: Fix the top navigation bar (Calendar, Student Resources, etc.) */
-/* Using consistent #2d2d2d to match the rest of the interface */
+/* Using #2d2d2d (dark 2) for main header */
 .d2l-labs-navigation-centerer,
 .d2l-labs-navigation-centerer > *,
 .d2l-labs-navigation-centerer div,
@@ -315,7 +475,23 @@ div[style*="background-color"] {
 .d2l-labs-navigation-gutters div,
 .d2l-labs-navigation-main-footer,
 .d2l-labs-navigation-main-footer > *,
-.d2l-labs-navigation {
+.d2l-labs-navigation,
+d2l-labs-navigation-main-header,
+d2l-labs-navigation-main-header *,
+.d2l-labs-navigation-header-left,
+.d2l-labs-navigation-header-right,
+.d2l-navigation-s-header-open-button-wrapper,
+.d2l-navigation-s-header-logo-area,
+.d2l-navigation-s-course-menu,
+.d2l-navigation-s-notifications,
+.d2l-navigation-s-notifications-wrapper,
+.d2l-navigation-s-notification,
+.d2l-navigation-s-personal-menu,
+.d2l-navigation-s-personal-menu-wrapper,
+.d2l-navigation-s-admin-menu,
+.d2l-personal-tools-list,
+.d2l-personal-tools-category-item,
+.d2l-personal-tools-separated-item {
   background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
@@ -364,18 +540,1755 @@ div[class*="d2l-card"] {
   background-color: #2d2d2d !important;
 }
 
-/* Catch divs with light/white backgrounds by RGB values */
-div[style*="rgb(255, 255, 255)"],
-div[style*="rgb(240, 240, 240)"],
-div[style*="rgba(255, 255, 255"],
-div[style*="#ffffff"],
-div[style*="#fff"],
-div[style*="white"] {
+/* Catch divs with light/white backgrounds by RGB values (exclude .typebox) */
+div[style*="rgb(255, 255, 255)"]:not(.typebox),
+div[style*="rgb(240, 240, 240)"]:not(.typebox),
+div[style*="rgba(255, 255, 255"]:not(.typebox),
+div[style*="#ffffff"]:not(.typebox),
+div[style*="#fff"]:not(.typebox),
+div[style*="white"]:not(.typebox) {
   background-color: #2d2d2d !important;
+}
+
+/* Notifications and datalist elements - announcements dark 2 */
+.d2l-placeholder,
+.d2l-placeholder-live,
+.d2l-datalist-container,
+.d2l-datalist,
+.d2l-datalist-item:not(.d2l-datalist-item-actionable),
+.d2l-datalist-simpleitem:not(.d2l-datalist-item-actionable),
+.d2l-list-item-action-hover,
+.d2l-datalist-summary,
+.d2l-datalist-empty,
+#AB_DL_PH_Grades {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Course selector items - dark 2 */
+.d2l-datalist-item-actionable,
+li.d2l-datalist-item.d2l-datalist-item-actionable {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Panels and page backgrounds */
+.d2l-panel,
+[class*="d2l-panel"],
+.d2l-page-bg,
+.d2l-column-side-bg {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Datalist list items / Course selector dropdown - dark 2 */
+ul.d2l-datalist,
+ul.d2l-datalist.vui-list,
+.vui-list,
+li.d2l-datalist-item,
+.d2l-datalist-item-content,
+.d2l-course-selector-item,
+.d2l-course-selector-item-name,
+.d2l-button-toggle-container,
+.d2l-clear {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Activity message content wrappers - dark 2 */
+.d2l-navigation-area-activity-message-content,
+.d2l-navigation-area-activity-message-wrapper,
+.d2l-navigation-area-activity-message-details {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Course selector links - dark 2 */
+a.d2l-datalist-item-actioncontrol {
+  background-color: #2d2d2d !important;
+  color: #66b3ff !important;
+}
+
+a.d2l-datalist-item-actioncontrol:hover {
+  color: #99ccff !important;
+}
+
+/* Datalist hover state */
+.d2l-datalist-item:hover,
+.d2l-list-item-action-hover {
+  background-color: #3d3d3d !important;
+}
+
+/* Course selector hover - slightly lighter than dark 1 */
+.d2l-datalist-item-actionable:hover,
+li.d2l-datalist-item.d2l-datalist-item-actionable:hover {
+  background-color: #2d2d2d !important;
+}
+
+/* Menu and menu items */
+d2l-menu,
+d2l-menu-item,
+d2l-menu-item-link,
+.d2l-menu,
+.d2l-menu-mvc,
+.d2l-contextmenu {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.d2l-menu-item:hover,
+.d2l-menu-item:focus {
+  background-color: #3d3d3d !important;
+}
+
+/* Modal dialogs (e.g., evaluation reminders) */
+.modal-content {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.modal-content .close,
+#nagClose {
+  color: #e0e0e0 !important;
+}
+
+.modal-content .close:hover,
+#nagClose:hover {
+  color: #ffffff !important;
+}
+
+#nagBody,
+#nagBody * {
+  color: #e0e0e0 !important;
+  background-color: transparent !important;
+}
+
+#nagBody h1,
+#nagBody h2,
+#nagBody h3 {
+  color: #ffffff !important;
+}
+
+/* Navigation search and container */
+.navigation-container,
+.navigation-menu,
+.navigation-search,
+#navigation-search-results-div,
+.navigation-search-results-div {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+#navigation-search-results-div *,
+.navigation-search-results-div * {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Action buttons container */
+.d2l-action-buttons,
+.d2l-action-buttons-list,
+.d2l-action-buttons-item {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Action button - keep visible with light background */
+.d2l-action-buttons .d2l-button,
+.d2l-action-buttons-item .d2l-button,
+button.d2l-button[primary] {
+  background-color: #4a90d9 !important;
+  color: #ffffff !important;
+  border-color: #3a7fc9 !important;
+}
+
+.d2l-action-buttons .d2l-button:hover,
+.d2l-action-buttons-item .d2l-button:hover,
+button.d2l-button[primary]:hover {
+  background-color: #5aa0e9 !important;
+}
+
+/* d2l-input-search shadow DOM override */
+d2l-input-search {
+  background-color: #2d2d2d !important;
+  --d2l-input-background-color: #3d3d3d !important;
+  --d2l-input-border-color: #505050 !important;
+  --d2l-color-ferrite: #e0e0e0 !important;
+}
+
+/* Search input styling */
+.d2l-input-container,
+.d2l-input-text-container,
+.d2l-skeletize,
+.d2l-input-inside-before,
+.d2l-input-inside-after {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+input.d2l-input,
+input[class*="d2l-input"] {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+input.d2l-input::placeholder {
+  color: #888888 !important;
+}
+
+/* Content/Lessons navigation sidebar */
+.navigation-tree,
+.navigation-tree > div,
+.navigation-item,
+.navigation-item > div,
+.navigation-item div,
+.unit,
+.unit-box,
+.unit-box.hoverable,
+.unit-box.selectable,
+.unit-box.selected,
+.unit-box.focusable,
+[role="treeitem"],
+[data-objectid],
+div[data-objectid],
+div.navigation-item[data-objectid] {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Force all divs inside navigation-item to be dark */
+div.navigation-item *,
+[data-objectid] *,
+[role="tree"] *,
+[role="tree"] div {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Keep accent colors transparent */
+div.navigation-item .accent,
+[data-objectid] .accent {
+  background-color: revert !important;
+}
+
+.co-content,
+.title-container,
+.title,
+.title-text,
+.text-wrapper,
+.date-container,
+.due-date-container,
+.drag-handle,
+.accent-outline,
+.outline,
+.overflow-detector,
+.fadeout-spacer {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+.unit-box .outline,
+.unit-box .accent-outline {
+  border-color: #404040 !important;
+}
+
+.unit-box:hover,
+.unit-box.hoverable:hover {
+  background-color: #3d3d3d !important;
+}
+
+.unit-box .fadeout,
+.fadeout {
+  background: transparent !important;
+  display: none !important;
+}
+
+.unit-box:hover .fadeout,
+.unit-box.selected .fadeout {
+  background: transparent !important;
+  display: none !important;
+}
+
+/* File drop area */
+.file-drop-area,
+.drop-wrapper {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+/* Dialog/Modal (ddial) styling */
+.ddial_o2,
+.ddial_i,
+.ddial_c,
+.ddial_t,
+.ddial_h,
+.d2l-dialog-buttons,
+.d2l-dialog-footer,
+.d2l-dialog-loading-spinner {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.ddial_t table,
+.ddial_t td,
+.d2l-dialog-buttons table,
+.d2l-dialog-buttons td {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.ddial_h h1,
+.ddial_h .d2l-heading,
+.ddial_h .vui-heading-3 {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+.ddial_close a,
+.d2l-dialog-close {
+  color: #e0e0e0 !important;
+}
+
+.ddial_close a:hover,
+.d2l-dialog-close:hover {
+  color: #ffffff !important;
+}
+
+.d2l-dialog-resize {
+  background-color: transparent !important;
+}
+
+/* Dialog backdrop/overlay */
+.d2l-shim,
+.d2l-shim-opaque,
+.d2l-shim.d2l-shim-opaque {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Popup title (e.g., Compose New Message) */
+.d2l-popup-title,
+.d2l-popup-title h1,
+.d2l-popup-title .d2l-heading,
+.d2l-popup-title .vui-heading-1 {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+}
+
+/* Multiselect (email recipients, etc.) */
+.d2l-multiselect,
+ul.d2l-multiselect,
+ul[class*="d2l-multiselect"],
+[id$="$control"].d2l-multiselect,
+[id*="Addresses$control"],
+ul[id*="$control"] {
+  background-color: #3d3d3d !important;
+  border-color: #505050 !important;
+}
+
+.d2l-multiselect-choice,
+li.d2l-multiselect-choice,
+ul.d2l-multiselect li.d2l-multiselect-choice,
+ul[id*="$control"] li.d2l-multiselect-choice,
+li[class*="d2l-multiselect-choice"] {
+  background-color: #4a4a4a !important;
+  color: #e0e0e0 !important;
+  border-color: #606060 !important;
+}
+
+.d2l-multiselect-choice span,
+li.d2l-multiselect-choice span,
+ul.d2l-multiselect li span,
+ul[id*="$control"] li span,
+li[class*="d2l-multiselect-choice"] span {
+  color: #e0e0e0 !important;
+}
+
+.d2l-multiselect-choice a,
+.d2l-multiselect-clearicon,
+.d2l-imagelink.d2l-multiselect-clearicon,
+li.d2l-multiselect-choice a,
+ul[id*="$control"] li a {
+  color: #e0e0e0 !important;
+}
+
+.d2l-multiselect-choice a:hover,
+.d2l-multiselect-clearicon:hover {
+  color: #ffffff !important;
+}
+
+.d2l-multiselect-input,
+li.d2l-multiselect-input,
+.d2l-multiselect-input input,
+.d2l-multiselect input.d2l-edit,
+ul.d2l-multiselect input,
+ul[id*="$control"] input,
+input.d2l-edit {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+/* Autocomplete dropdown */
+.d2l-autocomplete-dynamic,
+[id*="AutoComplete"],
+.d2l-autocomplete-message {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+/* ===== DTU Login Page (sts.ait.dtu.dk) ===== */
+#contentWrapper,
+#content,
+#workArea,
+#authArea,
+#loginArea,
+#formsAuthenticationArea,
+#userNameArea,
+#passwordArea,
+#submissionArea,
+#authOptions,
+#introduction,
+#footerPlaceholder {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+#header,
+#header.float,
+div#header {
+  background-color: #1a1a1a !important;
+}
+
+#loginMessage,
+#loginMessage b {
+  color: #e0e0e0 !important;
+}
+
+#loginMessage a {
+  color: #66b3ff !important;
+}
+
+#userNameInput,
+#passwordInput,
+.text.fullWidth {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+#userNameInput::placeholder,
+#passwordInput::placeholder {
+  color: #888888 !important;
+}
+
+#submitButton,
+.submit {
+  background-color: #c62828 !important;
+  color: #ffffff !important;
+  border-color: #a62020 !important;
+}
+
+#submitButton:hover,
+.submit:hover {
+  background-color: #d32f2f !important;
+}
+
+#footer,
+#footerLinks {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+#footer a,
+#footerLinks a,
+#helpDesk {
+  color: #66b3ff !important;
+}
+
+#copyright {
+  color: #888888 !important;
+}
+
+#error,
+.error {
+  color: #ff6b6b !important;
+}
+
+/* Replace DTU login illustration with custom image */
+#branding.illustrationClass,
+.illustrationClass {
+  background-image: url(dtuaften.jpg) !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* Replace DTU login logo with custom logo */
+img#companyLogo,
+img.logoImage {
+  content: url(logo_dark.png) !important;
+}
+
+/* Assignment info table */
+table.d_FG,
+table.d_FG tbody,
+table.d_FG tr,
+table.d_FG td,
+.d_fgh,
+.fct_w,
+.fl_n,
+.fl_top {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+table.d_FG label,
+table.d_FG .d2l-label,
+table.d_FG .dco,
+table.d_FG .dco_c {
+  color: #e0e0e0 !important;
+  background-color: #1a1a1a !important;
+}
+
+/* Settings content containers - dark 1 */
+.dco,
+.dco_c {
+  background-color: #1a1a1a !important;
+  background: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+table.d_FG .dhdg_fg,
+table.d_FG .dh_fg {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* List role containers */
+div[role="list"],
+[role="list"] {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Navigation sidebar - override role="list" to use lighter color */
+.d2l-navigation-s-main-wrapper,
+.d2l-navigation-s-main-wrapper[role="list"],
+div.d2l-navigation-s-main-wrapper,
+.d2l-navigation-s-main-wrapper *,
+.d2l-navigation-s-item,
+.d2l-navigation-s-group,
+.d2l-navigation-s-link {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Collapse/expand button */
+.d2l-hpg-opener,
+button.d2l-hpg-opener {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.d2l-hpg-opener span {
+  color: #e0e0e0 !important;
+}
+
+/* Empty state container */
+.empty-state-container,
+.d2l-empty-state-description,
+.d2l-body-compact.d2l-empty-state-description {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Floating buttons container */
+.d2l-floating-buttons-container,
+.d2l-floating-buttons,
+.d2l-floating-buttons-inner-container {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Breadcrumb - dark 2 */
+d2l-breadcrumb,
+d2l-breadcrumbs,
+[d2l-breadcrumb],
+[d2l-breadcrumb-current-page],
+d2l-breadcrumb-current-page {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Breadcrumb links (not inline links) */
+a.d2l-link:not(.d2l-link-inline),
+a.d2l-link-small:not(.d2l-link-inline) {
+  background-color: #2d2d2d !important;
+}
+
+/* Breadcrumb current page span */
+span[aria-current="page"] {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Inline links - dark 1 */
+a.d2l-link-inline,
+a.d2l-link.d2l-link-inline,
+.dco a.d2l-link,
+.dco_c a.d2l-link,
+td.d_gn a.d2l-link,
+td.d_gc a.d2l-link {
+  background-color: #1a1a1a !important;
+}
+
+/* Show All Announcements link - dark 2 */
+a.d2l-link[href*="/news/main.d2l"],
+a.d2l-link[title="Show All Announcements"] {
+  background-color: #2d2d2d !important;
+  color: #66b3ff !important;
+}
+
+/* Dialog iframes - dark 2 */
+iframe.ddial_c_frame {
+  background-color: #2d2d2d !important;
+}
+
+/* Breadcrumb icons */
+d2l-breadcrumbs d2l-icon,
+d2l-breadcrumb d2l-icon {
+  background-color: #2d2d2d !important;
+}
+
+/* File viewer / content viewer */
+.content-div,
+.topic-display,
+.activity-viewer,
+.content-container,
+.content-loaded-wrapper,
+.vui-fileviewer,
+.vui-fileviewer-generic,
+.vui-fileviewer-generic-container,
+.vui-fileviewer-generic-main,
+.generic-header-icon-container,
+.generic-headers,
+.vui-fileviewer-generic-header,
+.vui-fileviewer-generic-subheader,
+.vui-fileviewer-icon,
+.generic-download-area,
+.vui-fileviewer-generic-size,
+.vui-fileviewer-generic-download {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.vui-fileviewer-generic-header {
+  color: #ffffff !important;
+}
+
+/* ===== DTU Evaluation Site (evaluering.dtu.dk) ===== */
+header.header,
+header.header *,
+.header__title,
+.header__actions,
+.header__logo {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+div.main.row,
+nav.navigation,
+.navigation__items,
+.navigation__item,
+main.main__content,
+.tsMasterContent {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.navigation__item:hover {
+  background-color: #3d3d3d !important;
+}
+
+.page__title,
+.page__title.text--pre-wrap {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+.AnswerSurvey,
+.question__list,
+#QuestionZone {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.question,
+article.question {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.question__header,
+.question__title,
+.question__number,
+.question__content,
+.question__item,
+.question__text {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+.question__title {
+  color: #ffffff !important;
+}
+
+.item__list,
+.item__scale,
+.item--sum {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+.scale__radios,
+.scale__label,
+.scale__options {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+/* Matrix/battery questions */
+.matrix,
+.matrix__header,
+.matrix__item,
+.matrix__option,
+.matrix__items,
+.matrix__column {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.option__text,
+.item__text {
+  color: #e0e0e0 !important;
+}
+
+/* Evaluation textareas */
+.AnswerSurvey textarea,
+.question textarea,
+.question__item textarea {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+/* Dropdown menu */
+.dropdown,
+.dropdown__list,
+.dropdown__list-item {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.dropdown__list-item:hover {
+  background-color: #3d3d3d !important;
+}
+
+/* Modal dialogs */
+.modal,
+.modal__dialog,
+.modal__content,
+.modal__header,
+.modal__footer,
+.modal__body {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Confirm dialogs */
+.arc-confirm,
+.confirm__dialog,
+.confirm__content,
+.confirm__body,
+.confirm__footer {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Footer */
+footer.footer,
+footer.footer *,
+footer.footer .row,
+footer.footer address {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Forms */
+form[action*="/Answer/Exclude/"],
+form[action*="/Answer/SaveAnswers/"],
+.excludeForm,
+#answerForm {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+#AnswerZone {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Buttons on evaluation page */
+.button,
+.button--hollow,
+.button--primary,
+.button--small,
+.excludeButton {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.button--primary {
+  background-color: #c62828 !important;
+  color: #ffffff !important;
+}
+
+.button--hollow:hover,
+.button:hover {
+  background-color: #4d4d4d !important;
+}
+
+/* Help text */
+.text--help,
+.text--help--noopacity,
+.text--pre-wrap {
+  color: #b0b0b0 !important;
+}
+
+/* Radio buttons and checkboxes labels */
+.QuestionRadioText,
+.QuestionRadioTextDisabled {
+  color: #e0e0e0 !important;
+}
+
+/* Burger menu */
+.burger,
+article.burger {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Info request spans */
+.js-info-request,
+span.click {
+  color: #66b3ff !important;
+}
+
+/* Sum total input */
+.sum__total {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+/* Results page heading - dark 2 with white text (evaluering.dtu.dk only) */
+.tsMasterContent h2,
+.main__content h2,
+#CourseResultsPublicContainer h2 {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+}
+
+/* D2L headings - dark 2 (DTU Learn) */
+h2.d2l-heading,
+h2.vui-heading-4,
+h2.d2l-heading.vui-heading-4 {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* D2L datalist item content - dark 2 (DTU Learn announcements) */
+.d2l-datalist-item-content,
+.d2l-datalist-item-content *,
+.d2l-datalist-item-content h3,
+.d2l-datalist-item-content .d2l-heading-2,
+.d2l-datalist-item-content .d2l-linkheading-half,
+.d2l-datalist-item-content .d2l-textblock,
+.d2l-datalist-item-content .d2l-htmlblock-untrusted,
+.d2l-datalist-item-content .d2l-clear {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.d2l-datalist-item-content a.d2l-linkheading-link {
+  color: #66b3ff !important;
+}
+
+.d2l-datalist-item-content a.d2l-linkheading-link:hover {
+  color: #99ccff !important;
+}
+
+/* Results table - dark 2 */
+.tsMasterContent table,
+.tsMasterContent table tbody,
+.tsMasterContent table tr,
+.tsMasterContent table td,
+.main__content table,
+.main__content table tbody,
+.main__content table tr,
+.main__content table td,
+#CourseResultsPublicContainer table,
+#CourseResultsPublicContainer table tbody,
+#CourseResultsPublicContainer table tr,
+#CourseResultsPublicContainer table td {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Course results container - dark 2 (evaluering.dtu.dk) */
+#CourseResultsPublicContainer,
+#CourseResultsPublicContainer *,
+.grid_6.clearright,
+.grid_6.clearleft,
+.pad,
+.table-slide-container,
+.noprint,
+#ResultsMeasurableBarContainer,
+#PercentageResult {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Keep the red results bar */
+.ResultsMeasurableBarRed {
+  background-color: #990000 !important;
+}
+
+/* Statistics heading */
+#CourseResultsPublicContainer h5 {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+/* Course selector container - dark 2 (evaluering.dtu.dk) */
+#CourseSelectorContainer,
+#CourseSelectorContainer *,
+#CourseSelectorContainer span,
+.clearleft.clearright {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Course selector input */
+#CourseCodeTextbox {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+/* Period dropdown */
+#PeriodDropDownList {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+#PeriodDropDownList option {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Search button */
+#SearchButton {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+#SearchButton:hover {
+  background-color: #4d4d4d !important;
+}
+
+/* Link headings in announcements */
+a.d2l-linkheading-link,
+a.d2l-linkheading-link.d2l-clickable,
+a.d2l-linkheading-link.d2l-link {
+  background-color: #2d2d2d !important;
+  color: #66b3ff !important;
+}
+
+a.d2l-linkheading-link:hover {
+  color: #99ccff !important;
+}
+
+/* Chevron icons - dark 2 background */
+d2l-icon[icon="tier1:chevron-right"],
+d2l-icon[icon="tier1:chevron-left"],
+d2l-icon[icon="tier1:chevron-down"],
+d2l-icon[icon="tier1:chevron-up"] {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
+}
+
+/* Message bucket buttons - dark 2 */
+.d2l-messagebucket-button-container,
+.d2l-messagebucket-button-container *,
+.d2l-messagebucket-button-container-left,
+.d2l-messagebucket-button-container-right {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
+  color: #e0e0e0 !important;
+}
+
+/* ===== DTU Studieplanlægger (studieplaner.dtu.dk) ===== */
+/* Main body and backgrounds */
+.dturedbackground {
+  background-color: #990000 !important;
+}
+
+.dtugreybackground {
+  background-color: #2d2d2d !important;
+}
+
+.container.body-content,
+.body-content {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Rows and columns */
+.row,
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6,
+.col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+/* Box sections (study year containers) */
+.box {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Semester sections */
+.inverse {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Tables */
+.table,
+.table-bordered,
+.table-bordered thead,
+.table-bordered tbody,
+.table-bordered tr,
+.table-bordered th,
+.table-bordered td {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #2d2d2d !important;
+  border: 1px solid #2d2d2d !important;
+}
+
+/* Drop zone tables */
+.dropZoneSpring13,
+.dropZoneSpring3,
+.dropZoneAutumn13,
+.dropZoneAutumn3,
+.ui-droppable {
+  border-color: #2d2d2d !important;
+}
+
+.table-bordered th {
+  background-color: #3d3d3d !important;
+  color: #ffffff !important;
+  border-color: #2d2d2d !important;
+  border: 1px solid #2d2d2d !important;
+}
+
+.closedPeriod {
+  background-color: #252525 !important;
+}
+
+/* Overlay areas */
+.overlayArea {
+  background-color: transparent !important;
+}
+
+/* Headings */
+.box h2,
+.inverse h3 {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+/* Study year headings - dark 2 border */
+.box h2,
+h2[data-bind*="StartDate"],
+h2[data-bind*="EndDate"] {
+  border-color: #2d2d2d !important;
+  border-bottom: 1px solid #2d2d2d !important;
+}
+
+/* Semester headings - dark 2 border */
+.inverse h3,
+h3[data-bind*="SemesterNumber"] {
+  border-color: #2d2d2d !important;
+  border-bottom: 1px solid #2d2d2d !important;
+}
+
+/* Course codes and links */
+a.coursecode {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+}
+
+a.coursecode:hover {
+  color: #99ccff !important;
+}
+
+/* Type boxes - keep their original colors for course type indicators */
+
+/* Result cells */
+.result {
+  background-color: transparent !important;
+}
+
+.result .red {
+  color: #ff6b6b !important;
+}
+
+/* Grey text */
+.greytext {
+  color: #888888 !important;
+}
+
+/* Dropdown menus */
+.dropdown-menu {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.dropdown-menu li a {
+  color: #e0e0e0 !important;
+  background-color: transparent !important;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus {
+  background-color: #3d3d3d !important;
+  color: #ffffff !important;
+}
+
+.dropdown-menu .dropdown-header {
+  color: #b0b0b0 !important;
+}
+
+.dropdown-menu .divider {
+  background-color: #404040 !important;
+}
+
+/* Red dropdown (DTU header) */
+.dropdown-menu.red {
+  background-color: #990000 !important;
+}
+
+.dropdown-menu.red li a {
+  color: #ffffff !important;
+}
+
+.dropdown-menu.red li a:hover {
+  background-color: #770000 !important;
+}
+
+/* Buttons */
+.btn,
+.btn.dropdown-toggle {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.btn:hover {
+  background-color: #4d4d4d !important;
+}
+
+button.dropdown-toggle.red {
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+/* Navigation tabs */
+.nav-tabs {
+  border-color: #404040 !important;
+  background-color: #2d2d2d !important;
+}
+
+.nav-tabs > li,
+.nav-tabs > li[role="presentation"] {
+  background-color: #2d2d2d !important;
+}
+
+.nav-tabs > li > a,
+.nav-tabs > li[role="presentation"] > a {
+  color: #ffffff !important;
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.nav-tabs > li > a:hover,
+.nav-tabs > li[role="presentation"] > a:hover {
+  background-color: #3d3d3d !important;
+  border-color: #404040 !important;
+  color: #ffffff !important;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border-color: #404040 !important;
+  border-bottom-color: #1a1a1a !important;
+}
+
+/* Separator */
+.seperator {
+  color: #666666 !important;
+}
+
+/* Glyphicons */
+.glyphicon {
+  color: #e0e0e0 !important;
+}
+
+.glyphicon-ok {
+  color: #4caf50 !important;
+}
+
+/* Draggable items */
+.draggable {
+  background-color: #2d2d2d !important;
+}
+
+.draggable:hover {
+  background-color: #3d3d3d !important;
+}
+
+/* Dialog boxes */
+.dialog,
+.modal-dialog,
+.modal-content,
+[data-toggle="modal"] + .modal .modal-content {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Strike-through text */
+.strike {
+  color: #888888 !important;
+}
+
+/* Bootstrap panels and wells */
+.panel,
+.panel-default,
+.panel-body,
+.panel-heading,
+.panel-footer,
+.well,
+.card,
+.card-body,
+.card-header {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Kursuskurv (course basket) and similar sidebars */
+.sidebar,
+.side-panel,
+.course-basket,
+.kursuskurv,
+[class*="basket"],
+[class*="cart"],
+[class*="kurv"] {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Course items in basket */
+.course-item,
+.basket-item,
+.cart-item,
+[class*="course-item"],
+[class*="basket-item"] {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Generic white/light background overrides for studieplan */
+.bg-white,
+.bg-light,
+.background-white,
+[style*="background: white"],
+[style*="background-color: white"],
+[style*="background:#fff"],
+[style*="background-color:#fff"],
+[style*="background: #fff"],
+[style*="background-color: #fff"] {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+}
+
+/* List groups */
+.list-group,
+.list-group-item {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.list-group-item:hover {
+  background-color: #3d3d3d !important;
+}
+
+/* Input groups */
+.input-group,
+.input-group-addon,
+.input-group-btn {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+/* Form controls */
+.form-control {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.form-control::placeholder {
+  color: #888888 !important;
+}
+
+/* Alerts */
+.alert {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* ===== DTU Course Base (kurser.dtu.dk) ===== */
+/* Container */
+.container {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+/* Form horizontal layout */
+.form-horizontal .form-group {
+  background-color: transparent !important;
+}
+
+/* Control labels */
+.control-label,
+label.control-label {
+  color: #e0e0e0 !important;
+  background-color: transparent !important;
+}
+
+/* Column styling */
+.col-sm-3,
+.col-sm-9 {
+  background-color: transparent !important;
+}
+
+/* Multiselect dropdown (Bootstrap multiselect plugin) */
+.multiselect-native-select {
+  background-color: transparent !important;
+}
+
+.btn-group {
+  background-color: transparent !important;
+}
+
+.btn-default,
+.btn.btn-default,
+button.btn.btn-default {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active {
+  background-color: #4d4d4d !important;
+  color: #ffffff !important;
+  border-color: #606060 !important;
+}
+
+.multiselect.dropdown-toggle {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.multiselect-selected-text {
+  color: #e0e0e0 !important;
+}
+
+.multiselect-container.dropdown-menu {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.multiselect-container.dropdown-menu li {
+  background-color: #2d2d2d !important;
+}
+
+.multiselect-container.dropdown-menu li a {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+.multiselect-container.dropdown-menu li a:hover,
+.multiselect-container.dropdown-menu li a:focus {
+  background-color: #3d3d3d !important;
+  color: #ffffff !important;
+}
+
+.multiselect-container.dropdown-menu li.active a,
+.multiselect-container.dropdown-menu li.active a:hover {
+  background-color: #4a4a4a !important;
+  color: #ffffff !important;
+}
+
+/* Checkbox labels in multiselect */
+.multiselect-container label.checkbox {
+  color: #e0e0e0 !important;
+  background-color: transparent !important;
+}
+
+.multiselect-container label.checkbox input[type="checkbox"] {
+  background-color: #3d3d3d !important;
+}
+
+/* Multiselect all option */
+.multiselect-item.multiselect-all {
+  background-color: #2d2d2d !important;
+}
+
+.multiselect-item.multiselect-all a {
+  background-color: transparent !important;
+}
+
+/* Caret icon */
+.caret,
+b.caret {
+  border-top-color: #e0e0e0 !important;
+}
+
+/* Pull utility classes */
+.pull-left,
+.pull-right {
+  background-color: transparent !important;
+}
+
+/* Clearfix */
+.clearfix {
+  background-color: transparent !important;
+}
+
+/* Logo image - keep visible */
+.logo-img {
+  background-color: transparent !important;
+}
+
+/* Emphasis text */
+em {
+  color: #e0e0e0 !important;
+}
+
+/* Page title "DTU Course Base" */
+.col-md-6[style*="font-size"] {
+  color: #ffffff !important;
+}
+
+/* Hidden print elements */
+.hidden-print {
+  background-color: transparent !important;
+}
+
+/* Mofoclass nav container */
+.mofoclass {
+  background-color: transparent !important;
+}
+
+/* Course information bar - dark 2 with white text */
+.bar,
+div.bar {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+}
+
+/* ===== DTU Studieinformation / Course Evaluations (sites.dtu.dk) ===== */
+/* Page header - dark 2 */
+.pageheader,
+div.pageheader,
+.pageheader *,
+div.pageheader * {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
+  color: #e0e0e0 !important;
+}
+
+/* Page header pseudo-elements */
+.pageheader::before,
+.pageheader::after,
+.pageheaderoverlay::before,
+.pageheaderoverlay::after,
+.pageheader .container_12::before,
+.pageheader .container_12::after,
+.pageheader .grid_6::before,
+.pageheader .grid_6::after {
+  background: #2d2d2d !important;
+  background-color: #2d2d2d !important;
+  background-image: none !important;
+  display: none !important;
+}
+
+.pageheaderoverlay,
+#ctl10_PageHeaderOverlay,
+.pageheaderoverlay *,
+#ctl10_PageHeaderOverlay * {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
+  color: #e0e0e0 !important;
+}
+
+.pageheader .container_12,
+.pageheader .container_12 *,
+.pageheaderoverlay .container_12,
+.pageheaderoverlay .container_12 * {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.pageheadertop,
+.grid_6.pageheadertop,
+.sitelogo,
+.linkset4 {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Site text logo */
+.sitetextlogo {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+/* Mobile menu buttons */
+.mobilemenuNavigation,
+.mobilemenuNavigation *,
+.mobileTopMenuButton,
+.mobileTopMenuButton * {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
+}
+
+/* Main menu */
+.mainmenu,
+.mainmenusimple,
+ul.mainmenu,
+#mainmenu {
+  background-color: #2d2d2d !important;
+}
+
+.mainmenuBackground,
+.mainmenusubhoverBackground {
+  background-color: #2d2d2d !important;
+}
+
+/* Navigation */
+nav {
+  background-color: #2d2d2d !important;
+}
+
+/* Breadcrumb */
+.breadcrumb-print,
+.breadcrumb-print *,
+.breadcrumb.linkset6,
+#ctl10_ctl11_Breadcrumb,
+#ctl10_ctl11_Breadcrumb * {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.breadcrumb a,
+.breadcrumb.linkset6 a {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+}
+
+.breadcrumb a:hover {
+  color: #99ccff !important;
+}
+
+/* Grid classes - only in pageheader */
+.pageheader .grid_6,
+.pageheader .grid_10,
+.pageheaderoverlay .grid_6,
+.pageheaderoverlay .grid_10 {
+  background-color: #2d2d2d !important;
+}
+
+/* Clear helper - only in pageheader */
+.pageheader .clear,
+.pageheader .hideInPrint,
+.pageheaderoverlay .clear {
+  background-color: #2d2d2d !important;
+}
+
+/* Website logo link */
+.websiteLogoLink,
+.websitelogoright__link {
+  background-color: transparent !important;
+}
+
+/* Website logo link */
+.websiteLogoLink,
+.websitelogoright__link {
+  background-color: transparent !important;
+}
+
+/* ===== D2L Tool Areas (Discussions sidebar) - dark 2 ===== */
+.d2l-tool-areas-item,
+li.d2l-tool-areas-item {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.d2l-tool-areas-item-selected,
+li.d2l-tool-areas-item-selected {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.d2l-tool-areas-link,
+a.d2l-tool-areas-link {
+  background-color: transparent !important;
+  color: #66b3ff !important;
+}
+
+.d2l-tool-areas-link:hover {
+  color: #99ccff !important;
+}
+
+/* Unread posts link styling */
+a.d2l-link[title*="View unread posts"],
+a.d2l-link[title*="unread"] {
+  background-color: transparent !important;
+  color: #66b3ff !important;
+}
+
+a.d2l-link[title*="View unread posts"] strong,
+a.d2l-link[title*="unread"] strong {
+  color: #66b3ff !important;
+}
+
+/* Accordion content (Discussions, etc.) - dark 2 */
+.d2l-accordion-content,
+.d2l-accordion-content-expanded {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* ===== D2L Admin Tools Column - dark 2 ===== */
+.d2l-admin-tools-column,
+div.d2l-admin-tools-column,
+.d2l-admin-tools-column .d2l-list,
+.d2l-admin-tools-column li,
+.d2l-admin-tools-column label {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.d2l-admin-tools-column h2,
+.d2l-admin-tools-column h2.d2l-heading,
+.d2l-admin-tools-column h2.d2l-heading-none,
+h2.d2l-heading.d2l-heading-none {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.d2l-admin-tools-column ul.d2l-list,
+.d2l-admin-tools-column ul.d2l-list li {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.d2l-admin-tools-column ul.d2l-list a.d2l-link {
+  background-color: transparent !important;
+  color: #66b3ff !important;
+}
+
+.d2l-admin-tools-column ul.d2l-list a.d2l-link:hover {
+  color: #99ccff !important;
 }
 
 /* ===== EXCLUSIONS - Override dark mode for specific elements ===== */
 /* These rules must come LAST to override all previous dark mode rules */
+
+/* Typebox - keep custom user colors (kurser.dtu.dk) */
+.typebox,
+div.typebox {
+  background-color: revert !important;
+  background: revert !important;
+}
+
+/* Evaluation results - keep original red bar styling (evaluering.dtu.dk) */
+.FinalEvaluation_Result_AnswerPercentageSpan,
+.FinalEvaluation_Result_AnswerPercentageSpan span,
+.FinalEvaluation_Result_AnswerPercentageSpan span[style*="border-left"],
+.FinalEvaluation_Result_AnswerCountColumn,
+.Answer_Result_Background {
+  background-color: transparent !important;
+  background: transparent !important;
+  border-color: revert !important;
+}
+
+/* Keep the red border intact */
+span[style*="border-left"][style*="#990000"] {
+  border-left-color: #990000 !important;
+}
 
 /* Course banner - keep original colorful styling */
 .d2l-image-banner-overlay-content,
@@ -391,7 +2304,7 @@ div[style*="white"] {
   background: revert !important;
 }
 
-/* Teams widget - keep original white/light styling */
+/* Side panel and Teams widget - dark 1 */
 .team-widget-container,
 .team-widget-container *,
 .box-section.bg-white,
@@ -403,7 +2316,796 @@ div[style*="white"] {
 .card.teamH,
 .panel-section.side-panel,
 .panel-section.side-panel * {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  background: #1a1a1a !important;
+}
+
+.panel-section.side-panel a {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+}
+
+.panel-section.side-panel img {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* PDF Viewer - keep original styling */
+d2l-pdf-viewer,
+d2l-pdf-viewer *,
+d2l-pdf-viewer-toolbar,
+d2l-pdf-viewer-toolbar *,
+d2l-pdf-viewer-progress-bar,
+#viewerContainer,
+#viewerContainer *,
+#viewer,
+#viewer *,
+.pdfViewer,
+.pdfViewer *,
+.page[data-page-number],
+.page[data-page-number] *,
+.canvasWrapper,
+.canvasWrapper *,
+.textLayer,
+.textLayer *,
+.annotationLayer,
+.annotationLayer *,
+.annotationEditorLayer,
+.annotationEditorLayer * {
   background-color: revert !important;
   color: revert !important;
   background: revert !important;
+  filter: none !important;
+}
+
+/* Media Player - keep original styling */
+d2l-labs-media-player,
+d2l-labs-media-player *,
+d2l-labs-slider-bar,
+d2l-labs-slider-bar *,
+#d2l-labs-media-player-video,
+#d2l-labs-media-player-media-container,
+#d2l-labs-media-player-media-controls,
+#d2l-labs-media-player-buttons,
+[id^="d2l-labs-media-player"] {
+  background-color: revert !important;
+  color: revert !important;
+  background: revert !important;
+  filter: none !important;
+}
+
+/* ==================== karakterer.dtu.dk & sites.dtu.dk Search Box ==================== */
+/* Search container - dark 2 */
+.search,
+div.search,
+#ctl10_ServiceMenuHeader_SearchBox_SearchboxPanel,
+[id*="SearchBox_SearchboxPanel"],
+[id*="SearchBox"],
+[id*="Searchbox"],
+.pageheader .search,
+.grid_3 .search,
+.grid_3.search {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+}
+
+/* Search input field */
+.search input,
+.search .inputtext,
+.search input[type="text"],
+.search input[type="search"],
+[id*="SearchBox"] input,
+[id*="Searchbox"] input,
+input.inputtext,
+.grid_3 input,
+.grid_3 .inputtext,
+input[id*="SearchBox"],
+input[id*="Searchbox"] {
+  background-color: #3d3d3d !important;
+  background: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #505050 !important;
+}
+
+.search input::placeholder,
+.search .inputtext::placeholder,
+input.inputtext::placeholder,
+[id*="SearchBox"] input::placeholder {
+  color: #888888 !important;
+}
+
+/* Search button */
+.inside-search-btn,
+div.inside-search-btn,
+.search button,
+.search input[type="submit"],
+.search .inputsubmit,
+input.inputsubmit,
+[id*="SearchBox"] input[type="submit"],
+[id*="Searchbox"] input[type="submit"],
+.grid_3 input[type="submit"],
+.grid_3 .inputsubmit {
+  background-color: #3d3d3d !important;
+  background: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #505050 !important;
+}
+
+.inside-search-btn:hover,
+.search button:hover,
+.search input[type="submit"]:hover,
+input.inputsubmit:hover {
+  background-color: #4d4d4d !important;
+  background: #4d4d4d !important;
+}
+
+/* ==================== Page Footer - dark 2 ==================== */
+.pagefooterlogo,
+.pagefootercolumn,
+#footerLogo,
+#footerAbout,
+#footerJob,
+#footerFollowus,
+.footeraddresstitle,
+.footeraddress,
+.footerintro,
+.contactWrapper,
+.socialMediaIcons,
+.grid_1.minHeight.pagefooterlogo,
+.grid_5.pagefootercolumn,
+.grid_3.pagefootercolumn,
+.grid_1.minHeight,
+.grid_5.minHeight,
+.grid_5,
+div[id="footerLogo"],
+div[id="footerAbout"],
+div[id="footerJob"],
+div[id="footerFollowus"] {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Footer - override ALL descendants */
+#footerLogo *,
+#footerAbout *,
+#footerJob *,
+#footerFollowus *,
+.pagefooterlogo *,
+.pagefootercolumn * {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Footer text elements */
+#footerAbout p,
+#footerAbout strong,
+#footerAbout br,
+#footerAbout h2,
+#footerFollowus h2,
+.footeraddresstitle,
+.footeraddress p,
+.footeraddress strong,
+.footerintro p {
+  color: #e0e0e0 !important;
+}
+
+/* Footer links */
+#footerAbout a,
+#footerFollowus a,
+.footeraddress a,
+.pagefootercolumn a {
+  color: #66b3ff !important;
+}
+
+/* Footer images should be transparent bg */
+#footerLogo img,
+#footerFollowus img,
+.socialMediaIcons img,
+.pagefooterlogo img {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Page footer container - dark 2 */
+.pagefooter,
+.pagefooter .container_12,
+.pagefooter .container_12 *,
+.pagefooter.lineheight13_18 {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Page footer links */
+.pagefooter a {
+  color: #66b3ff !important;
+}
+
+/* Page footer images transparent */
+.pagefooter img {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* ==================== Service Menu (header & footer) - dark 1 ==================== */
+.servicemenu,
+.servicemenu *,
+.servicemenuitems,
+.servicemenuitems *,
+.subservicemenuFooter,
+.grid_6.minHeight,
+.grid_6.minHeight *,
+.grid_3.minHeight,
+.grid_3.minHeight *,
+.servicemenu nav,
+.servicemenu nav *,
+.item.itemmenu,
+.item.separator,
+.servicemenu__link-text {
+  background-color: #1a1a1a !important;
+  background: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Service menu links */
+.servicemenu a,
+.servicemenuitems a {
+  color: #66b3ff !important;
+}
+
+/* Service menu images transparent */
+.servicemenu img,
+.servicemenuitems img,
+.item.separator img {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* ==================== Top Menu Items - dark 2 ==================== */
+.topmenuitems,
+.topmenuitems *,
+.linkset1,
+ul.container_12.topmenuitems {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  background-image: none !important;
+  color: #e0e0e0 !important;
+}
+
+/* Content linkset8 - dark 1 */
+.linkset8,
+.content.linkset8 {
+  background-color: #1a1a1a !important;
+  background: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* ==================== Breadcrumb linkset6 - dark 1 ==================== */
+.breadcrumb.linkset6,
+.breadcrumb.linkset6 *,
+.breadcrumb.linkset6.grid_10 {
+  background-color: #1a1a1a !important;
+  background: #1a1a1a !important;
+  background-image: none !important;
+  color: #e0e0e0 !important;
+}
+
+.breadcrumb.linkset6 a {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.breadcrumb.linkset6 img {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* ===== CampusNet Grades (campusnet.dtu.dk) ===== */
+/* GPA summary row */
+.gpa-row {
+  background-color: #1a1a1a !important;
+  border-bottom: 2px solid #c62828 !important;
+}
+
+.gpa-row td {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  padding: 8px 5px !important;
+}
+
+/* Grades list table */
+table.gradesList {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+table.gradesList tr.gradesListHeader td {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+table.gradesList tr.context_direct td,
+table.gradesList tr.context_alternating td {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+table.gradesList tr.context_alternating td {
+  background-color: #252525 !important;
+}
+
+table.gradesList tr:hover td {
+  background-color: #3d3d3d !important;
+}
+
+table.gradesList a {
+  color: #66b3ff !important;
+}
+
+table.gradesList span[style*="color : green"],
+table.gradesList td[style*="color : green"] {
+  color: #4caf50 !important;
+}
+
+/* CampusNet header - dark 2 */
+article.header__top,
+.header__top {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.header__top *,
+article.header__top * {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.header__top a {
+  color: #66b3ff !important;
+  background-color: transparent !important;
+}
+
+.header__top img {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Header nav icons */
+.header__sub-nav {
+  background-color: #2d2d2d !important;
+}
+
+.nav__icon .fa-circle {
+  color: #3d3d3d !important;
+}
+
+.nav__icon .fa-heart,
+.nav__icon .fa-user {
+  color: #e0e0e0 !important;
+}
+
+/* Dropdown lists */
+.arc-dropdown__list {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.arc-dropdown__list-item {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.arc-dropdown__list-item:hover {
+  background-color: #3d3d3d !important;
+}
+
+.arc-dropdown__list-item img {
+  background-color: transparent !important;
+}
+
+.list-item__divider {
+  background-color: #404040 !important;
+  border-color: #404040 !important;
+}
+
+/* Arc buttons */
+.arc-button,
+.arc-button--default,
+.arc-button--small {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.arc-button:hover {
+  background-color: #4d4d4d !important;
+}
+
+/* Arc row / flex containers - dark 2 */
+.arc-row,
+.arc-row.flex {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+}
+
+/* Widget header - dark 2 bg, white text */
+.widget__header {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.widget__header *:not(service-icon):not(.widget__icon):not(.service-icon):not(.icon__base):not(.icon__content):not(.icon__identifier) {
+  background-color: transparent !important;
+  background: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+h2.widget__title {
+  color: #ffffff !important;
+}
+
+/* Icons keep original site colors (excluded from * override above) */
+
+/* CampusNet element links - light blue */
+a[href*="/cnnet/element/"] {
+  color: #b3d9ff !important;
+}
+
+a[href*="/cnnet/element/"]:hover {
+  color: #cce5ff !important;
+}
+
+/* Box content / files widget - dark 2 */
+.boxContent,
+.filesWidget {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+/* Main content area - dark 1 */
+.main__content,
+.main__content--box,
+#ctl00_ContentBox {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Toolbar */
+.arc-toolbar,
+article.arc-toolbar {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.arc-toolbar select,
+#typeSelector {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.arc-toolbar select option {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.checkbox-label,
+.checkbox-label span {
+  color: #e0e0e0 !important;
+  background-color: transparent !important;
+}
+
+.checkbox-functions {
+  background-color: #2d2d2d !important;
+}
+
+/* Arc button hollow */
+.arc-button--hollow-default {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+.arc-button--hollow-default:hover {
+  background-color: #3d3d3d !important;
+}
+
+.arc-button--medium {
+  background-color: #3d3d3d !important;
+  color: #e0e0e0 !important;
+  border-color: #505050 !important;
+}
+
+/* Archived elements list */
+.archived-elements {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.archived-elements__header {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.archived-elements__header div {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+.archived-elements__content {
+  background-color: #2d2d2d !important;
+}
+
+/* Individual archived element rows */
+.archived-element,
+article.archived-element {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.archived-element:hover,
+article.archived-element:hover {
+  background-color: #3d3d3d !important;
+}
+
+.archived-element__select,
+.archived-element__expiration,
+.archived-element__name,
+.archived-element__action {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+.archived-element__title {
+  background-color: transparent !important;
+}
+
+.archived-element__subtitle {
+  color: #888888 !important;
+  background-color: transparent !important;
+}
+
+.archived-element__expiration time {
+  color: #b0b0b0 !important;
+}
+
+/* Sort icons */
+.icon--sort {
+  color: #e0e0e0 !important;
+}
+
+/* Nav dropdown - white link text */
+.nav__dropdown a,
+article.nav__dropdown a {
+  color: #ffffff !important;
+}
+
+.nav__dropdown a:hover,
+article.nav__dropdown a:hover {
+  color: #ffffff !important;
+}
+
+/* Sidebar menu */
+ul.menu__items {
+  background-color: #2d2d2d !important;
+}
+
+.menu__item {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.item__link {
+  color: #e0e0e0 !important;
+}
+
+.item__link:hover {
+  background-color: #3a3a3a !important;
+  color: #ffffff !important;
+}
+
+.item__title {
+  color: #e0e0e0 !important;
+}
+
+.item__icon {
+  color: #e0e0e0 !important;
+}
+
+/* Category title */
+h4.category__title,
+h4.category__title a {
+  color: #ffffff !important;
+}
+
+/* Participants list */
+.ui-participants-placeholder {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.ui-participant {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.ui-participant-categorybar {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+  color: #e0e0e0 !important;
+}
+
+.ui-participant-details {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.ui-participant-infobox {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+  color: #e0e0e0 !important;
+}
+
+.info-header {
+  color: #e0e0e0 !important;
+}
+
+.ui-participant a {
+  color: #66b3ff !important;
+}
+
+.ui-participant img {
+  background-color: transparent !important;
+}
+
+/* DTU red background bar - dark 2 */
+.dturedbackground {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.dturedbackground a,
+.dturedbackground .pull-right a,
+.dturedbackground .pull-right span a {
+  color: #b3d9ff !important;
+}
+
+.dturedbackground a:hover,
+.dturedbackground .pull-right a:hover,
+.dturedbackground .pull-right span a:hover {
+  color: #cce5ff !important;
+}
+
+.dturedbackground .seperator {
+  color: #888888 !important;
+}
+
+.dturedbackground .dropdown-toggle.red {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.dturedbackground .dropdown-menu.red {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.dturedbackground .dropdown-menu.red li a {
+  color: #e0e0e0 !important;
+}
+
+.dturedbackground .dropdown-menu.red li a:hover {
+  background-color: #3d3d3d !important;
+}
+
+/* Pull-right (language selector, login) - dark 2 containers */
+.dturedbackground .pull-right,
+.dturedbackground .pull-right span,
+.dturedbackground .container,
+.dturedbackground .row,
+.dturedbackground .col-md-12 {
+  background-color: #2d2d2d !important;
+  background: #2d2d2d !important;
+}
+
+/* Search form container - dark 1 */
+form.form-horizontal {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+form.form-horizontal .form-group {
+  background-color: #1a1a1a !important;
+}
+
+form.form-horizontal label.control-label {
+  color: #e0e0e0 !important;
+}
+
+form.form-horizontal .form-control {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+/* Frontpage area and widgets - dark 1 */
+.frontpage-area {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.column__container,
+.column__row,
+[class^="column-lg-"],
+[class^="column-md-"],
+[class^="column-sm-"],
+[class^="column-xs-"] {
+  background-color: #1a1a1a !important;
+}
+
+.widget {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.widget__content {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.widget__content a {
+  color: #b3d9ff !important;
+}
+
+.widget__footer {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Deadline items */
+.deadline-item {
+  color: #e0e0e0 !important;
+}
+
+.deadline {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border-color: #404040 !important;
+}
+
+.event-date {
+  color: #e0e0e0 !important;
+}
+
+.event-date__year,
+.event-date__day,
+.event-date__month {
+  color: #e0e0e0 !important;
+}
+
+.deadline__details {
+  color: #e0e0e0 !important;
+}
+
+.deadline__title {
+  color: #ffffff !important;
+}
+
+.deadline__type {
+  color: #b0b0b0 !important;
 }
