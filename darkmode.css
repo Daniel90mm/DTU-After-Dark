@@ -2607,15 +2607,17 @@ ul.container_12.topmenuitems {
 /* ===== CampusNet Grades (campusnet.dtu.dk) ===== */
 /* GPA summary row */
 .gpa-row {
-  background-color: #1a1a1a !important;
-  border-bottom: 2px solid #c62828 !important;
+  background-color: #2d2d2d !important;
+  border-top: 3px solid #c62828 !important;
+  border-bottom: none !important;
 }
 
 .gpa-row td {
-  background-color: #1a1a1a !important;
+  background-color: #2d2d2d !important;
   color: #ffffff !important;
   font-weight: bold !important;
-  padding: 8px 5px !important;
+  font-size: 14px !important;
+  padding: 10px 5px !important;
 }
 
 /* Grades list table */
@@ -2652,6 +2654,42 @@ table.gradesList a {
 table.gradesList span[style*="color : green"],
 table.gradesList td[style*="color : green"] {
   color: #4caf50 !important;
+}
+
+/* ECTS progress bar */
+.ects-progress-container {
+  background: #2d2d2d !important;
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+.ects-progress-container span {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.ects-bar-bg {
+  background: #1a1a1a !important;
+  background-color: #1a1a1a !important;
+}
+.ects-bar-fill[data-bar-color="#4caf50"] {
+  background: #4caf50 !important;
+  background-color: #4caf50 !important;
+}
+.ects-bar-fill[data-bar-color="#66b3ff"] {
+  background: #66b3ff !important;
+  background-color: #66b3ff !important;
+}
+.ects-bar-fill[data-bar-color="#ffa726"] {
+  background: #ffa726 !important;
+  background-color: #ffa726 !important;
+}
+.ects-bar-fill[data-bar-color="#ef5350"] {
+  background: #ef5350 !important;
+  background-color: #ef5350 !important;
+}
+.ects-bar-pct {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #ffffff !important;
 }
 
 /* CampusNet header - dark 2 */

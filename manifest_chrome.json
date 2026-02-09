@@ -7,6 +7,7 @@
     "48": "icon_48.png",
     "128": "icon_128.png"
   },
+  "host_permissions": ["https://www.rejseplanen.dk/*"],
   "web_accessible_resources": [
     {
       "resources": ["dtuaften.jpg", "logo_dark.png", "Corp_White_Transparent.png", "Mojangles text.png"],
