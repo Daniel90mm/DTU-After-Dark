@@ -1,6 +1,6 @@
 # DTU Dark Mode
 
-Dark mode for DTU Learn and other DTU sites. Makes your courses easier on the eyes!
+Dark mode for DTU Learn and other DTU sites — DTU After Dark.
 
 ## Install
 
@@ -12,9 +12,10 @@ Dark mode for DTU Learn and other DTU sites. Makes your courses easier on the ey
 
 - Two-tier dark theme (#1a1a1a / #2d2d2d) across all DTU sites
 - Shadow DOM support for Brightspace custom elements (d2l-*)
+- Full CampusNet darkening (frontpage, grades, sidebar, widgets, participants)
+- Weighted GPA calculation on CampusNet grade pages (ECTS-weighted, skips pass/fail)
 - Custom DTU logo replacement
-- Weighted GPA calculation on CampusNet grade pages
-- Preserves syntax highlighting and code editor colors
+- Preserves syntax highlighting, code editor colors, and service icons
 - Lightweight — pure CSS + JS, no dependencies
 
 ## Supported Sites

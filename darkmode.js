@@ -1068,7 +1068,11 @@
         .d2l-accordion-content,
         .d2l-accordion-content-expanded,
         .d2l-hpg-opener,
-        button.d2l-hpg-opener
+        button.d2l-hpg-opener,
+        a.ddl_li_c,
+        a.ddl_li_c *,
+        #z_g,
+        #z_g .dco_c
     `;
 
     // Function to apply darkest style to an element (#1a1a1a)
@@ -1730,11 +1734,784 @@
         gpaRow.appendChild(tdECTS);
         gpaRow.appendChild(tdDate);
 
-        headerRow.after(gpaRow);
+        // Insert at the bottom of the table
+        const lastRow = table.querySelector('tr:last-child');
+        if (lastRow) {
+            lastRow.after(gpaRow);
+        } else {
+            table.appendChild(gpaRow);
+        }
     }
 
     // Run GPA insertion (unified observer handles updates)
     insertGPARow();
+
+    // ===== CAMPUSNET ECTS PROGRESS BAR (campusnet.dtu.dk) =====
+    // Show a visual progress bar of earned ECTS above the grades table
+    function insertECTSProgressBar() {
+        const table = document.querySelector('table.gradesList');
+        if (!table || document.querySelector('.ects-progress-container')) return;
+
+        const rows = table.querySelectorAll('tr:not(.gradesListHeader)');
+        let passedECTS = 0;
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length < 4) return;
+
+            const gradeSpan = cells[2].querySelector('span');
+            if (!gradeSpan) return;
+
+            const gradeText = gradeSpan.textContent.trim();
+            const ects = parseFloat(cells[3].textContent.trim());
+            if (isNaN(ects) || ects <= 0) return;
+
+            // Check if passed: numeric grade >= 2, or "BE" (Bestået/Pass)
+            const numMatch = gradeText.match(/^(-?\d+)/);
+            if (numMatch) {
+                if (parseInt(numMatch[1], 10) >= 2) passedECTS += ects;
+            } else if (/^BE\b/i.test(gradeText)) {
+                passedECTS += ects;
+            }
+        });
+
+        if (passedECTS === 0) return;
+
+        // Target: 180 ECTS for BSc, then 120 ECTS for MSc (300 total)
+        const inMasters = passedECTS > 180;
+        const target = inMasters ? 300 : 180;
+        const pct = Math.min((passedECTS / target) * 100, 100);
+        const mscECTS = inMasters ? passedECTS - 180 : 0;
+        const targetLabel = inMasters
+            ? 'BSc done \u00B7 MSc ' + mscECTS + ' / 120 ECTS'
+            : 'BSc (' + passedECTS + ' / 180 ECTS)';
+
+        const container = document.createElement('div');
+        container.className = 'ects-progress-container';
+        container.style.cssText = 'margin: 12px 0 16px 0; padding: 10px 12px; background: #2d2d2d; border-radius: 6px;';
+
+        const label = document.createElement('div');
+        label.style.cssText = 'display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; color: #e0e0e0;';
+        label.textContent = '';
+
+        const labelLeft = document.createElement('span');
+        labelLeft.style.fontWeight = 'bold';
+        labelLeft.textContent = passedECTS + ' ECTS earned';
+
+        const labelRight = document.createElement('span');
+        labelRight.style.color = '#b0b0b0';
+        labelRight.textContent = targetLabel;
+
+        label.appendChild(labelLeft);
+        label.appendChild(labelRight);
+
+        const barBg = document.createElement('div');
+        barBg.className = 'ects-bar-bg';
+        barBg.style.cssText = 'width: 100%; height: 18px; border-radius: 9px; overflow: hidden; position: relative;';
+
+        const barFill = document.createElement('div');
+        barFill.className = 'ects-bar-fill';
+        const barColor = pct >= 100 ? '#4caf50' : pct >= 66 ? '#66b3ff' : pct >= 33 ? '#ffa726' : '#ef5350';
+        barFill.style.cssText = 'height: 100%; border-radius: 9px; transition: width 0.3s; width: ' + pct + '%;';
+        barFill.setAttribute('data-bar-color', barColor);
+
+        const pctLabel = document.createElement('div');
+        pctLabel.className = 'ects-bar-pct';
+        pctLabel.style.cssText = 'position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.5);';
+        pctLabel.textContent = Math.round(pct) + '%';
+
+        barBg.appendChild(barFill);
+        barBg.appendChild(pctLabel);
+        container.appendChild(label);
+        container.appendChild(barBg);
+
+        // Insert above the grades table
+        table.parentNode.insertBefore(container, table);
+    }
+
+    // Run ECTS progress bar (unified observer handles updates)
+    insertECTSProgressBar();
+
+    // ===== BUS DEPARTURE TIMES (Rejseplanen 2.0 API) =====
+    // Live bus departure information for DTU-area stops, shown on the DTU Learn homepage
+
+    const REJSEPLANEN_API = 'https://www.rejseplanen.dk/api';
+    const REJSEPLANEN_KEY = 'YOUR_API_KEY_HERE';
+
+    // Bus lines that serve the DTU campus area
+    const DTU_BUS_LINES = [
+        { line: '150S', name: 'Bus 150S' },
+        { line: '300S', name: 'Bus 300S' },
+        { line: '40E', name: 'Bus 40E' },
+        { line: '15E', name: 'Bus 15E' },
+        { line: '193', name: 'Bus 193' }
+    ];
+
+    // Stops near DTU to query for departures (resolved to IDs at setup time)
+    const DTU_AREA_STOP_QUERIES = [
+        'Rævehøjvej (Lyngby)',
+        'Anker Engelunds Vej (Lyngby)',
+        'Lundtoftevej (Lyngby)'
+    ];
+
+    const BUS_ENABLED_KEY = 'dtuDarkModeBusEnabled';
+    const BUS_CONFIG_KEY = 'dtuDarkModeBusConfig';
+    const BUS_SETUP_DONE_KEY = 'dtuDarkModeBusSetupDone';
+
+    let _lastBusFetch = 0;
+    let _cachedDepartures = [];
+    let _busFetchInProgress = false;
+
+    function isBusEnabled() {
+        return localStorage.getItem(BUS_ENABLED_KEY) === 'true';
+    }
+
+    function getBusConfig() {
+        try {
+            const raw = localStorage.getItem(BUS_CONFIG_KEY);
+            return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function saveBusConfig(config) {
+        localStorage.setItem(BUS_CONFIG_KEY, JSON.stringify(config));
+    }
+
+    function isDTULearnHomepage() {
+        return window.location.hostname === 'learn.inside.dtu.dk'
+            && /^\/d2l\/home\/?$/.test(window.location.pathname);
+    }
+
+    // Search for a stop by name via the Rejseplanen API
+    async function searchStop(query) {
+        const url = REJSEPLANEN_API + '/location.name?accessId=' + encodeURIComponent(REJSEPLANEN_KEY)
+            + '&format=json&input=' + encodeURIComponent(query) + '&type=S';
+        try {
+            const resp = await fetch(url);
+            if (!resp.ok) return [];
+            const data = await resp.json();
+            const stops = data.stopLocationOrCoordLocation || [];
+            return stops
+                .filter(s => s.StopLocation)
+                .map(s => ({ id: s.StopLocation.extId || s.StopLocation.id, name: s.StopLocation.name }));
+        } catch (e) {
+            return [];
+        }
+    }
+
+    // Get departures for a specific stop
+    async function getDepartures(stopId) {
+        const url = REJSEPLANEN_API + '/departureBoard?accessId=' + encodeURIComponent(REJSEPLANEN_KEY)
+            + '&format=json&id=' + encodeURIComponent(stopId);
+        try {
+            const resp = await fetch(url);
+            if (!resp.ok) return [];
+            const data = await resp.json();
+            const deps = data.DepartureBoard ? data.DepartureBoard.Departure : (data.Departure || []);
+            if (!Array.isArray(deps)) return deps ? [deps] : [];
+            return deps;
+        } catch (e) {
+            return [];
+        }
+    }
+
+    // Calculate minutes until a departure
+    function minutesUntilDeparture(dep) {
+        const timeStr = dep.rtTime || dep.time;
+        const dateStr = dep.rtDate || dep.date;
+        if (!timeStr || !dateStr) return null;
+        let depDate;
+        if (dateStr.includes('.')) {
+            const parts = dateStr.split('.');
+            const year = parts[2].length === 2 ? '20' + parts[2] : parts[2];
+            depDate = new Date(year + '-' + parts[1] + '-' + parts[0] + 'T' + timeStr);
+        } else {
+            depDate = new Date(dateStr + 'T' + timeStr);
+        }
+        if (isNaN(depDate.getTime())) return null;
+        return Math.round((depDate.getTime() - Date.now()) / 60000);
+    }
+
+    // Check if a departure is delayed
+    function isDelayed(dep) {
+        if (!dep.rtTime || !dep.time) return false;
+        return dep.rtTime !== dep.time;
+    }
+
+    // Format the time display
+    function formatDepartureTime(dep) {
+        const mins = minutesUntilDeparture(dep);
+        if (mins === null) return dep.rtTime || dep.time;
+        if (mins <= 0) return 'Now';
+        if (mins < 60) return mins + ' min';
+        return (dep.rtTime || dep.time).substring(0, 5);
+    }
+
+    // Fetch departures for all configured stops, filter by selected lines/directions
+    async function fetchBusDepartures() {
+        const config = getBusConfig();
+        if (!config || !config.stopIds || config.stopIds.length === 0) return [];
+
+        _busFetchInProgress = true;
+        const allDeps = [];
+        const seen = new Set(); // deduplicate across stops
+
+        try {
+            const promises = config.stopIds.map(async (stopId) => {
+                const deps = await getDepartures(stopId);
+                deps.forEach(dep => {
+                    const configLine = config.lines.find(l => l.line === dep.line);
+                    if (!configLine) return;
+                    const matchesDir = configLine.directions.some(d =>
+                        dep.direction && dep.direction.includes(d)
+                    );
+                    if (!matchesDir) return;
+
+                    // Deduplicate by line + direction + scheduled time
+                    const key = dep.line + '|' + dep.direction + '|' + dep.time + '|' + dep.date;
+                    if (seen.has(key)) return;
+                    seen.add(key);
+
+                    allDeps.push({
+                        line: dep.line,
+                        direction: dep.direction,
+                        time: formatDepartureTime(dep),
+                        minutes: minutesUntilDeparture(dep),
+                        stop: dep.stop || '',
+                        delayed: isDelayed(dep),
+                        type: dep.type
+                    });
+                });
+            });
+            await Promise.all(promises);
+        } catch (e) {
+            // Silently fail
+        }
+
+        _busFetchInProgress = false;
+        allDeps.sort((a, b) => (a.minutes || 999) - (b.minutes || 999));
+        return allDeps.slice(0, 5);
+    }
+
+    // Insert or update the bus departure display in the navigation bar
+    function insertBusDisplay() {
+        if (!isDTULearnHomepage() || !isBusEnabled()) {
+            const existing = document.querySelector('.dtu-bus-departures');
+            if (existing) existing.remove();
+            return;
+        }
+
+        const wrapper = document.querySelector('.d2l-navigation-s-main-wrapper');
+        if (!wrapper) return;
+
+        let container = document.querySelector('.dtu-bus-departures');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'dtu-bus-departures';
+            container.setAttribute('role', 'listitem');
+            container.style.cssText = 'display: flex; flex-direction: column; gap: 3px; padding: 6px 14px; '
+                + 'margin-left: auto; background-color: #2d2d2d !important; color: #e0e0e0 !important; '
+                + 'font-size: 12px; min-width: 200px; max-width: 320px; border-left: 2px solid #404040; '
+                + 'align-self: center;';
+            wrapper.appendChild(container);
+        }
+
+        // Clear existing content
+        while (container.firstChild) container.removeChild(container.firstChild);
+
+        if (_cachedDepartures.length === 0) {
+            const empty = document.createElement('span');
+            empty.style.cssText = 'color: #888; font-style: italic;';
+            empty.textContent = _busFetchInProgress ? 'Loading bus times...' : 'No upcoming buses';
+            container.appendChild(empty);
+            return;
+        }
+
+        _cachedDepartures.forEach(dep => {
+            const row = document.createElement('div');
+            row.style.cssText = 'display: flex; align-items: center; gap: 6px; white-space: nowrap;';
+
+            const badge = document.createElement('span');
+            badge.style.cssText = 'background-color: #1565c0 !important; color: #fff !important; '
+                + 'padding: 1px 5px; border-radius: 3px; font-weight: bold; font-size: 11px; min-width: 32px; text-align: center;';
+            badge.textContent = dep.line;
+
+            const dir = document.createElement('span');
+            dir.style.cssText = 'color: #b0b0b0; overflow: hidden; text-overflow: ellipsis; flex: 1;';
+            dir.textContent = '\u2192 ' + dep.direction;
+
+            const time = document.createElement('span');
+            time.style.cssText = 'font-weight: bold; color: ' + (dep.delayed ? '#ffa726' : '#66bb6a') + ';';
+            time.textContent = dep.time;
+
+            row.appendChild(badge);
+            row.appendChild(dir);
+            row.appendChild(time);
+            container.appendChild(row);
+        });
+    }
+
+    // Orchestrate: fetch (if enough time elapsed) + update display
+    async function updateBusDepartures() {
+        if (!isDTULearnHomepage() || !isBusEnabled()) {
+            insertBusDisplay();
+            return;
+        }
+        const config = getBusConfig();
+        if (!config) return;
+
+        const now = Date.now();
+        if (now - _lastBusFetch >= 60000 && !_busFetchInProgress) {
+            _lastBusFetch = now;
+            _cachedDepartures = await fetchBusDepartures();
+        }
+        insertBusDisplay();
+    }
+
+    // ===== BUS SETUP PROMPT (first-time) =====
+    function showBusSetupPrompt() {
+        if (!isDTULearnHomepage()) return;
+        if (localStorage.getItem(BUS_SETUP_DONE_KEY)) return;
+        if (document.querySelector('.dtu-bus-setup-prompt')) return;
+
+        const prompt = document.createElement('div');
+        prompt.className = 'dtu-bus-setup-prompt';
+        prompt.style.cssText = 'position: fixed; bottom: 24px; right: 24px; z-index: 999999; '
+            + 'background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); '
+            + 'border: 1px solid #1565c0; border-radius: 12px; padding: 20px 24px; '
+            + 'box-shadow: 0 8px 32px rgba(21,101,192,0.3), 0 0 0 1px rgba(21,101,192,0.1); '
+            + 'max-width: 360px; font-family: sans-serif; '
+            + 'transform: translateX(120%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);';
+
+        // Slide in after a frame
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                prompt.style.transform = 'translateX(0)';
+            });
+        });
+
+        const header = document.createElement('div');
+        header.style.cssText = 'display: flex; align-items: center; gap: 10px; margin-bottom: 10px;';
+
+        const busIcon = document.createElement('span');
+        busIcon.style.cssText = 'font-size: 28px; line-height: 1;';
+        busIcon.textContent = '\uD83D\uDE8C';
+
+        const title = document.createElement('div');
+        title.style.cssText = 'color: #fff; font-size: 16px; font-weight: bold;';
+        title.textContent = 'Never miss your bus!';
+
+        header.appendChild(busIcon);
+        header.appendChild(title);
+
+        const desc = document.createElement('div');
+        desc.style.cssText = 'color: #b0b0b0; font-size: 13px; margin-bottom: 16px; line-height: 1.5;';
+        desc.textContent = 'Get live departure times for buses near DTU right here on your homepage.';
+
+        const btnRow = document.createElement('div');
+        btnRow.style.cssText = 'display: flex; gap: 10px;';
+
+        const setupBtn = document.createElement('button');
+        setupBtn.style.cssText = 'background: #1565c0; color: #fff; border: none; padding: 8px 20px; '
+            + 'border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; flex: 1; '
+            + 'transition: background 0.2s;';
+        setupBtn.textContent = 'Set it up';
+        setupBtn.addEventListener('mouseenter', () => { setupBtn.style.background = '#1976d2'; });
+        setupBtn.addEventListener('mouseleave', () => { setupBtn.style.background = '#1565c0'; });
+        setupBtn.addEventListener('click', () => {
+            prompt.style.transform = 'translateX(120%)';
+            setTimeout(() => { prompt.remove(); showBusConfigModal(); }, 300);
+        });
+
+        const dismissBtn = document.createElement('button');
+        dismissBtn.style.cssText = 'background: transparent; color: #666; border: 1px solid #444; '
+            + 'padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; '
+            + 'transition: border-color 0.2s, color 0.2s;';
+        dismissBtn.textContent = 'Not now';
+        dismissBtn.addEventListener('mouseenter', () => { dismissBtn.style.borderColor = '#666'; dismissBtn.style.color = '#999'; });
+        dismissBtn.addEventListener('mouseleave', () => { dismissBtn.style.borderColor = '#444'; dismissBtn.style.color = '#666'; });
+        dismissBtn.addEventListener('click', () => {
+            localStorage.setItem(BUS_SETUP_DONE_KEY, 'dismissed');
+            prompt.style.transform = 'translateX(120%)';
+            setTimeout(() => prompt.remove(), 300);
+        });
+
+        btnRow.appendChild(setupBtn);
+        btnRow.appendChild(dismissBtn);
+        prompt.appendChild(header);
+        prompt.appendChild(desc);
+        prompt.appendChild(btnRow);
+        document.body.appendChild(prompt);
+    }
+
+    // ===== BUS CONFIGURATION MODAL =====
+    function showBusConfigModal() {
+        const existing = document.querySelector('.dtu-bus-config-modal');
+        if (existing) existing.remove();
+
+        // Overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'dtu-bus-config-modal';
+        overlay.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1000000; '
+            + 'background: transparent !important; backdrop-filter: blur(16px) brightness(2.5); '
+            + '-webkit-backdrop-filter: blur(16px) brightness(2.5); '
+            + 'display: flex; align-items: center; justify-content: center; '
+            + 'font-family: sans-serif; opacity: 0; transition: opacity 0.3s;';
+        requestAnimationFrame(() => { overlay.style.opacity = '1'; });
+
+        const modal = document.createElement('div');
+        modal.style.cssText = 'background: rgba(30,30,30,0.92); border-radius: 14px; padding: 28px; max-width: 480px; '
+            + 'width: 90%; max-height: 80vh; overflow-y: auto; color: #e0e0e0; '
+            + 'box-shadow: 0 12px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06); '
+            + 'border: 1px solid rgba(255,255,255,0.08);';
+
+        const titleEl = document.createElement('h2');
+        titleEl.style.cssText = 'margin: 0 0 6px 0; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.3px;';
+        titleEl.textContent = 'Bus Departure Setup';
+
+        const subtitle = document.createElement('p');
+        subtitle.style.cssText = 'margin: 0 0 20px 0; font-size: 14px; color: #999; line-height: 1.4;';
+        subtitle.textContent = 'Select the bus lines you take from DTU campus. You\u2019ll pick directions next.';
+
+        modal.appendChild(titleEl);
+        modal.appendChild(subtitle);
+
+        // Bus line badge colors
+        const LINE_COLORS = { '150S': '#1565c0', '300S': '#2e7d32', '40E': '#6a1b9a', '15E': '#c62828', '193': '#e65100' };
+
+        // Step 1: Bus line selection — card grid
+        const lineSection = document.createElement('div');
+        lineSection.className = 'dtu-bus-step-lines';
+        lineSection.style.cssText = 'display: grid; grid-template-columns: 1fr 1fr; gap: 10px;';
+
+        const lineCheckboxes = [];
+        DTU_BUS_LINES.forEach((bus, idx) => {
+            const color = LINE_COLORS[bus.line] || '#1565c0';
+
+            const card = document.createElement('label');
+            card.style.cssText = 'display: flex; align-items: center; gap: 12px; padding: 14px 16px; '
+                + 'cursor: pointer; border-radius: 8px; border: 2px solid #404040; '
+                + 'transition: border-color 0.15s, background 0.15s;';
+            card.addEventListener('mouseenter', () => { card.style.borderColor = color; card.style.backgroundColor = 'rgba(255,255,255,0.03)'; });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = cb.checked ? color : '#404040';
+                card.style.backgroundColor = cb.checked ? 'rgba(255,255,255,0.03)' : 'transparent';
+            });
+
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.dataset.lineIdx = idx;
+            cb.style.cssText = 'display: none;';
+
+            const badge = document.createElement('span');
+            badge.style.cssText = 'background-color: ' + color + '; color: #fff; padding: 6px 0; '
+                + 'border-radius: 6px; font-weight: 800; font-size: 18px; min-width: 56px; text-align: center; '
+                + 'letter-spacing: 0.5px;';
+            badge.textContent = bus.line;
+
+            const label = document.createElement('span');
+            label.style.cssText = 'font-size: 13px; color: #888;';
+            label.textContent = bus.name;
+
+            // Toggle visual state on click
+            cb.addEventListener('change', () => {
+                card.style.borderColor = cb.checked ? color : '#404040';
+                card.style.backgroundColor = cb.checked ? 'rgba(255,255,255,0.03)' : 'transparent';
+            });
+
+            card.appendChild(cb);
+            card.appendChild(badge);
+            card.appendChild(label);
+            lineSection.appendChild(card);
+            lineCheckboxes.push(cb);
+        });
+
+        modal.appendChild(lineSection);
+
+        // Container for step 2 (direction selection) — filled after "Next"
+        const dirSection = document.createElement('div');
+        dirSection.className = 'dtu-bus-step-dirs';
+        dirSection.style.display = 'none';
+        modal.appendChild(dirSection);
+
+        // Status / loading indicator
+        const statusEl = document.createElement('div');
+        statusEl.style.cssText = 'margin: 12px 0; font-size: 13px; color: #888; display: none;';
+        modal.appendChild(statusEl);
+
+        // Button row
+        const btnRow = document.createElement('div');
+        btnRow.style.cssText = 'display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px;';
+
+        // Dismiss without saving: revert toggle if no valid config exists
+        function dismissModal() {
+            const config = getBusConfig();
+            if (!config || !config.lines || config.lines.length === 0) {
+                localStorage.setItem(BUS_ENABLED_KEY, 'false');
+                const toggle = document.querySelector('#bus-departures-toggle');
+                if (toggle) toggle.checked = false;
+            }
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 200);
+        }
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.style.cssText = 'background: transparent; color: #888; border: 1px solid #555; '
+            + 'padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 13px;';
+        cancelBtn.textContent = 'Cancel';
+        cancelBtn.addEventListener('click', dismissModal);
+
+        const nextBtn = document.createElement('button');
+        nextBtn.style.cssText = 'background: #1565c0; color: #fff; border: none; padding: 8px 20px; '
+            + 'border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;';
+        nextBtn.textContent = 'Next';
+
+        const saveBtn = document.createElement('button');
+        saveBtn.style.cssText = 'background: #1565c0; color: #fff; border: none; padding: 8px 20px; '
+            + 'border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; display: none;';
+        saveBtn.textContent = 'Save';
+
+        btnRow.appendChild(cancelBtn);
+        btnRow.appendChild(nextBtn);
+        btnRow.appendChild(saveBtn);
+        modal.appendChild(btnRow);
+
+        // Data resolved in step 2
+        let resolvedStopIds = [];
+        let discoveredDirections = {}; // { line: [{ direction, cb }] }
+
+        nextBtn.addEventListener('click', async () => {
+            const selectedLines = lineCheckboxes
+                .filter(cb => cb.checked)
+                .map(cb => DTU_BUS_LINES[parseInt(cb.dataset.lineIdx, 10)].line);
+
+            if (selectedLines.length === 0) {
+                statusEl.textContent = 'Please select at least one bus line.';
+                statusEl.style.display = 'block';
+                statusEl.style.color = '#ef5350';
+                return;
+            }
+
+            // Show loading
+            lineSection.style.display = 'none';
+            nextBtn.style.display = 'none';
+            statusEl.textContent = 'Finding available directions...';
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#888';
+
+            // Resolve DTU-area stop IDs and fetch current departures
+            resolvedStopIds = [];
+            const allDepartures = [];
+
+            for (const query of DTU_AREA_STOP_QUERIES) {
+                const results = await searchStop(query);
+                if (results.length > 0) {
+                    const stopId = results[0].id;
+                    resolvedStopIds.push(stopId);
+                    const deps = await getDepartures(stopId);
+                    deps.forEach(d => allDepartures.push(d));
+                }
+            }
+
+            // Extract unique directions per selected line
+            discoveredDirections = {};
+            selectedLines.forEach(line => {
+                const dirSet = new Map();
+                allDepartures.forEach(d => {
+                    if (d.line === line && d.direction) {
+                        if (!dirSet.has(d.direction)) {
+                            dirSet.set(d.direction, d.direction);
+                        }
+                    }
+                });
+                discoveredDirections[line] = Array.from(dirSet.values());
+            });
+
+            statusEl.style.display = 'none';
+
+            if (resolvedStopIds.length === 0) {
+                statusEl.textContent = 'Could not reach Rejseplanen. Try again later or contact the developer on the extension store page.';
+                statusEl.style.display = 'block';
+                statusEl.style.color = '#ef5350';
+                lineSection.style.display = 'block';
+                nextBtn.style.display = 'inline-block';
+                return;
+            }
+
+            // Build direction selection UI
+            while (dirSection.firstChild) dirSection.removeChild(dirSection.firstChild);
+
+            const dirTitle = document.createElement('p');
+            dirTitle.style.cssText = 'margin: 0 0 14px 0; font-size: 13px; color: #888;';
+            dirTitle.textContent = 'Select the directions you travel:';
+            dirSection.appendChild(dirTitle);
+
+            const dirCheckboxes = []; // { line, direction, cb }
+
+            selectedLines.forEach(line => {
+                const header = document.createElement('div');
+                header.style.cssText = 'display: flex; align-items: center; gap: 8px; margin: 14px 0 8px 0; '
+                    + 'padding-bottom: 6px; border-bottom: 1px solid #404040;';
+
+                const headerBadge = document.createElement('span');
+                headerBadge.style.cssText = 'background-color: #1565c0; color: #fff; padding: 2px 8px; '
+                    + 'border-radius: 4px; font-weight: bold; font-size: 13px;';
+                headerBadge.textContent = line;
+                header.appendChild(headerBadge);
+
+                dirSection.appendChild(header);
+
+                const dirs = discoveredDirections[line] || [];
+                if (dirs.length === 0) {
+                    const noDir = document.createElement('div');
+                    noDir.style.cssText = 'font-size: 13px; color: #888; font-style: italic; padding: 4px 0 4px 12px;';
+                    noDir.textContent = 'No departures found right now. Try again later.';
+                    dirSection.appendChild(noDir);
+                    return;
+                }
+
+                dirs.forEach(direction => {
+                    const row = document.createElement('label');
+                    row.style.cssText = 'display: flex; align-items: center; gap: 8px; padding: 8px 12px; '
+                        + 'cursor: pointer; border-radius: 6px; margin-bottom: 2px; transition: background 0.15s;';
+                    row.addEventListener('mouseenter', () => { row.style.backgroundColor = '#383838'; });
+                    row.addEventListener('mouseleave', () => { row.style.backgroundColor = 'transparent'; });
+
+                    const cb = document.createElement('input');
+                    cb.type = 'checkbox';
+                    cb.checked = true;
+                    cb.style.cssText = 'width: 16px; height: 16px; accent-color: #1565c0; cursor: pointer;';
+
+                    const arrow = document.createElement('span');
+                    arrow.style.cssText = 'color: #66bb6a; font-size: 13px;';
+                    arrow.textContent = '\u2192';
+
+                    const dirText = document.createElement('span');
+                    dirText.style.cssText = 'font-size: 14px; color: #e0e0e0;';
+                    dirText.textContent = direction;
+
+                    row.appendChild(cb);
+                    row.appendChild(arrow);
+                    row.appendChild(dirText);
+                    dirSection.appendChild(row);
+                    dirCheckboxes.push({ line: line, direction: direction, cb: cb });
+                });
+            });
+
+            dirSection.style.display = 'block';
+            saveBtn.style.display = 'inline-block';
+
+            // Wire up save
+            saveBtn.onclick = () => {
+                const config = { stopIds: resolvedStopIds, lines: [] };
+                selectedLines.forEach(line => {
+                    const selectedDirs = dirCheckboxes
+                        .filter(dc => dc.line === line && dc.cb.checked)
+                        .map(dc => dc.direction);
+                    if (selectedDirs.length > 0) {
+                        config.lines.push({ line: line, directions: selectedDirs });
+                    }
+                });
+
+                if (config.lines.length === 0) {
+                    statusEl.textContent = 'Please select at least one direction.';
+                    statusEl.style.display = 'block';
+                    statusEl.style.color = '#ef5350';
+                    return;
+                }
+
+                saveBusConfig(config);
+                localStorage.setItem(BUS_ENABLED_KEY, 'true');
+                localStorage.setItem(BUS_SETUP_DONE_KEY, 'configured');
+                _lastBusFetch = 0;
+                _cachedDepartures = [];
+                overlay.style.opacity = '0';
+                setTimeout(() => { overlay.remove(); updateBusDepartures(); }, 200);
+            };
+        });
+
+        // Close on overlay click
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) dismissModal();
+        });
+
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+    }
+
+    // ===== BUS TOGGLE IN ADMIN TOOLS =====
+    function insertBusToggle() {
+        if (!isDTULearnHomepage()) return;
+        if (document.querySelector('#bus-departures-toggle')) return;
+
+        const placeholder = document.querySelector('#AdminToolsPlaceholderId');
+        if (!placeholder) return;
+
+        const columns = placeholder.querySelectorAll('.d2l-admin-tools-column');
+        let targetList = null;
+        columns.forEach(col => {
+            const h2 = col.querySelector('h2');
+            if (h2 && h2.textContent === 'DTU After Dark') {
+                targetList = col.querySelector('ul.d2l-list');
+            }
+        });
+
+        if (!targetList) return;
+
+        const li = document.createElement('li');
+        li.style.cssText = 'display: flex; align-items: center; gap: 8px; padding: 4px 0; background-color: #2d2d2d !important;';
+
+        const label = document.createElement('label');
+        label.style.cssText = 'display: flex; align-items: center; gap: 8px; cursor: pointer; color: #e0e0e0; '
+            + 'font-size: 14px; background-color: #2d2d2d !important; background: #2d2d2d !important;';
+
+        const toggle = document.createElement('input');
+        toggle.type = 'checkbox';
+        toggle.id = 'bus-departures-toggle';
+        toggle.checked = isBusEnabled();
+        toggle.style.cssText = 'width: 16px; height: 16px; cursor: pointer; accent-color: #1565c0;';
+
+        toggle.addEventListener('change', () => {
+            localStorage.setItem(BUS_ENABLED_KEY, toggle.checked.toString());
+            if (toggle.checked) {
+                const config = getBusConfig();
+                if (!config || !config.lines || config.lines.length === 0) {
+                    showBusConfigModal();
+                } else {
+                    _lastBusFetch = 0;
+                    updateBusDepartures();
+                }
+            } else {
+                insertBusDisplay();
+            }
+        });
+
+        label.appendChild(toggle);
+        label.appendChild(document.createTextNode('Bus Departures'));
+        li.appendChild(label);
+
+        const config = getBusConfig();
+        if (config && config.lines && config.lines.length > 0) {
+            const editBtn = document.createElement('button');
+            editBtn.style.cssText = 'background: transparent; color: #66b3ff; border: none; cursor: pointer; '
+                + 'font-size: 12px; padding: 0; margin-left: 4px; text-decoration: underline;';
+            editBtn.textContent = 'Edit';
+            editBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showBusConfigModal();
+            });
+            li.appendChild(editBtn);
+        }
+
+        targetList.appendChild(li);
+    }
+
+    // Run initial bus functions
+    if (isDTULearnHomepage()) {
+        updateBusDepartures();
+    }
 
     // ===== UNIFIED SCHEDULING =====
     // Replaces 8 separate setIntervals and 6 MutationObservers with
@@ -1765,6 +2542,9 @@
         insertMojanglesToggle();
         preserveTypeboxColors();
         insertGPARow();
+        insertECTSProgressBar();
+        insertBusToggle();
+        updateBusDepartures();
     }
 
     // Single safety-net interval at 2000ms (MutationObserver handles real-time)
@@ -1829,6 +2609,7 @@
                 insertMojanglesText();
                 insertMojanglesToggle();
                 preserveTypeboxColors();
+                insertBusToggle();
             }, 200);
         }
     }
@@ -1858,6 +2639,7 @@
         setTimeout(runAllPeriodicChecks, 500);
         setTimeout(runAllPeriodicChecks, 1500);
         setTimeout(showOnboardingHint, 2000);
+        setTimeout(showBusSetupPrompt, 2500);
     });
 
     // Re-process when tab becomes visible again
