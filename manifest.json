@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "DTU Dark Mode",
+  "name": "DTU After Dark",
   "version": "1.1",
   "description": "Dark mode for DTU Sites - DTU After Dark",
   "browser_specific_settings": {
@@ -21,57 +21,57 @@
   "content_scripts": [
     {
       "matches": ["*://learn.inside.dtu.dk/*"],
-      "js": ["darkmode.js"],
+      "js": ["config.js", "darkmode.js"],
       "run_at": "document_start",
       "all_frames": true,
       "match_about_blank": true
     },
     {
       "matches": ["*://s.brightspace.com/*"],
-      "js": ["darkmode.js"],
+      "js": ["config.js", "darkmode.js"],
       "run_at": "document_start",
       "all_frames": true,
       "match_about_blank": true
     },
     {
       "matches": ["*://sts.ait.dtu.dk/*"],
-      "js": ["darkmode.js"],
+      "js": ["config.js", "darkmode.js"],
       "run_at": "document_start",
       "all_frames": true
     },
     {
       "matches": ["*://evaluering.dtu.dk/*"],
-      "js": ["darkmode.js"],
+      "js": ["config.js", "darkmode.js"],
       "run_at": "document_start",
       "all_frames": true
     },
     {
       "matches": ["*://studieplan.dtu.dk/*"],
-      "js": ["darkmode.js"],
+      "js": ["config.js", "darkmode.js"],
       "run_at": "document_start",
       "all_frames": true
     },
     {
       "matches": ["*://kurser.dtu.dk/*"],
-      "js": ["darkmode.js"],
+      "js": ["config.js", "darkmode.js"],
       "run_at": "document_start",
       "all_frames": true
     },
     {
       "matches": ["*://karakterer.dtu.dk/*"],
-      "js": ["darkmode.js"],
+      "js": ["config.js", "darkmode.js"],
       "run_at": "document_start",
       "all_frames": true
     },
     {
       "matches": ["*://sites.dtu.dk/*"],
-      "js": ["darkmode.js"],
+      "js": ["config.js", "darkmode.js"],
       "run_at": "document_start",
       "all_frames": true
     },
     {
       "matches": ["*://campusnet.dtu.dk/*"],
-      "js": ["darkmode.js"],
+      "js": ["config.js", "darkmode.js"],
       "run_at": "document_start",
       "all_frames": true
     }
