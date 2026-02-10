@@ -1,6 +1,6 @@
-# DTU Dark Mode
+# DTU After Dark
 
-Dark mode for DTU Learn and other DTU sites — DTU After Dark.
+Dark mode for DTU Learn and other DTU sites.
 
 ## Install
 
@@ -10,14 +10,26 @@ Dark mode for DTU Learn and other DTU sites — DTU After Dark.
 
 ## Features
 
+### Dark Mode
 - Two-tier dark theme (#1a1a1a / #2d2d2d) across all DTU sites, toggleable from the homepage
 - Shadow DOM support for Brightspace custom elements (d2l-*)
 - Full CampusNet darkening (frontpage, grades, sidebar, widgets, participants)
-- Weighted GPA calculation on CampusNet grade pages (ECTS-weighted, skips pass/fail)
-- GPA Simulator — add hypothetical grades to see projected GPA (saved across sessions)
-- Content shortcut buttons on course cards (hover to reveal, links directly to course content)
 - Custom DTU logo replacement
 - Preserves syntax highlighting, code editor colors, and service icons
+
+### GPA Tools
+- Weighted GPA calculation on CampusNet grade pages (ECTS-weighted, skips pass/fail)
+- GPA Simulator — add hypothetical grades to see projected GPA (saved across sessions)
+
+### Bus Departures (Rejseplanen)
+- Live bus departure times for DTU-area stops, displayed directly in DTU Learn
+- Configurable bus lines and directions (150S, 300S, 40E, 15E, 193)
+- Real-time delay indicators (green = on time, orange = delayed)
+- 60-second auto-refresh with smart caching
+- Setup wizard and configuration modal for personalized routes
+
+### Quality of Life
+- Content shortcut buttons on course cards (hover to reveal, links directly to course content)
 - Lightweight — pure CSS + JS, no dependencies
 
 ## Supported Sites
@@ -34,7 +46,7 @@ Dark mode for DTU Learn and other DTU sites — DTU After Dark.
 
 ## Privacy
 
-No data is collected, stored, or transmitted. The extension runs entirely in your browser. See [PRIVACY.md](PRIVACY.md).
+No personal data is collected, stored, or transmitted. The extension fetches public transit data from the Rejseplanen API for bus departure times — no user-identifying information is sent. All preferences are stored locally in your browser. See [PRIVACY.md](PRIVACY.md).
 
 ## License
 
