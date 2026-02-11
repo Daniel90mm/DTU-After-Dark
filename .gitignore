@@ -13,3 +13,6 @@ config.js
 # OS files
 Thumbs.db
 .DS_Store
+
+# Local release/store submission notes
+release_notes/

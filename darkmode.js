@@ -4,9 +4,17 @@
 
     // ===== DARK MODE TOGGLE =====
     const DARK_MODE_KEY = 'dtuDarkModeEnabled';
+    const DEV_CONTEXT_CAPTURE_KEY = 'dtuDevContextCapture';
     const IS_TOP_WINDOW = (() => {
         try {
             return window === window.top;
+        } catch (e) {
+            return false;
+        }
+    })();
+    const ENABLE_CONTEXT_CAPTURE_DEV_TOOL = (() => {
+        try {
+            return localStorage.getItem(DEV_CONTEXT_CAPTURE_KEY) === 'true';
         } catch (e) {
             return false;
         }
@@ -5882,8 +5890,10 @@
         if (!IS_TOP_WINDOW) return;
 
         var host = window.location.hostname;
-        setupContextCaptureHotkey();
-        insertContextCaptureHelper();
+        if (ENABLE_CONTEXT_CAPTURE_DEV_TOOL) {
+            setupContextCaptureHotkey();
+            insertContextCaptureHelper();
+        }
         styleStudyPlannerTabs();
         fixEvalueringResultCharts();
         fixCampusnetHeaderStyling();
