@@ -10,6 +10,7 @@ $files = @(
     'background.js',
     'config.js',
     'darkmode.js',
+    'darkmode.css',
     'icon_48.png',
     'icon_128.png',
     'dtuaften.jpg',
