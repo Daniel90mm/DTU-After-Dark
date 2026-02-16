@@ -12,6 +12,9 @@ When i say less dark or dark 2, i mean rgb(45,45,45).
 
 Global darkening rules can override local style changes, so always account for that when implementing or debugging new UI styling.
 Whenever adding a new element, ensure it is styled and works correctly with dark mode both ON and OFF.
+Whenever adding UI/styling that should follow the brand/accent color, use the accent CSS variables (`--dtu-ad-accent*`) so the user's accent setting applies sitewide (including hover states and carets).
+If CSS rules do not apply (because the site uses inline `!important` or because our global darkening writes inline `!important`), force the accent at runtime with inline overrides: `el.style.setProperty(prop, value, 'important')` and re-apply via existing observers/host-specific styling functions.
+For good contrast: prefer `--dtu-ad-accent` / `--dtu-ad-accent-soft` for text or small highlight pills on dark backgrounds, and `--dtu-ad-accent-deep` for solid bars/panels on light backgrounds (always verify dark mode ON and OFF).
 
 I do not understand HTML, css, javascript, no web dev stuff, so if you cant darken something i want, give me clear instructions on what to give you so you can darken it.
 
